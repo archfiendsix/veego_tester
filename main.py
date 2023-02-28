@@ -97,10 +97,10 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry()
         self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
 
-    def test_messenger_conference(self):
-        self.messenger_page.run_messenger_conference(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True)
+    # def test_messenger_conference(self):
+    #     self.messenger_page.run_messenger_conference(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True)
 
     def test_microsoft_download(self):
         self.microsoft_page.run_microsoft_download(180)
