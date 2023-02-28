@@ -4,6 +4,7 @@ import logging
 import requests
 from selenium import webdriver
 from datetime import datetime
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,37 +19,32 @@ class Telemetry(BasePage):
         self.config_data = config_data
         self.login_texbox_locator = (By.ID, "username")
 
+    # Define the login method
     def run_telemetry(self):
         self.driver.switch_to.new_window('tab')
-
-        time.sleep(10)
-
-        # self.driver.switch_to.window(self.driver.window_handles[-1])
-        self.driver.get(
-            self.config_data["telemetry"]+self.config_data["router_id"])
-
-        self.driver.maximize_window()
-
-        time.sleep(10)
-
-        if self.driver.title == "Sign in to veego":
-
-            login_texbox = self.driver.find_element(By.ID, "username")
-
-            login_texbox = WebDriverWait(self.driver, 360).until(
-                EC.presence_of_element_located(
-                    self.login_texbox_locator)
+        self.driver.get(self.config_data["telemetry"]+self.config_data["router_id"])
+        try:
+            login_textbox = WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located((By.ID, "username"))
             )
-            login_texbox.clear()
-            login_texbox.send_keys(self.env_username)
+            # Check if the login textbox is already populated with the correct value
+            if login_textbox.get_attribute("value") != self.env_username:
+                login_textbox.send_keys(Keys.CONTROL + "a")
+                login_textbox.send_keys(Keys.DELETE)
+                login_textbox.send_keys(self.env_username)
 
             password_textbox = self.driver.find_element(By.ID, "password")
-            login_button = self.driver.find_element(By.ID, "kc-login")
-            password_textbox.clear()
-            password_textbox.send_keys(self.env_password)
-            login_button.click()
+            # Check if the password textbox is already populated with the correct value
+            if password_textbox.get_attribute("value") != self.env_password:
+                password_textbox.send_keys(Keys.CONTROL + "a")
+                password_textbox.send_keys(Keys.DELETE)
+                password_textbox.send_keys(self.env_password)
 
-        time.sleep(5)
+            login_button = self.driver.find_element(By.ID, "kc-login")
+            login_button.click()
+        except (NoSuchElementException,TimeoutException):
+            # Elements not found, so the user is probably already signed in
+            pass
 
     def return_page_service_items(self, name, type, is_classification_final):
         self.driver.switch_to.window(self.driver.window_handles[1])

@@ -19,10 +19,10 @@ class YoutubePage(BasePage):
 
         self.driver.maximize_window()
 
-        self.driver.get(self.test_sites['youtube_steaming'])
+        self.driver.get(self.test_sites['youtube_streaming'])
 
         time.sleep(2)
-        # self.actions.send_keys('k').perform()
+        self.actions.send_keys('k').perform()
         self.logger(f'\nPlaying Youtube video... \n')
 
         time.sleep(timeout)

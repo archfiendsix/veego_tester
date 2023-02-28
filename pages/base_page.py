@@ -1,4 +1,3 @@
-
 import logging
 import urllib3
 import pickle
@@ -12,11 +11,19 @@ import os
 class BasePage:
     def __init__(self, driver):
         self.driver = driver,
-        self.timeout = 10,
-        self.env_username = os.getenv("USERNAME"),
-        self.env_password = os.getenv("PASSWORD"),
-        self.env_soundcloud_email = os.getenv("SOUNDCLOUD_EMAIL"),
-        self.env_soundcloud_password = os.getenv("SOUNDCLOUD_PASSWORD"),
+        self.timeout = 10
+
+        # Set the path to the .env file based on the current operating system
+        env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env')
+
+        # Load environment variables from the .env file
+        load_dotenv(env_file)
+
+        # Set environment variables
+        self.env_username = os.getenv("USERNAME")
+        self.env_password = os.getenv("PASSWORD")
+        self.env_soundcloud_email = os.getenv("SOUNDCLOUD_EMAIL")
+        self.env_soundcloud_password = os.getenv("SOUNDCLOUD_PASSWORD")
         self.env_twitter_email = os.getenv("TWITTER_EMAIL")
         self.env_twitter_password = os.getenv("TWITTER_PASSWORD")
         self.env_nexusmods_email = os.getenv("NEXUSMODS_EMAIL")
