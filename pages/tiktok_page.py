@@ -30,7 +30,7 @@ class TiktokPage(BasePage):
         # signin_email_textbox = self.driver.find_element(By.ID, 'sign_in_up_email')
         # signin_email_textbox.send_keys(soundcloud_email)
 
-    def run_tiktok(self,timeout=180):
+    def run_tiktok_social(self,timeout=180):
         
         self.driver.get(self.test_sites["tiktok_social"])
         
