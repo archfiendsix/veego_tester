@@ -46,7 +46,8 @@ class TelemetryTest(unittest.TestCase):
         chrome_options = webdriver.ChromeOptions()
         # prefs = {"download.default_directory": download_dir}
         # chrome_options.add_experimental_option("prefs", prefs)
-        sessions_dir = os.path.abspath(os.path.join(os.path.expanduser("~"), ".chrome_sessions"))
+        sessions_dir = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
+        # sessions_dir = os.path.abspath(os.path.join(os.path.expanduser("~"), ".chrome_sessions"))
         # Create the folder if it doesn't already exist
         os.makedirs(sessions_dir, exist_ok=True)
         chrome_options.add_argument(f"--user-data-dir={sessions_dir}")
@@ -132,7 +133,7 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
 
     def test_twitter_social(self):
-        self.tiktok_page.run_tiktok_social(180)
+        self.twitter_page.run_twitter_social(180)
         self.telemetry.run_telemetry()
         self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
 

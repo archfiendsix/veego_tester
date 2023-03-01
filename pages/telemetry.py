@@ -2,6 +2,7 @@ import time
 import json
 import logging
 import requests
+import random
 from selenium import webdriver
 from datetime import datetime
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -47,10 +48,14 @@ class Telemetry(BasePage):
             # Elements not found, so the user is probably already signed in
             pass
 
-    def switch_to_service_window(self):
+    def switch_to_service_window(self, timeout):
         # Get the list of window handles
         window_handles = self.driver.window_handles
         # print(f'{window_handles}')
+
+        
+
+                
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
@@ -61,7 +66,10 @@ class Telemetry(BasePage):
         else:
             self.driver.switch_to.window(self.driver.window_handles[0])
 
+        self.timout_while_interact(timeout)
+
     def return_page_service_items(self, name, type, is_classification_final):
+        #Switch to telemetry Window
         self.driver.switch_to.window(self.driver.window_handles[-1])
         self.driver.refresh()
         service_items = None
@@ -80,12 +88,12 @@ class Telemetry(BasePage):
         service_items = {key: value for key, value in services.items(
         ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value["name"] == name}
 
-        self.switch_to_service_window()
+        # self.switch_to_service_window(8)
 
         return service_items
 
     def run_telemetry_test(self, service, service_type, classification_final):
-        self.switch_to_service_window()
+        
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
@@ -109,22 +117,22 @@ class Telemetry(BasePage):
                     service_item[uuid_key]['start_time']/1000)
                 delta = detection_time - service_start_time
                 self.logger(
-                    f"\n{detected_service_name} {detected_service_type} started at: {service_start_time}\nName: {detected_service_name}\n\nService Type: {detected_service_type}\nRecognized in: {delta} Minutes\nService UUID: {uuid_key}\n")
+                    f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\nName: {detected_service_name}\n\nService Type: {detected_service_type}\nRecognized in: {delta} Minutes\nService UUID: {uuid_key}\n")
 
                 # Check if service is correct and log message accordingly
                 if detected_service_name == service and detected_service_name == service:
-                    self.logger("PASS: Both type and name are correct")
+                    self.logger("\nPASS: Both type and name are correct\n\n")
                 elif detected_service_type == service_type and (not detected_service_name or detected_service_name == ''):
                     assert True
                     self.logger(
-                        "Partial PASS: Type is correct, name is empty")
+                        "\nPartial PASS: Type is correct, name is empty\n\n")
                 elif detected_service_type == service_type and detected_service_name != service:
-                    self.logger("Fail: Type is correct, name is incorrect")
+                    self.logger("\nFail: Type is correct, name is incorrect\n\n")
                 else:
-                    self.logger("Fail: Type and/or name are incorrect")
+                    self.logger("\nFail: Type and/or name are incorrect\n\n")
 
                 # Wait before trying to detect service again
-                time.sleep(10)
+                self.switch_to_service_window(10)
 
                 # Check if maximum runtime has been reached and exit if it has
                 if (datetime.utcnow() - detection_time).total_seconds() > max_runtime:
