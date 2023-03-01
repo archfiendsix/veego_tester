@@ -22,7 +22,19 @@ class YoutubePage(BasePage):
         self.driver.get(self.test_sites['youtube_streaming'])
 
         time.sleep(2)
-        self.actions.send_keys('k').perform()
+        # self.actions.send_keys('k').perform()
+
+        try:
+            player_paused = WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, "#movie_player.paused-mode"))
+            )
+            # Check if the login textbox is already populated with the correct value
+            self.actions.send_keys('k').perform()
+        except (NoSuchElementException, TimeoutException):
+            # Elements not found, so the user is probably already signed in
+            pass
+
         self.logger(f'\nPlaying Youtube video... \n')
 
         time.sleep(timeout)
@@ -62,7 +74,15 @@ class YoutubePage(BasePage):
         self.driver.get(self.test_sites["youtube_download"])
 
         try:
+            player_paused = WebDriverWait(self.driver, 20).until(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, "#movie_player.paused-mode"))
+            )
+
+        except (NoSuchElementException, TimeoutException):
             self.actions.send_keys('k').perform()
+
+        try:
             download_button_locator = (
                 By.CSS_SELECTOR, 'button[aria-label="Download"]')
             download_button = WebDriverWait(self.driver, 5).until(
