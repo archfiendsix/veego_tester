@@ -22,7 +22,8 @@ class Telemetry(BasePage):
     # Define the login method
     def run_telemetry(self):
         self.driver.switch_to.new_window('tab')
-        self.driver.get(self.config_data["telemetry"]+self.config_data["router_id"])
+        self.driver.get(
+            self.config_data["telemetry"]+self.config_data["router_id"])
         try:
             login_textbox = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.ID, "username"))
@@ -42,12 +43,26 @@ class Telemetry(BasePage):
 
             login_button = self.driver.find_element(By.ID, "kc-login")
             login_button.click()
-        except (NoSuchElementException,TimeoutException):
+        except (NoSuchElementException, TimeoutException):
             # Elements not found, so the user is probably already signed in
             pass
 
+    def switch_to_service_window(self):
+        # Get the list of window handles
+        window_handles = self.driver.window_handles
+        # print(f'{window_handles}')
+        # Iterate over the window handles and switch to the one with the desired title
+        for handle in window_handles:
+            self.driver.switch_to.window(handle)
+            if self.driver.title == "Messenger call":
+                self.logger(
+                    f"\nSwitched to {self.driver.title} window to maintain service.")
+                break
+        else:
+            self.driver.switch_to.window(self.driver.window_handles[0])
+
     def return_page_service_items(self, name, type, is_classification_final):
-        self.driver.switch_to.window(self.driver.window_handles[1])
+        self.driver.switch_to.window(self.driver.window_handles[-1])
         self.driver.refresh()
         service_items = None
 
@@ -64,10 +79,13 @@ class Telemetry(BasePage):
         assert services, "No runnning services detected"
         service_items = {key: value for key, value in services.items(
         ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value["name"] == name}
-        self.driver.switch_to.window(self.driver.window_handles[0])
+
+        self.switch_to_service_window()
+
         return service_items
 
     def run_telemetry_test(self, service, service_type, classification_final):
+        self.switch_to_service_window()
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
@@ -132,5 +150,5 @@ class Telemetry(BasePage):
             # Switch to the second tab
             # self.driver.switch_to.window(self.driver.window_handles[1])
             time.sleep(10)
-            print(
+            self.logger(
                 f"No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")

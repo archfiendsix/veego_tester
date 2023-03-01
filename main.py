@@ -6,6 +6,9 @@ import urllib3
 import pathlib
 import pickle
 import re
+import subprocess
+import pyautogui
+import keyboard
 from playwright.sync_api import Page, expect
 from selenium.webdriver.chrome.options import Options
 import undetected_chromedriver as webdriver
@@ -74,7 +77,7 @@ class TelemetryTest(unittest.TestCase):
         # Initialize page objects
         self.youtube_page = YoutubePage(self.driver, self.test_sites_data)
         self.telemetry = Telemetry(self.driver, self.config_data)
-        self.messenger_page = MessengerPage(self.driver)
+        self.messenger_page = MessengerPage(self.driver, self.test_sites_data)
         self.soundcloud_page = SoundcloudPage(
             self.driver, self.test_sites_data)
         self.twitter_page = TwitterPage(self.driver, self.test_sites_data)
@@ -83,65 +86,76 @@ class TelemetryTest(unittest.TestCase):
         self.icloud_page = IcloudPage(self.driver, self.test_sites_data)
         self.tiktok_page = TiktokPage(self.driver, self.test_sites_data)
 
-    #Can't run this. it needs subscription to upload/download more files
-    def test_icloud_download(self):
-        # Test downloading a file from iCloud
-        self.icloud_page.run_icloud_download()
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
+    # Can't run this. it needs subscription to upload/download more files
+    # def test_icloud_download(self):
+    #     # Test downloading a file from iCloud
+    #     self.icloud_page.run_icloud_download()
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
 
     # Can't run this. it needs subscription to upload/download more files
-    def test_icloud_upload(self):
-        # Test uploading a file to iCloud
-        self.icloud_page.run_icloud_upload()
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
-
-    # def test_messenger_conference(self):
-    #     self.messenger_page.run_messenger_conference(180)
+    # def test_icloud_upload(self):
+    #     # Test uploading a file to iCloud
+    #     self.icloud_page.run_icloud_upload()
     #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True)
+    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
 
-    def test_microsoft_download(self):
-        self.microsoft_page.run_microsoft_download(180)
+    def test_messenger_conference(self):
+        self.messenger_page.run_messenger_conference(180)
         self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
+        self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True)
 
-    def test_nexusmods_download(self):
-        # Test downloading a file from Nexus Mods
-        self.nexusmods_page.run_nexusmods_download()
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
+    # def test_microsoft_download(self):
+    #     self.microsoft_page.run_microsoft_download(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
 
-    def test_soundcloud_music(self):
-        self.soundcloud_page.run_soundcloud_music(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True)
+    # def test_nexusmods_download(self):
+    #     # Test downloading a file from Nexus Mods
+    #     self.nexusmods_page.run_nexusmods_download()
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
 
-    def test_soundcloud_upload(self):
-        self.soundcloud_page.run_soundcloud_upload(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
+    # def test_soundcloud_music(self):
+    #     self.soundcloud_page.run_soundcloud_music(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True)
 
-    def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
+    # def test_soundcloud_upload(self):
+    #     self.soundcloud_page.run_soundcloud_upload(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
 
-    def test_twitter_social(self):
-        self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
+    # def test_tiktok_social(self):
+    #     self.tiktok_page.run_tiktok_social(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
 
-    def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+    # def test_twitter_social(self):
+    #     self.tiktok_page.run_tiktok_social(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
 
-    def test_youtube_download(self):
-        self.youtube_page.run_youtube_download(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
+    # def test_youtube_streaming(self):
+    #     self.youtube_page.run_youtube_streaming(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+
+    # def test_youtube_download(self):
+    #     self.youtube_page.run_youtube_download(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
+
+    # def test_open_spotify_app(self):
+    #     # vlc_path = "/var/lib/flatpak/exportsorg.videolan.VLC"
+    #     # # vlc_path = "/var/lib/flatpak/exportsorg.videolan.VLC"
+    #     # # os.startfile(spotify_path)
+    #     # subprocess.Popen(vlc_path)
+    #     command = ["flatpak", "run", "com.spotify.Client"]
+    #     subprocess.run(command)
+
+       
+        
 
     def tearDown(self):
         # Close the browser
