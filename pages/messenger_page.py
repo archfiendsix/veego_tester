@@ -39,7 +39,6 @@ class MessengerPage(BasePage):
         
         self.driver.switch_to.new_window('tab')
         self.driver.get(self.test_sites["messenger_receiver"])
-        # self.driver.switch_to.window(self.driver.window_handles[0])
         self.driver.switch_to.window(self.driver.window_handles[-2])
         accept_button_locator = (
             By.CSS_SELECTOR, 'div[aria-label="Accept"]')
