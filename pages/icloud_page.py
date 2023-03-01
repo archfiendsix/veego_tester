@@ -90,7 +90,7 @@ class IcloudPage(BasePage):
         # self.dump_cookies()
         # self.load_cookies()
 
-    def run_icloud_upload(self):
+    def run_icloud_upload(self,timeout=180):
         self.delete_file()
         # self.icloud_signin(self.env_nexusmods_email, self.env_nexusmods_password)
 
@@ -129,7 +129,7 @@ class IcloudPage(BasePage):
         # self.load_cookies()
         #
 
-        time.sleep(180)
+        time.sleep(timeout)
 
     def run_icloud_download(self, timeout=180):
         # self.icloud_signin(self.env_nexusmods_email, self.env_nexusmods_password)

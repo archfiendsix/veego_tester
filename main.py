@@ -89,14 +89,14 @@ class TelemetryTest(unittest.TestCase):
     #Can't run this. it needs subscription to upload/download more files
     def test_icloud_download(self):
         # Test downloading a file from iCloud
-        self.icloud_page.run_icloud_download()
+        self.icloud_page.run_icloud_download(180)
         self.telemetry.run_telemetry()
         self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
 
     #Can't run this. it needs subscription to upload/download more files
     def test_icloud_upload(self):
         # Test uploading a file to iCloud
-        self.icloud_page.run_icloud_upload()
+        self.icloud_page.run_icloud_upload(180)
         self.telemetry.run_telemetry()
         self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
 
@@ -112,7 +112,7 @@ class TelemetryTest(unittest.TestCase):
 
     def test_nexusmods_download(self):
         # Test downloading a file from Nexus Mods
-        self.nexusmods_page.run_nexusmods_download()
+        self.nexusmods_page.run_nexusmods_download(180)
         self.telemetry.run_telemetry()
         self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
 
