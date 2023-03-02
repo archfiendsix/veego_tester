@@ -37,7 +37,7 @@ class YoutubePage(BasePage):
 
         self.logger(f'\nPlaying Youtube video... \n')
 
-        time.sleep(timeout)
+        self.timout_while_interact(timeout)
         # 180
 
     def download_video(self):
@@ -96,4 +96,4 @@ class YoutubePage(BasePage):
         download_button.click()
         self.logger(f'\nYoutube Download Started... \n')
 
-        time.sleep(timeout)
+        self.timout_while_interact(timeout)

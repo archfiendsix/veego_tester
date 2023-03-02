@@ -36,30 +36,19 @@ class SoundcloudPage(BasePage):
         signin_email_textbox.send_keys(soundcloud_email)
 
     def run_soundcloud_music(self, timeout=180):
-        # self.dump_cookies()
 
         self.driver.get(self.test_sites["soundcloud_music"])
-        time.sleep(30)
-        # Set the maximum amount of time to wait for the element to be present
-        self.driver.maximize_window()
-        # # Create a wait object with the specified timeout and expected condition
-        # wait = WebDriverWait(self.driver, timeout).until(
-        #     EC.presence_of_element_located(
-        #         (By.ID, "onetrust-accept-btn-handler"))
-        # )
+        
         # save_cookies_accept_btn = self.driver.find_element(
         #     By.ID, "onetrust-accept-btn-handler")
         play_btn_locator = (
             By.CSS_SELECTOR, ".sc-button-play.playButton.sc-button.m-stretch")
-        play_btn = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(
-                play_btn_locator)
-        )
-        play_btn.click()
+        
+        self.wait_and_execute(self.driver,play_btn_locator,10,lambda elem: elem.click())
 
         self.logger(f'\nStarting Soundcloud play test... \n')
-
-        time.sleep(timeout)
+        self.timout_while_interact(timeout)
+        # time.sleep(timeout)
 
     def run_soundcloud_upload(self, timeout=180):
         self.logger('Starting Soundcloud upload test...')

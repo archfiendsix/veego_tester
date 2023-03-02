@@ -34,13 +34,13 @@ class Telemetry(BasePage):
             if login_tb_attrib != self.env_username:
                 # login_textbox.send_keys(Keys.CONTROL + "a")
                 self.wait_and_execute(self.driver, login_textbox_locator,
-                                  20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
+                                      20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
                 # login_textbox.send_keys(Keys.DELETE)
                 self.wait_and_execute(self.driver, login_textbox_locator,
-                                  20, lambda elem: elem.send_keys(Keys.DELETE))
+                                      20, lambda elem: elem.send_keys(Keys.DELETE))
                 # login_textbox.send_keys(self.env_username)
                 self.wait_and_execute(self.driver, login_textbox_locator,
-                                  20, lambda elem: elem.send_keys(self.env_username))
+                                      20, lambda elem: elem.send_keys(self.env_username))
 
             password_textbox = self.driver.find_element(By.ID, "password")
             # Check if the password textbox is already populated with the correct value
@@ -59,13 +59,13 @@ class Telemetry(BasePage):
         # Get the list of window handles
         window_handles = self.driver.window_handles
         # print(f'{window_handles}')
-
+        
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
+            self.logger(
+            f"\nSwitched to {self.driver.title} window to maintain service.")
             if self.driver.title == "Messenger call":
-                self.logger(
-                    f"\nSwitched to {self.driver.title} window to maintain service.")
                 break
         else:
             self.driver.switch_to.window(self.driver.window_handles[0])
@@ -91,8 +91,6 @@ class Telemetry(BasePage):
         assert services, "No runnning services detected"
         service_items = {key: value for key, value in services.items(
         ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value["name"] == name}
-
-        # self.switch_to_service_window(8)
 
         return service_items
 

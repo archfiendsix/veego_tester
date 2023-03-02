@@ -38,7 +38,7 @@ class TiktokPage(BasePage):
         # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
         self.logger(f'\nRunning Tiktok Social... \n')
 
-        self.timout_while_interact(timeout)
+        self.timout_while_interact(timeout, True)
      
 
    

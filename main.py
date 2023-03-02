@@ -113,7 +113,7 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
 
-    # # Neds subscription to upload/download more files
+    # # Needs subscription to upload/download more files
     # def test_icloud_upload(self):
     #     # Test uploading a file to iCloud
     #     self.icloud_page.run_icloud_upload(180)
@@ -145,15 +145,15 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
 
-    def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
-
-    # def test_twitter_social(self):
-    #     self.twitter_page.run_twitter_social(180)
+    # def test_tiktok_social(self):
+    #     self.tiktok_page.run_tiktok_social(180)
     #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
+    #     self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
+
+    def test_twitter_social(self):
+        self.twitter_page.run_twitter_social(180)
+        self.telemetry.run_telemetry()
+        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
 
     # def test_youtube_streaming(self):
     #     self.youtube_page.run_youtube_streaming(180)
