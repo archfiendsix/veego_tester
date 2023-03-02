@@ -5,6 +5,7 @@ import requests
 import random
 from selenium import webdriver
 from datetime import datetime
+from dotenv import load_dotenv
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -12,7 +13,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
-
+load_dotenv()
 class Telemetry(BasePage):
     def __init__(self, driver, config_data):
         super().__init__(driver)

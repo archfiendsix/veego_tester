@@ -15,7 +15,7 @@ import undetected_chromedriver as webdriver
 # from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from pages.microsoft_page import MicrosoftPage
 from pages.messenger_page import MessengerPage
 from pages.nexusmods_page import NexusModsPage

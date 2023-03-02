@@ -12,22 +12,16 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import os
 
-
+load_dotenv()
 class BasePage:
     def __init__(self, driver):
         self.driver = driver,
         self.timeout = 10
 
-        # Set the path to the .env file based on the current operating system
-        env_file = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), '..', '.env')
-
-        # Load environment variables from the .env file
-        load_dotenv(env_file)
 
         # Set environment variables
-        self.env_username = os.getenv("USERNAME")
-        self.env_password = os.getenv("PASSWORD")
+        self.env_username = os.getenv("VEEGO_USERNAME")
+        self.env_password = os.getenv("VEEGO_PASSWORD")
         self.env_soundcloud_email = os.getenv("SOUNDCLOUD_EMAIL")
         self.env_soundcloud_password = os.getenv("SOUNDCLOUD_PASSWORD")
         self.env_twitter_email = os.getenv("TWITTER_EMAIL")
