@@ -79,11 +79,11 @@ class IcloudPage(BasePage):
         )
         first_file.click()
 
-        delete_button_locatot = (
+        delete_button_locator = (
             By.CSS_SELECTOR, 'ui-button[title="Delete"]')
         delete_button = WebDriverWait(self.driver, 60).until(
             EC.presence_of_element_located(
-                delete_button_locatot)
+                delete_button_locator)
         )
         delete_button.click()
 

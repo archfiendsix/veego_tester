@@ -6,6 +6,9 @@ import time
 from selenium import webdriver
 from dotenv import load_dotenv
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import os
 
@@ -16,7 +19,8 @@ class BasePage:
         self.timeout = 10
 
         # Set the path to the .env file based on the current operating system
-        env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '.env')
+        env_file = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), '..', '.env')
 
         # Load environment variables from the .env file
         load_dotenv(env_file)
@@ -51,31 +55,35 @@ class BasePage:
             for cookie in cookies:
                 self.driver.add_cookie(cookie)
 
-    def random_scroll(self):
-        # Set the time limit for scrolling
-        time_limit = 3.5  # seconds
+    def random_scroll(self, time_limit=180):
+        pass
 
+    def timout_while_interact(self, timeout):
         # Set the initial scrolling direction to "down"
         scroll_direction = "down"
 
         # Scroll the page alternately up and down by random amounts for 3.5 seconds
         start_time = time.time()
-        while time.time() - start_time < time_limit:
-            scroll_amount = random.randint(500, 1000)
+        while time.time() - start_time < timeout:
+            
             if scroll_direction == "down":
-                self.driver.execute_script(f"window.scrollBy(0, {scroll_amount});")
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, {scroll_amount});")
             else:
-                self.driver.execute_script(f"window.scrollBy(0, -{scroll_amount});")
-            time.sleep(0.5)  # wait for 0.5 seconds between scrolls
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, -{scroll_amount});")
+            time.sleep(0.1)  # wait for 0.5 seconds between scrolls
             if scroll_direction == "down" and self.driver.execute_script("return window.innerHeight + window.pageYOffset") >= self.driver.execute_script("return document.body.scrollHeight"):
                 scroll_direction = "up"
             elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
                 scroll_direction = "down"
-    def timout_while_interact(self,timeout):
-        start_time = time.time()
-        while time.time() - start_time < timeout:
-            self.random_scroll()
 
+    def wait_and_execute(self, driver, locator, timeout, action):
+        element = WebDriverWait(driver, timeout).until(
+            EC.presence_of_element_located(locator))
+        action(element)
 
     def logger(self, text):
         logging.info(text)

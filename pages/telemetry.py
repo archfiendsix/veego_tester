@@ -26,14 +26,21 @@ class Telemetry(BasePage):
         self.driver.get(
             self.config_data["telemetry"]+self.config_data["router_id"])
         try:
-            login_textbox = WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.ID, "username"))
-            )
+
+            login_textbox_locator = (By.ID, "username")
+            login_tb_attrib = self.wait_and_execute(
+                self.driver, login_textbox_locator, 20, lambda elem: elem.get_attribute("value"))
             # Check if the login textbox is already populated with the correct value
-            if login_textbox.get_attribute("value") != self.env_username:
-                login_textbox.send_keys(Keys.CONTROL + "a")
-                login_textbox.send_keys(Keys.DELETE)
-                login_textbox.send_keys(self.env_username)
+            if login_tb_attrib != self.env_username:
+                # login_textbox.send_keys(Keys.CONTROL + "a")
+                self.wait_and_execute(self.driver, login_textbox_locator,
+                                  20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
+                # login_textbox.send_keys(Keys.DELETE)
+                self.wait_and_execute(self.driver, login_textbox_locator,
+                                  20, lambda elem: elem.send_keys(Keys.DELETE))
+                # login_textbox.send_keys(self.env_username)
+                self.wait_and_execute(self.driver, login_textbox_locator,
+                                  20, lambda elem: elem.send_keys(self.env_username))
 
             password_textbox = self.driver.find_element(By.ID, "password")
             # Check if the password textbox is already populated with the correct value
@@ -53,9 +60,6 @@ class Telemetry(BasePage):
         window_handles = self.driver.window_handles
         # print(f'{window_handles}')
 
-        
-
-                
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
@@ -69,7 +73,7 @@ class Telemetry(BasePage):
         self.timout_while_interact(timeout)
 
     def return_page_service_items(self, name, type, is_classification_final):
-        #Switch to telemetry Window
+        # Switch to telemetry Window
         self.driver.switch_to.window(self.driver.window_handles[-1])
         self.driver.refresh()
         service_items = None
@@ -93,7 +97,7 @@ class Telemetry(BasePage):
         return service_items
 
     def run_telemetry_test(self, service, service_type, classification_final):
-        
+
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
@@ -127,7 +131,8 @@ class Telemetry(BasePage):
                     self.logger(
                         "\nPartial PASS: Type is correct, name is empty\n\n")
                 elif detected_service_type == service_type and detected_service_name != service:
-                    self.logger("\nFail: Type is correct, name is incorrect\n\n")
+                    self.logger(
+                        "\nFail: Type is correct, name is incorrect\n\n")
                 else:
                     self.logger("\nFail: Type and/or name are incorrect\n\n")
 
