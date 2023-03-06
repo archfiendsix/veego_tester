@@ -17,55 +17,58 @@ class TwitterPage(BasePage):
         self.timeout = 10
 
     def twitter_signin(self):
-        loginbutton_locator = (By.CSS_SELECTOR, 'a[href="/login"]')
-        username_textbox_locator = (
-            By.CSS_SELECTOR, 'input[autocomplete="username"]')
-        nextbutton_locator = (By.XPATH, "//span[contains(text(), 'Next')]")
-        password_textbox_locator = (
-            By.CSS_SELECTOR, 'input[autocomplete="current-password"]')
+        self.driver.switch_to.default_content()
 
-        login_submit_button_locator = (
-            By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]')
+        # self.wait_and_execute(
+        #     self.driver, (By.CSS_SELECTOR, 'a[data-testid="loginButton"]'), 10, lambda elem: elem.click())
+        # time.sleep(3000)
         self.wait_and_execute(
-            self.driver, loginbutton_locator, 10, lambda elem: elem.click())
-        self.wait_and_execute(self.driver, username_textbox_locator,
-                              10, lambda elem: elem.send_keys(self.env_twitter_email))
-        self.wait_and_execute(self.driver, nextbutton_locator,
-                              10, lambda elem: elem.click())
-        self.wait_and_execute(self.driver, password_textbox_locator,
-                              10, lambda elem: elem.send_keys(self.env_twitter_password))
-        self.wait_and_execute(self.driver, login_submit_button_locator,
-                              10, lambda elem: elem.click())
+            self.driver, (By.CSS_SELECTOR, 'input[autocomplete="username"]'), 30,
+            lambda elem: elem.send_keys(self.env_twitter_email))
+
+        self.wait_and_execute(
+            self.driver, (By.XPATH, "//span[contains(text(), 'Next')]"), 30,
+            lambda elem: elem.click())
+
+        self.wait_and_execute(
+            self.driver, (By.CSS_SELECTOR, 'input[type="password"]'), 10,
+            lambda elem: elem.send_keys(self.env_twitter_password))
+
+        self.wait_and_execute(
+            self.driver, (By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]'), 10, lambda elem: elem.click())
+
 
     def run_twitter_social(self, timeout=180):
 
-        self.driver.get(self.test_sites["twitter_social"])
-        # time.sleep(3000)
-        try:
-            # sign_in_to_google_iframe_locator = (
-            #     By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
-            # iframe = WebDriverWait(self.driver, 20).until(
-            #     EC.presence_of_element_located(
-            #         sign_in_to_google_iframe_locator)
-            # )
-            # self.driver.switch_to.frame(iframe)
-
-            # sign_in_to_google_button = (
-            #     By.XPATH, "//div[contains(text(), 'Continue as Veego')]")
-
-            # self.wait_and_execute(
-            #     self.driver, sign_in_to_google_button, 10, lambda elem: elem.click())
-            pass
-
-        except (NoSuchElementException, TimeoutException):
+            self.driver.get(self.test_sites["twitter_social"])
+            # time.sleep(3000)
+            # try:
+            #     sign_in_to_google_iframe_locator = (
+            #         By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
+            #     iframe = WebDriverWait(self.driver, 20).until(
+            #         EC.presence_of_element_located(
+            #             sign_in_to_google_iframe_locator)
+            #     )
+            #     self.driver.switch_to.frame(iframe)
+            #
+            #     sign_in_to_google_button = (
+            #         By.XPATH, "//div[contains(text(), 'Sign in as Veego')]")
+            #
+            #     self.wait_and_execute(
+            #         self.driver, sign_in_to_google_button, 10, lambda elem: elem.click())
+            #     pass
+            #
+            # except (NoSuchElementException, TimeoutException):
+            #
             try:
                 self.twitter_signin()
             except (NoSuchElementException, TimeoutException):
                 self.logger("Twitter Already Logged in")
 
-        
 
-        # self.load_cookies()
-        # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
-        self.logger(f'\nRunning Twitter Social... \n')
-        self.timout_while_interact(timeout)
+
+
+            # self.load_cookies()
+            # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
+            self.logger(f'\nRunning Twitter Social... \n')
+            self.timout_while_interact(timeout)

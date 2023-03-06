@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
 from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
@@ -15,38 +16,42 @@ class IcloudPage(BasePage):
         self.test_sites = test_sites
         self.timeout = 10
 
-    def icloud_signin(self, nexumods_email, nexusmods_password):
-        self.driver.get(self.test_sites["icloud_download"])
+    def icloud_signin(self):
+        signin_button_locator = (By.CSS_SELECTOR, 'ui-button.sign-in-button')
 
-        self.driver.maximize_window()
-        # jjk = input('Enter')
+        self.wait_and_execute(self.driver, signin_button_locator, 10, lambda elem: elem.click())
+        signin_iframe_locator = (By.CSS_SELECTOR, "#aid-auth-widget-iFrame")
+        signin_iframe = WebDriverWait(self.driver, 20).until(
+                    EC.presence_of_element_located(
+                        signin_iframe_locator)
+                )
 
-        cookies = [
-            {'name': 'SSPZ', 'value': '172138'},
-            {'name': 'DSP2F_71', 'value': '343983'},
-            {'name': 'vs', 'value': '242441=5325914&503171=5082295&219976=5089374&521966=5102021&557984=5282398&497351=5282396'},
-            {'name': 'DSP2F_55', 'value': '298424'},
-            {'name': 'TAPAD', 'value': "%7B%22id%22%3A%22a0403514-f4c3-452e-8339-d24fb887d075%22%7D"},
-            {'name': 'jwt_fingerprint', 'value': 'a67c8658085334bcbb95563244e29cab'},
-            {'name': '_hjSessionUser_1264276',
-                'value': 'eyJpZCI6IjEyODk3NWUwLTA3ZTktNTU5Zi05MjExLWQ2YjI5MDQ5MmQ3ZiIsImNyZWF0ZWQiOjE2NzYyNzcxNTYyMDEsImV4aXN0aW5nIjp0cnVlfQ=='},
-            # Add more cookies as needed
-        ]
 
-        for cookie in cookies:
-            self.driver.add_cookie(cookie)
+        self.driver.switch_to.frame(signin_iframe)
+        apple_id_textbox_locator = (By.CSS_SELECTOR, "input#account_name_text_field")
+        self.wait_and_execute(self.driver, apple_id_textbox_locator, 20, lambda elem: (
+            elem.click(),
+            elem.send_keys(Keys.CONTROL + "a"),
+            elem.send_keys(Keys.DELETE),
+            elem.send_keys(self.env_icloud_email)
+        ))
 
-        self.save_cookie(self.driver, '/tmp/cookie')
+        # time.sleep(3000)
+        keep_me_signed_in_checkbox_locator = (By.CSS_SELECTOR, 'input[type="checkbox"]')
+        self.wait_and_execute(self.driver, keep_me_signed_in_checkbox_locator, 10, lambda elem: elem.click())
 
-        time.sleep(60)
+        proceed_button_locator = (By.ID, "sign-in")
+        self.wait_and_execute(self.driver, proceed_button_locator, 10, lambda elem: elem.click())
 
-    def icloud_signin(self, nexumods_email, nexusmods_password):
-        self.driver.get(self.test_sites["icloud_upload"])
-
-        self.driver.maximize_window()
-        # jjk = input('Enter')
-
-        time.sleep(60)
+        password_textbox_locator = (By.ID, "password_text_field")
+        self.wait_and_execute(self.driver, password_textbox_locator, 10, lambda elem: (
+            elem.click(),
+            elem.send_keys(Keys.CONTROL + "a"),
+            elem.send_keys(Keys.DELETE),
+            elem.send_keys(self.env_icloud_password)
+        ))
+        self.wait_and_execute(self.driver, proceed_button_locator, 10, lambda elem: elem.click())
+        self.driver.switch_to.default_content()
 
     def delete_file(self):
         self.driver.get(self.test_sites["icloud_upload"])
@@ -91,8 +96,14 @@ class IcloudPage(BasePage):
         # self.load_cookies()
 
     def run_icloud_upload(self,timeout=180):
+        self.driver.get(self.test_sites["icloud_upload"])
+        self.icloud_signin()
+        # try:
+        #     self.icloud_signin()
+        # except (NoSuchElementException, TimeoutException):
+        #     pass
+
         self.delete_file()
-        # self.icloud_signin(self.env_nexusmods_email, self.env_nexusmods_password)
 
         self.driver.get(self.test_sites["icloud_upload"])
 

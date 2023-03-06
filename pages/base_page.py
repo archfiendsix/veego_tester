@@ -9,6 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 import os
 
@@ -30,6 +31,12 @@ class BasePage:
         self.env_nexusmods_password = os.getenv("NEXUSMODS_PASSWORD")
         self.env_icloud_email = os.getenv("ICLOUD_EMAIL")
         self.env_icloud_password = os.getenv("ICLOUD_PASSWORD")
+        self.env_tiktok_username = os.getenv("TIKTOK_USERNAME")
+        self.env_tiktok_password = os.getenv("TIKTOK_PASSWORD")
+        self.env_messenger_email = os.getenv("MESSENGER_EMAIL")
+        self.env_messenger_password = os.getenv("MESSENGER_PASSWORD")
+        self.env_facebook_email = os.getenv("FACEBOOK_EMAIL")
+        self.env_facebook_password = os.getenv("FACEBOOK_PASSWORD")
 
     def setup(self):
         pass
@@ -54,13 +61,19 @@ class BasePage:
 
     def timout_while_interact(self, timeout):
 
-        if "twitter" in self.driver.current_url or "tiktok" in self.driver.current_url:
+        if "twitter" in self.driver.current_url or "tiktok" in self.driver.current_url or "soundcloud" in self.driver.current_url:
             # Set the initial scrolling direction to "down"
             scroll_direction = "down"
 
             # Scroll the page alternately up and down by random amounts for 3.5 seconds
             start_time = time.time()
             while time.time() - start_time < timeout:
+                try:
+                    time.sleep(random.randint(1, 3))
+                    soundcloud_skip_button_locator= (By.CSS_SELECTOR, ".skipControl__next")
+                    self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 20, lambda elem: elem.click())
+                except (NoSuchElementException, TimeoutException):
+                    pass
 
                 if scroll_direction == "down":
                     scroll_amount = random.randint(500, 1000)
@@ -70,7 +83,7 @@ class BasePage:
                     scroll_amount = random.randint(500, 1000)
                     self.driver.execute_script(
                         f"window.scrollBy(0, -{scroll_amount});")
-                time.sleep(0.1)  # wait for 0.5 seconds between scrolls
+                time.sleep(random.randint(1, 2))  # wait for n seconds between scrolls
                 if scroll_direction == "down" and self.driver.execute_script("return window.innerHeight + window.pageYOffset") >= self.driver.execute_script("return document.body.scrollHeight"):
                     scroll_direction = "up"
                 elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
@@ -79,11 +92,12 @@ class BasePage:
             time.sleep(timeout)
 
     def wait_and_execute(self, driver, locator, timeout, action):
+        time.sleep(random.randint(1, 2))
 
         element = WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located(locator))
+            EC.visibility_of_element_located(locator))
         action(element)
-        time.sleep(random.randint(1, 3))
+
 
     def logger(self, text):
         logging.info(text)

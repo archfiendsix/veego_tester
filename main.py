@@ -71,6 +71,18 @@ class TelemetryTest(unittest.TestCase):
         chrome_options.add_argument(f"--user-data-dir={sessions_dir}")
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--disable-infobars")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-popup-blocking")
+        chrome_options.add_experimental_option("prefs", {
+            "profile.default_content_setting_values.media_stream_mic": 1,
+            "profile.default_content_setting_values.media_stream_camera": 1,
+            "profile.default_content_setting_values.geolocation": 1,
+            "profile.default_content_setting_values.notifications": 1,
+            "credentials_enable_service": True
+        })
+
         # driver_service = webdriver.chrome.service.Service(
         #     ChromeDriverManager().install())
 
@@ -106,6 +118,7 @@ class TelemetryTest(unittest.TestCase):
         self.microsoft_page = MicrosoftPage(self.driver, self.test_sites_data)
         self.icloud_page = IcloudPage(self.driver, self.test_sites_data)
         self.tiktok_page = TiktokPage(self.driver, self.test_sites_data)
+        self.driver.maximize_window()
 
     # # Needs subscription to upload/download more files
     # def test_icloud_download(self):
@@ -114,11 +127,11 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
 
     # # Needs subscription to upload/download more files
-    # def test_icloud_upload(self):
-    #     # Test uploading a file to iCloud
-    #     self.icloud_page.run_icloud_upload(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
+    def test_icloud_upload(self):
+        # Test uploading a file to iCloud
+        self.icloud_page.run_icloud_upload(180)
+        self.telemetry.run_telemetry()
+        self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
 
     # def test_messenger_conference(self):
     #     self.messenger_page.run_messenger_conference(180)
@@ -150,10 +163,10 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
 
-    def test_twitter_social(self):
-        self.twitter_page.run_twitter_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
+    # def test_twitter_social(self):
+    #     self.twitter_page.run_twitter_social(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
 
     # def test_youtube_streaming(self):
     #     self.youtube_page.run_youtube_streaming(180)

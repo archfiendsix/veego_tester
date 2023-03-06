@@ -64,8 +64,7 @@ class Telemetry(BasePage):
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
-            self.logger(
-            f"\nSwitched to {self.driver.title} window to maintain service.")
+            
             if self.driver.title == "Messenger call":
                 break
         else:

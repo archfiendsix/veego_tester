@@ -1,9 +1,11 @@
+import os
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from pages.base_page import BasePage
 
 
@@ -15,30 +17,53 @@ class TiktokPage(BasePage):
         self.test_sites = test_sites
         self.timeout = 10
 
-    def twitter_signin(self, twitter_email, twitter_password):
-        self.driver.get(self.test_sites["tiktok_social"])
-        # wait = WebDriverWait(self.driver, self.timeout).until(
-        #     EC.presence_of_element_located((By.CSS_SELECTOR, '.header__loginMenu button[title="Sign in"]'))
-        # )
-        # signin_btn = self.driver.find_element(By.CSS_SELECTOR, '.header__loginMenu button[title="Sign in"]')
-        # signin_btn.click()
+    def tiktok_signin(self):
 
-        # time.sleep(3)
-        # wait = WebDriverWait(self.driver, self.timeout).until(
-        #     EC.presence_of_element_located((By.CSS_SELECTOR, '.modal.g-z-index-modal-background'))
-        # )
-        # signin_email_textbox = self.driver.find_element(By.ID, 'sign_in_up_email')
-        # signin_email_textbox.send_keys(soundcloud_email)
+        try:
+            self.wait_and_execute(
+                self.driver, (By.CSS_SELECTOR, 'button[data-e2e="top-login-button"]'), 10, lambda elem: elem.click())
+            self.wait_and_execute(
+                self.driver, (By.XPATH, "//p[contains(text(), 'Use phone / email / username')]"), 5,
+                lambda elem: elem.click())
+            self.wait_and_execute(
+                self.driver, (By.CSS_SELECTOR, 'a[href="/login/phone-or-email/email"]'), 5,
+                lambda elem: elem.click())
 
+            self.wait_and_execute(self.driver, (By.CSS_SELECTOR, 'input[name="username"]'),
+                                  20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
+
+            self.wait_and_execute(self.driver, (By.CSS_SELECTOR, 'input[name="username"]'),
+                                  20, lambda elem: elem.send_keys(Keys.DELETE))
+
+            self.wait_and_execute(
+                self.driver, (By.CSS_SELECTOR, 'input[name="username"]'), 5,
+                lambda elem: elem.send_keys(self.env_tiktok_username))
+
+            self.wait_and_execute(self.driver, (By.CSS_SELECTOR, 'input[placeholder="Password"]'),
+                                  20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
+
+            self.wait_and_execute(self.driver, (By.CSS_SELECTOR, 'input[placeholder="Password"]'),
+                                  20, lambda elem: elem.send_keys(Keys.DELETE))
+
+            self.wait_and_execute(
+                self.driver, (By.CSS_SELECTOR, 'input[placeholder="Password"]'), 5,
+                lambda elem: elem.send_keys(self.env_tiktok_password))
+
+            self.wait_and_execute(
+                self.driver, (By.CSS_SELECTOR, 'a+button[data-e2e="login-button"]'), 5,
+                lambda elem: elem.click())
+
+        except (NoSuchElementException, TimeoutException):
+            pass
     def run_tiktok_social(self,timeout=180):
         
         self.driver.get(self.test_sites["tiktok_social"])
-        
-        # self.load_cookies()
-        # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
+
+        self.tiktok_signin()
+
         self.logger(f'\nRunning Tiktok Social... \n')
 
-        self.timout_while_interact(timeout, True)
+        self.timout_while_interact(timeout)
      
 
    
