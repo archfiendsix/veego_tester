@@ -17,7 +17,7 @@ class SoundcloudPage(BasePage):
         self.actions = ActionChains(self.driver)
         self.test_sites = test_sites
         self.timeout = 10
-        self.header_sign_button_locator = (By.CSS_SELECTOR, '.loginButtons button[title="Sign in"]')
+        self.header_sign_button_locator = (By.CSS_SELECTOR, '.header__loginMenu button[title="Sign in"]')
         self.accept_cookies_button_locator = (By.ID, 'onetrust-accept-btn-handler')
         self.signin_email_textbox_locator = (By.CSS_SELECTOR, '#sign_in_up_email')
         self.signin_continue_button_locator = (By.CSS_SELECTOR, 'button[title="Continue"]')
@@ -26,38 +26,30 @@ class SoundcloudPage(BasePage):
 
     def soundcloud_signin(self):
 
-        # try:
-        #
-        #     # onetap_google_intermediate_iframe = self.driver.find_element(By.CSS_SELECTOR, "#onetap_google_intermediate_iframe")
-        #     # self.driver.switch_to.frame(onetap_google_intermediate_iframe)
-        #     self.wait_and_execute(self.driver, (By.CSS_SELECTOR, "#onetap_google_intermediate_iframe"),60, lambda elem: self.driver.switch_to.frame(elem))
-        #     gclosebutton = self.driver.find_element(By.CSS_SELECTOR, "#credentials-picker-container #close")
-        #     gclosebutton.click()
-        #
-        #     self.driver.switch_to.default_content()
-        # except(NoSuchElementException, TimeoutException):
-        #     pass
 
-        self.wait_and_execute(self.driver, self.header_sign_button_locator, 30, lambda elem: elem.click())
-        # time.sleep(3000)
-        # Find all iframes on the page
-        iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
+        try:
+            self.wait_and_execute(self.driver, self.header_sign_button_locator, 30, lambda elem: elem.click())
+            # time.sleep(3000)
+            # Find all iframes on the page
+            iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
 
-        # Iterate over each iframe
-        for iframe in iframes:
-            # Check if the src attribute includes the expected URL
-            if "https://secure.soundcloud.com/web-auth" in iframe.get_attribute("src"):
-                # Switch to the iframe
-                self.driver.switch_to.frame(iframe)
-                break  # Stop iterating over iframes once we have found the correct one
+            # Iterate over each iframe
+            for iframe in iframes:
+                # Check if the src attribute includes the expected URL
+                if "https://secure.soundcloud.com/web-auth" in iframe.get_attribute("src"):
+                    # Switch to the iframe
+                    self.driver.switch_to.frame(iframe)
+                    break  # Stop iterating over iframes once we have found the correct one
 
 
-        self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60,
-                              lambda elem:( elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE)))
-        self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60, lambda elem: elem.send_keys(self.env_soundcloud_email))
-        self.wait_and_execute(self.driver, self.signin_continue_button_locator, 30, lambda  elem: elem.click())
-        self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 30, lambda  elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE),elem.send_keys(self.env_soundcloud_password)))
-        self.wait_and_execute(self.driver, self.signin_signin_button_locator, 30, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60,
+                                  lambda elem:( elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE)))
+            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60, lambda elem: elem.send_keys(self.env_soundcloud_email))
+            self.wait_and_execute(self.driver, self.signin_continue_button_locator, 30, lambda  elem: elem.click())
+            self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 30, lambda  elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE),elem.send_keys(self.env_soundcloud_password)))
+            self.wait_and_execute(self.driver, self.signin_signin_button_locator, 30, lambda elem: elem.click())
+        except (NoSuchElementException, TimeoutException):
+            pass
         try:
             # Wait for the alert to appear
             alert = Alert(self.driver)
@@ -114,15 +106,10 @@ class SoundcloudPage(BasePage):
         # Load the Soundcloud upload page
         self.driver.maximize_window()
         self.driver.get(self.test_sites["soundcloud_upload"])
-
+        self.soundcloud_signin()
+        self.driver.get(self.test_sites["soundcloud_upload"])
         time.sleep(3)
 
-        # Handle cookies dialog if present
-        # save_cookies_accept_btn = self.driver.find_element(By.ID, "onetrust-accept-btn-handler")
-        # save_cookies_accept_btn.click()
-
-        # Sign in to Soundcloud if necessary
-        # self.soundcloud_signin(self.env_soundcloud_email, self.env_soundcloud_password)
 
         # Select the file to upload
         file_input_locator = (

@@ -41,6 +41,7 @@ class TwitterPage(BasePage):
     def run_twitter_social(self, timeout=180):
 
             self.driver.get(self.test_sites["twitter_social"])
+
             # time.sleep(3000)
             # try:
             #     sign_in_to_google_iframe_locator = (
@@ -60,13 +61,24 @@ class TwitterPage(BasePage):
             #
             # except (NoSuchElementException, TimeoutException):
             #
+            # try:
+            #     self.twitter_signin()
+            # except (NoSuchElementException, TimeoutException):
+            #     self.logger("Twitter Already Logged in")
             try:
-                self.twitter_signin()
-            except (NoSuchElementException, TimeoutException):
-                self.logger("Twitter Already Logged in")
+                signin_iframe_locator = (By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
+                signin_iframe = WebDriverWait(self.driver, 20).until(
+                    EC.presence_of_element_located(
+                        signin_iframe_locator)
+                )
 
+                self.driver.switch_to.frame(signin_iframe)
 
+                continue_as = (By.CSS_SELECTOR, '#continue-as')
 
+                self.wait_and_execute(self.driver, continue_as, 30, lambda elem: elem.click())
+            except(NoSuchElementException, TimeoutException):
+                pass
 
             # self.load_cookies()
             # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
