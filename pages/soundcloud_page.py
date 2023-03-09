@@ -66,15 +66,14 @@ class SoundcloudPage(BasePage):
 
 
         self.driver.get(self.test_sites["soundcloud_music"])
-        time.sleep(5)
         play_btn_locator = (
             By.CSS_SELECTOR, ".sc-button-play.playButton.sc-button.m-stretch")
 
-        self.wait_and_execute(self.driver, play_btn_locator, 30, lambda elem: elem.click())
+        self.wait_and_execute(self.driver, play_btn_locator, 5, lambda elem: elem.click())
 
         # time.sleep(10)
         try:
-            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 30, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
 
         except (NoSuchElementException, TimeoutException):
             pass

@@ -123,16 +123,16 @@ class Telemetry(BasePage):
 
                 # Check if service is correct and log message accordingly
                 if detected_service_name == service and detected_service_name == service:
-                    self.logger("\nPASS: Both type and name are correct\n\n")
+                    self.logger("PASS: Both type and name are correct\n\n")
                 elif detected_service_type == service_type and (not detected_service_name or detected_service_name == ''):
                     assert True
                     self.logger(
-                        "\nPartial PASS: Type is correct, name is empty\n\n")
+                        "Partial PASS: Type is correct, name is empty\n\n")
                 elif detected_service_type == service_type and detected_service_name != service:
                     self.logger(
-                        "\nFail: Type is correct, name is incorrect\n\n")
+                        "Fail: Type is correct, name is incorrect\n\n")
                 else:
-                    self.logger("\nFail: Type and/or name are incorrect\n\n")
+                    self.logger("Fail: Type and/or name are incorrect\n\n")
 
                 # Wait before trying to detect service again
                 self.switch_to_service_window(10)
