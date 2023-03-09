@@ -13,8 +13,10 @@ import keyboard
 # from playwright.sync_api import Page, expect
 from selenium.webdriver.chrome.options import Options
 import undetected_chromedriver as webdriver
+
 # from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from setup.test_setup import setup_test_environment
 from selenium.webdriver.chrome.service import Service
 from dotenv import load_dotenv
 from pages.microsoft_page import MicrosoftPage
@@ -32,77 +34,15 @@ from applications.bittorent import Bittorrent
 
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
-        # Load environment variables from .env file
-        # load_dotenv()
-
-        # Initialize the Chrome driver
-        chrome_driver_path = "./drivers/chromedriver"
-        driver_service = ChromeDriverManager().install()
 
         # Update download_dir and config_dir paths to be platform-independent
         download_dir = os.path.abspath(os.path.join(os.getcwd(), "downloads"))
         config_dir = os.path.abspath(os.path.join(os.getcwd(), "config.json"))
-        torrent_dir = os.path.abspath(os.path.join(os.getcwd(), "fixtures/"))
+        torrent_dir = os.path.abspath(os.path.join(os.getcwd(), "fixtures"))
         testsites_dir = os.path.abspath(os.path.join(
             os.getcwd(), "fixtures/test_sites.json"))
 
-        chrome_options = webdriver.ChromeOptions()
-        # prefs = {"download.default_directory": download_dir}
-        # chrome_options.add_experimental_option("prefs", prefs)
-        sessions_dir = os.path.abspath(os.path.join(os.getcwd(), "sessions"))
-        # sessions_dir = os.path.abspath(os.path.join(os.path.expanduser("~"), ".chrome_sessions"))
-        # Create the folder if it doesn't already exist
-        os.makedirs(sessions_dir, exist_ok=True)
-        for session_file in os.listdir(sessions_dir):
-            if session_file.endswith(".session"):
-                with open(os.path.join(sessions_dir, session_file), "r") as f:
-                    cookie_data = f.read().strip().split("\n")
-                    cookies = {}
-                    for line in cookie_data:
-                        name, value, domain, path, expires, secure, http_only = line.split("\t")
-                        cookies[name] = {
-                            "value": value,
-                            "domain": domain,
-                            "path": path,
-                            "expires": expires,
-                            "secure": secure,
-                            "httpOnly": http_only
-                        }
-                    for cookie in cookies.values():
-                        self.driver.add_cookie(cookie)
-        
-        chrome_options.add_argument(f"--user-data-dir={sessions_dir}")
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument("--disable-infobars")
-        chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--disable-popup-blocking")
-        chrome_options.add_experimental_option("prefs", {
-            "profile.default_content_setting_values.media_stream_mic": 1,
-            "profile.default_content_setting_values.media_stream_camera": 1,
-            "profile.default_content_setting_values.geolocation": 1,
-            "profile.default_content_setting_values.notifications": 1,
-            "credentials_enable_service": True
-        })
-
-        # driver_service = webdriver.chrome.service.Service(
-        #     ChromeDriverManager().install())
-
-        # self.driver = webdriver.Chrome(service=driver_service,
-        #                                executable_path=chrome_driver_path, options=chrome_options
-        #                                )
-
-        self.driver = webdriver.Chrome(options=chrome_options)
-
-        # Disable SSL warnings and set up logging
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(levelname)s : %(message)s",
-            handlers=[logging.StreamHandler()],
-        )
-        logging.getLogger().setLevel(logging.INFO)
+        self.driver = setup_test_environment()
 
         # Load configuration data and test site data from JSON files
         with open(config_dir, "r") as json_file:

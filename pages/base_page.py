@@ -39,13 +39,6 @@ class BasePage:
         self.env_messenger_password = os.getenv("MESSENGER_PASSWORD")
         self.env_facebook_email = os.getenv("FACEBOOK_EMAIL")
         self.env_facebook_password = os.getenv("FACEBOOK_PASSWORD")
-
-    def setup(self):
-        pass
-
-    def maximize_window(self):
-        self.driver.maximize_window()
-
     def dump_cookies(self):
         # with open("fixtures/cookies.pkl", "wb") as f:
         #     pickle.dump(self.driver.get_cookies(), f)
@@ -58,9 +51,8 @@ class BasePage:
             for cookie in cookies:
                 self.driver.add_cookie(cookie)
 
-    def timout_while_interact(self, timeout):
+    def try_interaction_thread(self):
         print("Interacting with page...")
-
         # define a function to do the scrolling
         def scroll_function(driver):
             scroll_direction = "down"
@@ -97,6 +89,38 @@ class BasePage:
 
         # join the threads to wait for them to finish (optional)
         scroll_thread.join()
+
+    def timout_while_interact(self, timeout):
+        print("Interacting with page...")
+        start_time = time.time()
+        scroll_direction = 'down'
+        while time.time() - start_time < timeout:
+
+            if scroll_direction == "down":
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, {scroll_amount});")
+            else:
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, -{scroll_amount});")
+            # time.sleep(random.randint(0, 1))  # wait for n seconds between scrolls
+            if scroll_direction == "down" and self.driver.execute_script(
+                    "return window.innerHeight + window.pageYOffset") >= self.driver.execute_script(
+                    "return document.body.scrollHeight"):
+                scroll_direction = "up"
+            elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
+                scroll_direction = "down"
+
+            #Control for Soundcloud Music
+            try:
+                time.sleep(random.randint(1, 3))
+                soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
+                self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 10, lambda elem: elem.click())
+            except (NoSuchElementException, TimeoutException):
+                pass
+
+
 
     def wait_and_execute(self, driver, locator, timeout, action):
         time.sleep(random.randint(1, 2))
