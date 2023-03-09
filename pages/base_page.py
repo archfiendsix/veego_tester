@@ -1,19 +1,14 @@
 import logging
-import urllib3
 import pickle
 import random
 import time
 import threading
-from selenium import webdriver
+import os
 from dotenv import load_dotenv
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-
-
-import os
 
 load_dotenv()
 class BasePage:

@@ -26,10 +26,9 @@ class SoundcloudPage(BasePage):
 
     def soundcloud_signin(self):
 
-
         try:
             self.wait_and_execute(self.driver, self.header_sign_button_locator, 30, lambda elem: elem.click())
-            # time.sleep(3000)
+
             # Find all iframes on the page
             iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
 

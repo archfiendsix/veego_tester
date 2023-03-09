@@ -1,4 +1,3 @@
-import time
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -80,7 +79,6 @@ class TwitterPage(BasePage):
             except(NoSuchElementException, TimeoutException):
                 pass
 
-            # self.load_cookies()
             # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
             self.logger(f'\nRunning Twitter Social... \n')
             self.timout_while_interact(timeout)

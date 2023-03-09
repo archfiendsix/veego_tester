@@ -16,8 +16,6 @@ class MicrosoftPage(BasePage):
         self.test_sites = test_sites
         self.timeout = 10
 
-   
-
     def run_microsoft_download(self, timeout=180):
         
         self.driver.get(self.test_sites["microsoft_download"])

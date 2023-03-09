@@ -22,12 +22,6 @@ class MessengerPage(BasePage):
     def run_messenger_conference(self, timeout=180):
         self.logger(f'\nStarting Messenger Conferencing test... \n')
 
-
-
-        # time.sleep(3000)
-
-
-
         try:
             print("Detecting Login State...")
             self.driver.get(self.test_sites["messenger_caller"])
@@ -35,7 +29,6 @@ class MessengerPage(BasePage):
             self.wait_and_execute(self.driver, self.messenger_password_texbox_locator, 10, lambda elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE), elem.send_keys(self.env_messenger_password)))
             self.wait_and_execute(self.driver,self.keep_me_signed_in_label, 10, lambda elem:elem.click())
             self.wait_and_execute(self.driver, self.messenger_continue_button_locator, 10, lambda elem: elem.click())
-
 
         except (NoSuchElementException, TimeoutException):
             print("User already logged in")
@@ -50,8 +43,6 @@ class MessengerPage(BasePage):
             self.wait_and_execute(self.driver, self.messenger_password_texbox_locator, 30, lambda elem: (
                 elem.click(), elem.send_keys(Keys.CONTROL + "a"), elem.send_keys(Keys.DELETE),
                 elem.send_keys(self.env_facebook_password)))
-            # time.sleep(3000)
-            # self.wait_and_execute(self.driver, self.keep_me_signed_in_label, 30, lambda elem: elem.click())
             self.wait_and_execute(self.driver, self.messenger_continue_button_locator, 30, lambda elem: elem.click())
         except (NoSuchElementException, TimeoutException):
             print("User already logged in")
@@ -77,8 +68,6 @@ class MessengerPage(BasePage):
         action_chains = ActionChains(self.driver)
         action_chains.key_down(Keys.CONTROL).click(start_conference_button).key_up(Keys.CONTROL).perform()
         self.driver.switch_to.window(self.driver.window_handles[-1])
-
-
 
         self.driver.switch_to.window(self.driver.window_handles[-2])
         self.driver.get(self.test_sites["messenger_receiver"])

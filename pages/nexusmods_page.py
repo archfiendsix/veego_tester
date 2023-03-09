@@ -16,15 +16,13 @@ class NexusModsPage(BasePage):
         self.timeout = 10
         self.nav_login_button_locator = By.CLASS_NAME, "replaced-login-link"
 
-    def nexusmods_signin(self, nexumods_email, nexusmods_password):
+    def nexusmods_signin(self):
 
         self.driver.maximize_window()
-        # jjk = input('Enter')
 
         time.sleep(60)
 
     def run_nexusmods_download(self, timeout=180):
-        # self.nexusmods_signin(self.env_nexusmods_email, self.env_nexusmods_password)
 
         self.driver.get(self.test_sites["nexusmods_download"])
 

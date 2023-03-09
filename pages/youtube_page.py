@@ -1,5 +1,4 @@
 import time
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -53,19 +52,19 @@ class YoutubePage(BasePage):
 
     def delete_video_download(self):
         self.logger("\nVideo Already Downloaded. Deleting download...")
-        downloadedButton_locator = (
+        download_button_locator = (
             By.CSS_SELECTOR, 'button[aria-label="Downloaded"]')
-        downloadedButton = WebDriverWait(self.driver, 5).until(
+        download_button = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(
-                downloadedButton_locator)
+                download_button_locator)
         )
-        downloadedButton.click()
-        dialogDelete_locator = (By.CSS_SELECTOR, 'button[aria-label="Delete"]')
-        dialogDelete = WebDriverWait(self.driver, 5).until(
+        download_button.click()
+        dialog_delete_locator = (By.CSS_SELECTOR, 'button[aria-label="Delete"]')
+        dialog_delete = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(
-                dialogDelete_locator)
+                dialog_delete_locator)
         )
-        dialogDelete.click()
+        dialog_delete.click()
 
     def run_youtube_download(self, timeout=180):
 
