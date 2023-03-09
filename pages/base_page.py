@@ -61,35 +61,35 @@ class BasePage:
 
     def timout_while_interact(self, timeout):
 
-        if "twitter" in self.driver.current_url or "tiktok" in self.driver.current_url or "soundcloud" in self.driver.current_url:
-            # Set the initial scrolling direction to "down"
-            scroll_direction = "down"
+        # if "twitter" in self.driver.current_url or "tiktok" in self.driver.current_url or "soundcloud" in self.driver.current_url:
+        # Set the initial scrolling direction to "down"
+        scroll_direction = "down"
 
-            # Scroll the page alternately up and down by random amounts for 3.5 seconds
-            start_time = time.time()
-            while time.time() - start_time < timeout:
-                try:
-                    time.sleep(random.randint(1, 3))
-                    soundcloud_skip_button_locator= (By.CSS_SELECTOR, ".skipControl__next")
-                    self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 20, lambda elem: elem.click())
-                except (NoSuchElementException, TimeoutException):
-                    pass
+        # Scroll the page alternately up and down by random amounts for 3.5 seconds
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            try:
+                time.sleep(random.randint(1, 3))
+                soundcloud_skip_button_locator= (By.CSS_SELECTOR, ".skipControl__next")
+                self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 20, lambda elem: elem.click())
+            except (NoSuchElementException, TimeoutException):
+                pass
 
-                if scroll_direction == "down":
-                    scroll_amount = random.randint(500, 1000)
-                    self.driver.execute_script(
-                        f"window.scrollBy(0, {scroll_amount});")
-                else:
-                    scroll_amount = random.randint(500, 1000)
-                    self.driver.execute_script(
-                        f"window.scrollBy(0, -{scroll_amount});")
-                time.sleep(random.randint(1, 2))  # wait for n seconds between scrolls
-                if scroll_direction == "down" and self.driver.execute_script("return window.innerHeight + window.pageYOffset") >= self.driver.execute_script("return document.body.scrollHeight"):
-                    scroll_direction = "up"
-                elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
-                    scroll_direction = "down"
-        else:
-            time.sleep(timeout)
+            if scroll_direction == "down":
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, {scroll_amount});")
+            else:
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, -{scroll_amount});")
+            time.sleep(random.randint(1, 2))  # wait for n seconds between scrolls
+            if scroll_direction == "down" and self.driver.execute_script("return window.innerHeight + window.pageYOffset") >= self.driver.execute_script("return document.body.scrollHeight"):
+                scroll_direction = "up"
+            elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
+                scroll_direction = "down"
+        # else:
+        #     time.sleep(timeout)
 
     def wait_and_execute(self, driver, locator, timeout, action):
         time.sleep(random.randint(1, 2))
