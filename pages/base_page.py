@@ -52,7 +52,7 @@ class BasePage:
                 self.driver.add_cookie(cookie)
 
     def try_interaction_thread(self):
-        print("Interacting with page...")
+        print("Interacting with page...\n")
         # define a function to do the scrolling
         def scroll_function(driver):
             scroll_direction = "down"
