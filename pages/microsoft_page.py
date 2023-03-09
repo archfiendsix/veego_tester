@@ -53,6 +53,6 @@ class MicrosoftPage(BasePage):
         final_download_btn = self.driver.find_element(By.XPATH, '//*[@id="card-info-content"]/div/div/div/a')
         final_download_btn.click()
         self.logger(f'\nMicrosoft download started... \n')
-        time.sleep(timeout)
+        self.timout_while_interact(timeout)
 
    
