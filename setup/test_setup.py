@@ -19,7 +19,6 @@ def setup_test_environment():
     chrome_options.add_argument(f"--user-data-dir={sessions_dir}")
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-popup-blocking")

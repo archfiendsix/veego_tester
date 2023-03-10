@@ -68,7 +68,6 @@ class YoutubePage(BasePage):
 
     def run_youtube_download(self, timeout=180):
 
-        self.driver.maximize_window()
 
         self.driver.get(self.test_sites["youtube_download"])
 

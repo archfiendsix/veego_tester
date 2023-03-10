@@ -21,6 +21,8 @@ downloads/
 *.swp
 .DS_Store
 .idea/
+*.exe
+*.iso
 
 allure-results/
 allure-report/
