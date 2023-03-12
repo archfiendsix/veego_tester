@@ -1,14 +1,7 @@
-import time
-import asyncio
-import sys
+
 import os
 import pyautogui
-import win32com.client
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException
+
 from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
