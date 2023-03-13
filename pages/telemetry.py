@@ -144,7 +144,7 @@ class Telemetry(BasePage):
 
             # Print message if service is not detected within the allowed time
             total_testing_time = datetime.utcnow() - detection_time
-            if total_testing_time.total_seconds() >= 360:
+            if total_testing_time.total_seconds() >= 360 and not service:
                 total_testing_time = total_testing_time / 60
                 self.logger(
                     f"No {service} service recognized for the past {total_testing_time} minutes\n")

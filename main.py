@@ -71,10 +71,10 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
     #
-    def test_nexusmods_download(self):
-        self.nexusmods_page.run_nexusmods_download(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
+    # def test_nexusmods_download(self):
+    #     self.nexusmods_page.run_nexusmods_download(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
 
     # def test_soundcloud_music(self):
     #     self.soundcloud_page.run_soundcloud_music(180)
@@ -96,10 +96,10 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
     #
-    # def test_youtube_streaming(self):
-    #     self.youtube_page.run_youtube_streaming(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+    def test_youtube_streaming(self):
+        self.youtube_page.run_youtube_streaming(180)
+        self.telemetry.run_telemetry()
+        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
     #
     # def test_youtube_download(self):
     #     self.youtube_page.run_youtube_download(180)
