@@ -28,6 +28,7 @@ class YoutubePage(BasePage):
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, "#movie_player.paused-mode"))
             )
+            self.actions.send_keys('0').perform()
             self.actions.send_keys('k').perform()
         except (NoSuchElementException, TimeoutException):
             # Elements not found, so the user is probably already signed in
