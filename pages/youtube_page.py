@@ -1,5 +1,6 @@
 import time
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -16,7 +17,6 @@ class YoutubePage(BasePage):
 
     def run_youtube_streaming(self, timeout=180):
 
-        self.driver.maximize_window()
 
         self.driver.get(self.test_sites['youtube_streaming'])
 
@@ -28,14 +28,14 @@ class YoutubePage(BasePage):
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, "#movie_player.paused-mode"))
             )
-            self.actions.send_keys('0').perform()
+            self.actions.send_keys(Keys.SHIFT + "n").perform()
             self.actions.send_keys('k').perform()
         except (NoSuchElementException, TimeoutException):
             # Elements not found, so the user is probably already signed in
             pass
 
         self.logger(f'\nPlaying Youtube video... \n')
-
+        self.actions.send_keys(Keys.SHIFT + "n").perform()
         self.timout_while_interact(timeout)
         # 180
 
