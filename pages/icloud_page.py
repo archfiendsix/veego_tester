@@ -86,7 +86,7 @@ class IcloudPage(BasePage):
                 self.browseButton_locator)
 
         )
-        browse_button.click()
+        browseButton.click()
 
         try:
             first_file_locator = (
@@ -123,6 +123,7 @@ class IcloudPage(BasePage):
                 By.CSS_SELECTOR, ".alert-button-container .cw-button.primary.destructive")
 
             self.wait_and_execute(self.driver, popup_delete_button_locator, 5, lambda elem: elem.click())
+            self.actions.send_keys(Keys.ENTER).perform()
 
         except (NoSuchElementException, TimeoutException, ElementClickInterceptedException):
             print("No Recent Files to delete.")
@@ -142,16 +143,16 @@ class IcloudPage(BasePage):
 
 
 
-        self.driver.get(self.test_sites["icloud_upload"])
+        # self.driver.get(self.test_sites["icloud_upload"])
         time.sleep(5)
         # find the iframe element
-        iframe = WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located(
-                self.iclouddrive_iframe_locator)
-        )
+        # iframe = WebDriverWait(self.driver, 20).until(
+        #     EC.presence_of_element_located(
+        #         self.iclouddrive_iframe_locator)
+        # )
 
         # switch to the iframe
-        self.driver.switch_to.frame(iframe)
+        # self.driver.switch_to.frame(iframe)
 
 
 
@@ -159,7 +160,7 @@ class IcloudPage(BasePage):
             EC.presence_of_element_located(
                 self.browseButton_locator)
         )
-        browse_button.click()
+        browseButton.click()
 
         input_element_locator = (By.CSS_SELECTOR, '.upload-input-element')
         input_element = WebDriverWait(self.driver, 20).until(
@@ -197,13 +198,9 @@ class IcloudPage(BasePage):
 
 
 
-        browseButton = WebDriverWait(self.driver, 60).until(
-            EC.presence_of_element_located(
-                self.browseButton_locator)
-        )
 
-        # browse_button = self.driver.find_element(By.XPATH, "//span[contains(text(), 'Browse')]")
-        browse_button.click()
+
+        self.wait_and_execute(self.driver,self.browseButton_locator, 10, lambda elem: elem.click())
 
         first_file_locator = (
             By.XPATH, "//span[contains(text(), 'gparted')]")

@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 load_dotenv()
@@ -15,7 +16,7 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver,
         self.timeout = 10
-
+        self.actions = ActionChains(self.driver)
 
         # Set environment variables
         self.env_username = os.getenv("VEEGO_USERNAME")

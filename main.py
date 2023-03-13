@@ -55,12 +55,11 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
     #
     #  Needs subscription to upload/download more files
-    def test_icloud_upload(self):
-    # Test uploading a file to iCloud
-    # Sign in script requires text code authentication. Must login manually.
-        self.icloud_page.run_icloud_upload(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
+    # def test_icloud_upload(self):
+    # # Sign in script requires text code authentication. Must login manually.
+    #     self.icloud_page.run_icloud_upload(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
     #
     # def test_messenger_conference(self):
     #     self.messenger_page.run_messenger_conference(180)
@@ -72,40 +71,40 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
     #
-    # def test_nexusmods_download(self):
-    #     self.nexusmods_page.run_nexusmods_download(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
+    def test_nexusmods_download(self):
+        self.nexusmods_page.run_nexusmods_download(180)
+        self.telemetry.run_telemetry()
+        self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
 
     # def test_soundcloud_music(self):
     #     self.soundcloud_page.run_soundcloud_music(180)
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True)
 
-    def test_soundcloud_upload(self):
-        self.soundcloud_page.run_soundcloud_upload(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
+    # def test_soundcloud_upload(self):
+    #     self.soundcloud_page.run_soundcloud_upload(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
 
-    def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
+    # def test_tiktok_social(self):
+    #     self.tiktok_page.run_tiktok_social(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
 
-    def test_twitter_social(self):
-        self.twitter_page.run_twitter_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
-
-    def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
-
-    def test_youtube_download(self):
-        self.youtube_page.run_youtube_download(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
+    # def test_twitter_social(self):
+    #     self.twitter_page.run_twitter_social(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
+    #
+    # def test_youtube_streaming(self):
+    #     self.youtube_page.run_youtube_streaming(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+    #
+    # def test_youtube_download(self):
+    #     self.youtube_page.run_youtube_download(180)
+    #     self.telemetry.run_telemetry()
+    #     self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
 
     # def test_bittorrent_download(self):
     #

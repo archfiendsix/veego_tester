@@ -28,7 +28,6 @@ class YoutubePage(BasePage):
                 EC.presence_of_element_located(
                     (By.CSS_SELECTOR, "#movie_player.paused-mode"))
             )
-            # Check if the login textbox is already populated with the correct value
             self.actions.send_keys('k').perform()
         except (NoSuchElementException, TimeoutException):
             # Elements not found, so the user is probably already signed in

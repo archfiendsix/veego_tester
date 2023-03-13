@@ -27,7 +27,6 @@ class NexusModsPage(BasePage):
         self.driver.get(self.test_sites["nexusmods_download"])
 
         self.driver.maximize_window()
-
         download_button_locator = (By.CSS_SELECTOR, '#slowDownloadButton')
         download_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(download_button_locator)

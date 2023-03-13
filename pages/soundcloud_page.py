@@ -65,17 +65,21 @@ class SoundcloudPage(BasePage):
 
 
         self.driver.get(self.test_sites["soundcloud_music"])
+
+        try:
+            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
+
+        except (NoSuchElementException, TimeoutException):
+            pass
+
+
         play_btn_locator = (
             By.CSS_SELECTOR, ".sc-button-play.playButton.sc-button.m-stretch")
 
         self.wait_and_execute(self.driver, play_btn_locator, 5, lambda elem: elem.click())
 
         # time.sleep(10)
-        try:
-            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
 
-        except (NoSuchElementException, TimeoutException):
-            pass
 
         # self.soundcloud_signin()
         try:
@@ -102,8 +106,12 @@ class SoundcloudPage(BasePage):
         self.logger('Starting Soundcloud upload test...')
 
         # Load the Soundcloud upload page
-        self.driver.maximize_window()
         self.driver.get(self.test_sites["soundcloud_upload"])
+        try:
+            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
+
+        except (NoSuchElementException, TimeoutException):
+            pass
         self.soundcloud_signin()
         self.driver.get(self.test_sites["soundcloud_upload"])
         time.sleep(3)
