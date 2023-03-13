@@ -35,7 +35,8 @@ class YoutubePage(BasePage):
             pass
 
         self.logger(f'\nPlaying Youtube video... \n')
-        self.actions.send_keys("0").perform()
+        body_locator = (By.CSS_SELECTOR, 'body')
+        self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys("0"))
         self.timout_while_interact(timeout)
         # 180
 
