@@ -96,15 +96,15 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry()
     #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
     #
-    def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
-    #
-    # def test_youtube_download(self):
-    #     self.youtube_page.run_youtube_download(180)
+    # def test_youtube_streaming(self):
+    #     self.youtube_page.run_youtube_streaming(180)
     #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
+    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+    #
+    def test_youtube_download(self):
+        self.youtube_page.run_youtube_download(180)
+        self.telemetry.run_telemetry()
+        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
 
     # def test_bittorrent_download(self):
     #

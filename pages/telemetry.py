@@ -54,8 +54,7 @@ class Telemetry(BasePage):
     def switch_to_service_window(self, timeout):
         # Get the list of window handles
         window_handles = self.driver.window_handles
-        # print(f'{window_handles}')
-        
+
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
