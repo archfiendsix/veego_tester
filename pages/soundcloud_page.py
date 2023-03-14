@@ -66,6 +66,7 @@ class SoundcloudPage(BasePage):
     def interaction(self, timeout):
         # Control for Soundcloud Music
         # Get the list of window handles
+        self.driver.switch_to.window(self.driver.window_handles[0])
         window_handles = self.driver.window_handles
 
         # Iterate over the window handles and switch to the one with the desired title

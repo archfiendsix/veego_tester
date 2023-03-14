@@ -18,6 +18,7 @@ class MicrosoftPage(BasePage):
 
     def interaction(self, timeout=180):
         print("Interacting with page...")
+        self.driver.switch_to.window(self.driver.window_handles[0])
         time.sleep(timeout)
     def run_microsoft_download(self, timeout=180):
         
