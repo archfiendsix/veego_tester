@@ -18,6 +18,7 @@ class Telemetry(BasePage):
 
     # Define the login method
     def run_telemetry(self):
+        self.logger("Starting Telemetry...")
         self.driver.switch_to.new_window('tab')
         self.driver.get(
             self.config_data["telemetry"]+self.config_data["router_id"])
@@ -61,10 +62,10 @@ class Telemetry(BasePage):
             
             if self.driver.title == "Messenger call":
                 break
-        else:
-            self.driver.switch_to.window(self.driver.window_handles[0])
+            else:
+                self.driver.switch_to.window(self.driver.window_handles[0])
 
-        self.timout_while_interact(timeout)
+
 
     def return_page_service_items(self, name, type, is_classification_final):
         # Switch to telemetry Window
@@ -88,8 +89,9 @@ class Telemetry(BasePage):
 
         return service_items
 
-    def run_telemetry_test(self, service, service_type, classification_final):
+    def run_telemetry_test(self, service, service_type, classification_final, interaction):
 
+        self.run_telemetry()
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
@@ -129,7 +131,7 @@ class Telemetry(BasePage):
                     self.logger("Fail: Type and/or name are incorrect\n\n")
 
                 # Wait before trying to detect service again
-                self.switch_to_service_window(10)
+                interaction(10)
 
                 # Check if maximum runtime has been reached and exit if it has
                 if (datetime.utcnow() - detection_time).total_seconds() > max_runtime:

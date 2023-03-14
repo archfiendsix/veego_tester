@@ -1,5 +1,6 @@
 import time
 import os
+import random
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -27,7 +28,7 @@ class SoundcloudPage(BasePage):
     def soundcloud_signin(self):
 
         try:
-            self.wait_and_execute(self.driver, self.header_sign_button_locator, 30, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, self.header_sign_button_locator, 5, lambda elem: elem.click())
 
             # Find all iframes on the page
             iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
@@ -41,18 +42,18 @@ class SoundcloudPage(BasePage):
                     break  # Stop iterating over iframes once we have found the correct one
 
 
-            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60,
+            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5,
                                   lambda elem:( elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE)))
-            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 60, lambda elem: elem.send_keys(self.env_soundcloud_email))
-            self.wait_and_execute(self.driver, self.signin_continue_button_locator, 30, lambda  elem: elem.click())
-            self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 30, lambda  elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE),elem.send_keys(self.env_soundcloud_password)))
-            self.wait_and_execute(self.driver, self.signin_signin_button_locator, 30, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5, lambda elem: elem.send_keys(self.env_soundcloud_email))
+            self.wait_and_execute(self.driver, self.signin_continue_button_locator, 5, lambda  elem: elem.click())
+            self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 5, lambda  elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE),elem.send_keys(self.env_soundcloud_password)))
+            self.wait_and_execute(self.driver, self.signin_signin_button_locator, 5, lambda elem: elem.click())
         except (NoSuchElementException, TimeoutException):
             pass
         try:
             # Wait for the alert to appear
             alert = Alert(self.driver)
-            alert = WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            alert = WebDriverWait(self.driver, 5).until(EC.alert_is_present())
 
             # Switch to the alert box and click the "Save" button
             alert.accept()
@@ -61,8 +62,29 @@ class SoundcloudPage(BasePage):
             pass
 
         self.driver.switch_to.default_content()
-    def run_soundcloud_music(self, timeout=180):
 
+    def interaction(self, timeout):
+        # Control for Soundcloud Music
+        # Get the list of window handles
+        window_handles = self.driver.window_handles
+
+        # Iterate over the window handles and switch to the one with the desired title
+        for handle in window_handles:
+            self.driver.switch_to.window(handle)
+
+            if self.driver.title == "Messenger call":
+                break
+            else:
+                self.driver.switch_to.window(self.driver.window_handles[0])
+
+
+        try:
+            time.sleep(random.randint(1, timeout/2))
+            soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
+            self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 5, lambda elem: elem.click())
+        except (NoSuchElementException, TimeoutException):
+            pass
+    def run_soundcloud_music(self, timeout=180):
 
         self.driver.get(self.test_sites["soundcloud_music"])
 
@@ -78,10 +100,8 @@ class SoundcloudPage(BasePage):
 
         self.wait_and_execute(self.driver, play_btn_locator, 5, lambda elem: elem.click())
 
-        # time.sleep(10)
 
 
-        # self.soundcloud_signin()
         try:
             self.soundcloud_signin()
         except (NoSuchElementException, TimeoutException):
@@ -92,15 +112,14 @@ class SoundcloudPage(BasePage):
             play_btn_locator = (
                 By.CSS_SELECTOR, ".sc-button-play.playButton.sc-button.m-stretch")
 
-            self.wait_and_execute(self.driver,play_btn_locator,20,lambda elem: elem.click())
-
+            self.wait_and_execute(self.driver,play_btn_locator,5,lambda elem: elem.click())
 
 
         except StaleElementReferenceException:
             pass
 
         self.logger(f'\nStarting Soundcloud play test... \n')
-        self.timout_while_interact(timeout)
+        self.interaction(timeout)
 
     def run_soundcloud_upload(self, timeout=180):
         self.logger('Starting Soundcloud upload test...')
@@ -120,22 +139,20 @@ class SoundcloudPage(BasePage):
         # Select the file to upload
         file_input_locator = (
             By.CSS_SELECTOR, ".chooseFiles .chooseFiles__input")
-        file_upload_input = WebDriverWait(self.driver, 10).until(
+        file_upload_input = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(file_input_locator)
         )
         file_path = os.path.abspath("fixtures/upload_files/music.mp3")
         file_upload_input.send_keys(file_path)
 
         save_button_locator = (By.CSS_SELECTOR, 'button[title="Save"]')
-        save_button = WebDriverWait(self.driver, 10).until(
+        save_button = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(save_button_locator)
         )
         self.driver.execute_script(
             "arguments[0].scrollIntoView();", save_button)
         save_button.click()
-        # self.dump_cookies()
-        # self.load_cookies()
         # Wait for the upload to complete
         time.sleep(timeout)
 
-        # 180
+        

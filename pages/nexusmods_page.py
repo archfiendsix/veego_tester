@@ -14,7 +14,8 @@ class NexusModsPage(BasePage):
         self.actions = ActionChains(self.driver)
         self.test_sites = test_sites
         self.timeout = 10
-        self.nav_login_button_locator = By.CLASS_NAME, "replaced-login-link"
+        self.nav_login_button_locator = (By.CLASS_NAME, "replaced-login-link")
+        self.download_button_locator = (By.CSS_SELECTOR, '#slowDownloadButton')
 
     def nexusmods_signin(self):
 
@@ -22,16 +23,14 @@ class NexusModsPage(BasePage):
 
         time.sleep(60)
 
-    def run_nexusmods_download(self, timeout=180):
+    def interaction(self, timeout):
+        self.random_scroll(timeout)
 
+    def run_nexusmods_download(self, timeout=180):
         self.driver.get(self.test_sites["nexusmods_download"])
 
-        self.driver.maximize_window()
-        download_button_locator = (By.CSS_SELECTOR, '#slowDownloadButton')
-        download_button = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(download_button_locator)
-        )
-        download_button.click()
+        self.wait_and_execute(self.driver,self.download_button_locator,5,lambda elem:elem.click())
 
         self.logger(f'\nStarting Nexus Mods Download test... \n')
-        time.sleep(timeout)
+
+        self.interaction(timeout)

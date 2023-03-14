@@ -48,63 +48,51 @@ class TelemetryTest(unittest.TestCase):
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
-    # def test_icloud_download(self):
-    #     #Sign in script requires text code authentication. Must login manually.
-    #     self.icloud_page.run_icloud_download(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
+    def test_icloud_download(self):
+        #Sign in script requires text code authentication. Must login manually.
+        self.icloud_page.run_icloud_download(180)
+        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.icloud_page.interaction)
     #
     #  Needs subscription to upload/download more files
     # def test_icloud_upload(self):
-    # # Sign in script requires text code authentication. Must login manually.
     #     self.icloud_page.run_icloud_upload(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True)
+    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
     #
     # def test_messenger_conference(self):
     #     self.messenger_page.run_messenger_conference(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True)
+    #     self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True, self.messenger_page.interaction)
     #
     # def test_microsoft_download(self):
     #     self.microsoft_page.run_microsoft_download(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True)
+    #     self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.microsoft_page.interaction)
     #
     # def test_nexusmods_download(self):
     #     self.nexusmods_page.run_nexusmods_download(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True)
+    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True, self.nexusmods_page.interaction)
 
     # def test_soundcloud_music(self):
     #     self.soundcloud_page.run_soundcloud_music(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True)
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True, self.soundcloud_page.interaction)
 
     # def test_soundcloud_upload(self):
     #     self.soundcloud_page.run_soundcloud_upload(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True)
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
 
-    def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry()
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True)
+    # def test_tiktok_social(self):
+    #     self.tiktok_page.run_tiktok_social(180)
+    #     self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True,self.tiktok_page.interaction)
 
     # def test_twitter_social(self):
     #     self.twitter_page.run_twitter_social(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True)
+    #     self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction)
     #
     # def test_youtube_streaming(self):
     #     self.youtube_page.run_youtube_streaming(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True)
+    #     self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
     #
     # def test_youtube_download(self):
     #     self.youtube_page.run_youtube_download(180)
-    #     self.telemetry.run_telemetry()
-    #     self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True)
+    #     self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction)
 
     # def test_bittorrent_download(self):
     #

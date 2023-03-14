@@ -1,3 +1,4 @@
+import time
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -22,21 +23,22 @@ class TwitterPage(BasePage):
         #     self.driver, (By.CSS_SELECTOR, 'a[data-testid="loginButton"]'), 10, lambda elem: elem.click())
         # time.sleep(3000)
         self.wait_and_execute(
-            self.driver, (By.CSS_SELECTOR, 'input[autocomplete="username"]'), 30,
+            self.driver, (By.CSS_SELECTOR, 'input[autocomplete="username"]'), 5,
             lambda elem: elem.send_keys(self.env_twitter_email))
 
         self.wait_and_execute(
-            self.driver, (By.XPATH, "//span[contains(text(), 'Next')]"), 30,
+            self.driver, (By.XPATH, "//span[contains(text(), 'Next')]"), 5,
             lambda elem: elem.click())
 
         self.wait_and_execute(
-            self.driver, (By.CSS_SELECTOR, 'input[type="password"]'), 10,
+            self.driver, (By.CSS_SELECTOR, 'input[type="password"]'), 5,
             lambda elem: elem.send_keys(self.env_twitter_password))
 
         self.wait_and_execute(
-            self.driver, (By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]'), 10, lambda elem: elem.click())
+            self.driver, (By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]'), 5, lambda elem: elem.click())
 
-
+    def interaction(self, timeout=180):
+        self.random_scroll(timeout)
     def run_twitter_social(self, timeout=180):
 
             self.driver.get(self.test_sites["twitter_social"])
@@ -66,7 +68,7 @@ class TwitterPage(BasePage):
             #     self.logger("Twitter Already Logged in")
             try:
                 signin_iframe_locator = (By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
-                signin_iframe = WebDriverWait(self.driver, 20).until(
+                signin_iframe = WebDriverWait(self.driver, 5).until(
                     EC.presence_of_element_located(
                         signin_iframe_locator)
                 )
@@ -75,10 +77,10 @@ class TwitterPage(BasePage):
 
                 continue_as = (By.CSS_SELECTOR, '#continue-as')
 
-                self.wait_and_execute(self.driver, continue_as, 30, lambda elem: elem.click())
+                self.wait_and_execute(self.driver, continue_as, 5, lambda elem: elem.click())
             except(NoSuchElementException, TimeoutException):
                 pass
 
             # self.twitter_signin(self.env_twitter_email, self.env_twitter_password)
             self.logger(f'\nRunning Twitter Social... \n')
-            self.timout_while_interact(timeout)
+            self.interaction(timeout)

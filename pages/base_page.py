@@ -85,7 +85,26 @@ class BasePage:
 
         # join the threads to wait for them to finish (optional)
         scroll_thread.join()
+    def random_scroll(self,timeout):
+        start_time = time.time()
+        scroll_direction = 'down'
+        while time.time() - start_time < timeout:
 
+            if scroll_direction == "down":
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, {scroll_amount});")
+            else:
+                scroll_amount = random.randint(500, 1000)
+                self.driver.execute_script(
+                    f"window.scrollBy(0, -{scroll_amount});")
+            time.sleep(random.randint(1, 3))  # wait for n seconds between scrolls
+            if scroll_direction == "down" and self.driver.execute_script(
+                    "return window.innerHeight + window.pageYOffset") >= self.driver.execute_script(
+                "return document.body.scrollHeight"):
+                scroll_direction = "up"
+            elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
+                scroll_direction = "down"
     def timout_while_interact(self, timeout):
         print("Interacting with page...")
         start_time = time.time()

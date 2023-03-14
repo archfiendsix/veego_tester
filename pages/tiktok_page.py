@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -14,10 +16,10 @@ class TiktokPage(BasePage):
         self.timeout = 10
 
     def tiktok_signin(self):
-
         try:
             self.wait_and_execute(
-                self.driver, (By.CSS_SELECTOR, 'button[data-e2e="top-login-button"]'), 10, lambda elem: elem.click())
+                self.driver, (By.CSS_SELECTOR, 'button[data-e2e="top-login-button"]'), 5, lambda elem: elem.click())
+            # time.sleep(3000)
             self.wait_and_execute(
                 self.driver, (By.XPATH, "//p[contains(text(), 'Use phone / email / username')]"), 5,
                 lambda elem: elem.click())
@@ -51,7 +53,8 @@ class TiktokPage(BasePage):
 
         except (NoSuchElementException, TimeoutException):
             pass
-
+    def interaction(self,timeout=180):
+        self.random_scroll(timeout)
     def run_tiktok_social(self,timeout=180):
         
         self.driver.get(self.test_sites["tiktok_social"])
@@ -60,7 +63,7 @@ class TiktokPage(BasePage):
 
         self.logger(f'\nRunning Tiktok Social... \n')
 
-        self.timout_while_interact(timeout)
+        self.interaction(timeout)
      
 
    

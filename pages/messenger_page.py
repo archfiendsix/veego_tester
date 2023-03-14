@@ -85,5 +85,15 @@ class MessengerPage(BasePage):
 
         self.driver.switch_to.window(self.driver.window_handles[-2])
         self.logger(f'\nMessenger Conferencing started... \n')
-        time.sleep(timeout)
-        
+        self.interaction(timeout)
+
+    def interaction(self, timeout):
+
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            self.random_scroll(timeout*.20)
+            time.sleep(timeout*.20)
+            self.driver.switch_to.window(self.driver.window_handles[3])
+            self.random_scroll(timeout * .20)
+            time.sleep(timeout * .20)

@@ -16,6 +16,9 @@ class MicrosoftPage(BasePage):
         self.test_sites = test_sites
         self.timeout = 10
 
+    def interaction(self, timeout=180):
+        print("Interacting with page...")
+        time.sleep(timeout)
     def run_microsoft_download(self, timeout=180):
         
         self.driver.get(self.test_sites["microsoft_download"])
@@ -51,6 +54,6 @@ class MicrosoftPage(BasePage):
         final_download_btn = self.driver.find_element(By.XPATH, '//*[@id="card-info-content"]/div/div/div/a')
         final_download_btn.click()
         self.logger(f'\nMicrosoft download started... \n')
-        self.timout_while_interact(timeout)
+        self.interaction(timeout)
 
    
