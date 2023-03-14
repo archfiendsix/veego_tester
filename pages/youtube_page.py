@@ -101,4 +101,4 @@ class YoutubePage(BasePage):
         #     self.actions.send_keys('k').perform()
 
 
-        self.interaction(timeout)
+        self.interaction_download(timeout)
