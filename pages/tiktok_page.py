@@ -8,7 +8,7 @@ from pages.base_page import BasePage
 
 
 class TiktokPage(BasePage):
-    def __init__(self, driver, test_sites):     
+    def __init__(self, driver, test_sites):
         super().__init__(driver)
         self.driver = driver
         self.actions = ActionChains(self.driver)
@@ -53,11 +53,13 @@ class TiktokPage(BasePage):
 
         except (NoSuchElementException, TimeoutException):
             pass
-    def interaction(self,timeout=180):
+
+    def interaction(self, timeout=180):
         self.driver.switch_to.window(self.driver.window_handles[-1])
         self.random_scroll(timeout)
-    def run_tiktok_social(self,timeout=180):
-        
+
+    def run_tiktok_social(self, timeout=180):
+
         self.driver.get(self.test_sites["tiktok_social"])
 
         self.tiktok_signin()
@@ -65,6 +67,3 @@ class TiktokPage(BasePage):
         self.logger(f'\nRunning Tiktok Social... \n')
 
         self.interaction(timeout)
-     
-
-   

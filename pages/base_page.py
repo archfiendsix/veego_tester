@@ -12,6 +12,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 load_dotenv()
+
+
 class BasePage:
     def __init__(self, driver):
         self.driver = driver,
@@ -35,6 +37,7 @@ class BasePage:
         self.env_messenger_password = os.getenv("MESSENGER_PASSWORD")
         self.env_facebook_email = os.getenv("FACEBOOK_EMAIL")
         self.env_facebook_password = os.getenv("FACEBOOK_PASSWORD")
+
     def dump_cookies(self):
         # with open("fixtures/cookies.pkl", "wb") as f:
         #     pickle.dump(self.driver.get_cookies(), f)
@@ -49,6 +52,7 @@ class BasePage:
 
     def try_interaction_thread(self):
         print("Interacting with page...\n")
+
         # define a function to do the scrolling
         def scroll_function(driver):
             scroll_direction = "down"
@@ -62,7 +66,7 @@ class BasePage:
                 time.sleep(random.randint(0, 1))  # wait for n seconds between scrolls
                 if scroll_direction == "down" and driver.execute_script(
                         "return window.innerHeight + window.pageYOffset") >= driver.execute_script(
-                        "return document.body.scrollHeight"):
+                    "return document.body.scrollHeight"):
                     scroll_direction = "up"
                 elif scroll_direction == "up" and driver.execute_script("return window.pageYOffset") == 0:
                     scroll_direction = "down"
@@ -85,7 +89,8 @@ class BasePage:
 
         # join the threads to wait for them to finish (optional)
         scroll_thread.join()
-    def random_scroll(self,timeout):
+
+    def random_scroll(self, timeout):
         start_time = time.time()
         scroll_direction = 'down'
         while time.time() - start_time < timeout:
@@ -105,7 +110,8 @@ class BasePage:
                 scroll_direction = "up"
             elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
                 scroll_direction = "down"
-    def timout_while_interact(self, timeout):
+
+    def timeout_while_interact(self, timeout):
         print("Interacting with page...")
         start_time = time.time()
         scroll_direction = 'down'
@@ -122,12 +128,12 @@ class BasePage:
             # time.sleep(random.randint(0, 1))  # wait for n seconds between scrolls
             if scroll_direction == "down" and self.driver.execute_script(
                     "return window.innerHeight + window.pageYOffset") >= self.driver.execute_script(
-                    "return document.body.scrollHeight"):
+                "return document.body.scrollHeight"):
                 scroll_direction = "up"
             elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
                 scroll_direction = "down"
 
-            #Control for Soundcloud Music
+            # Control for Soundcloud Music
             try:
                 time.sleep(random.randint(1, 3))
                 soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
@@ -135,15 +141,14 @@ class BasePage:
             except (NoSuchElementException, TimeoutException):
                 pass
 
-
-
-    def wait_and_execute(self, driver, locator, timeout, action):
+    @staticmethod
+    def wait_and_execute(driver, locator, timeout, action):
         time.sleep(random.randint(1, 2))
 
         element = WebDriverWait(driver, timeout).until(
             EC.visibility_of_element_located(locator))
         action(element)
 
-
-    def logger(self, text):
+    @staticmethod
+    def logger(text):
         logging.info(text)

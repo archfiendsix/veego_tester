@@ -9,6 +9,8 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 load_dotenv()
+
+
 class Telemetry(BasePage):
     def __init__(self, driver, config_data):
         super().__init__(driver)
@@ -21,7 +23,7 @@ class Telemetry(BasePage):
         self.logger("Starting Telemetry...")
         self.driver.switch_to.new_window('tab')
         self.driver.get(
-            self.config_data["telemetry"]+self.config_data["router_id"])
+            self.config_data["telemetry"] + self.config_data["router_id"])
         try:
 
             login_textbox_locator = (By.ID, "username")
@@ -59,13 +61,11 @@ class Telemetry(BasePage):
         # Iterate over the window handles and switch to the one with the desired title
         for handle in window_handles:
             self.driver.switch_to.window(handle)
-            
+
             if self.driver.title == "Messenger call":
                 break
             else:
                 self.driver.switch_to.window(self.driver.window_handles[-1])
-
-
 
     def return_page_service_items(self, name, type, is_classification_final):
         # Switch to telemetry Window
@@ -83,9 +83,10 @@ class Telemetry(BasePage):
             return
 
         services = text_to_json["devices"][0]["discovery"]["devices"][self.config_data["mac"]]["services"]
-        assert services, "No runnning services detected"
+        assert services, "No running services detected"
         service_items = {key: value for key, value in services.items(
-        ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value["name"] == name}
+        ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value[
+                             "name"] == name}
 
         return service_items
 
@@ -112,15 +113,18 @@ class Telemetry(BasePage):
                 detected_service_type = service_item[uuid_key]['type']
                 detected_is_classification_final = service_item[uuid_key]['is_classification_final']
                 service_start_time = datetime.utcfromtimestamp(
-                    service_item[uuid_key]['start_time']/1000)
+                    service_item[uuid_key]['start_time'] / 1000)
                 delta = detection_time - service_start_time
                 self.logger(
-                    f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} Minutes\nService UUID: {uuid_key}\n")
+                    f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
+                    f"\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} "
+                    f"Minutes\nService UUID: {uuid_key}\n")
 
                 # Check if service is correct and log message accordingly
                 if detected_service_name == service and detected_service_name == service:
                     self.logger("PASS: Both type and name are correct\n\n")
-                elif detected_service_type == service_type and (not detected_service_name or detected_service_name == ''):
+                elif detected_service_type == service_type and (
+                        not detected_service_name or detected_service_name == ''):
                     assert True
                     self.logger(
                         "Partial PASS: Type is correct, name is empty\n\n")

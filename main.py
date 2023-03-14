@@ -104,6 +104,3 @@ class TelemetryTest(unittest.TestCase):
         self.driver.quit()
 
 
-if __name__ == "__main__":
-    # Run the test case
-    unittest.main()

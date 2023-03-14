@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException, ElementClickInterceptedException, UnexpectedAlertPresentException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, NoAlertPresentException, \
+    ElementClickInterceptedException, UnexpectedAlertPresentException
 from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
@@ -30,16 +31,15 @@ class IcloudPage(BasePage):
         self.delete_button_locator = (
             By.CSS_SELECTOR, 'ui-button[title="Delete"]')
 
-
     def icloud_signin(self):
 
         self.actions.send_keys(Keys.ENTER).perform()
         self.wait_and_execute(self.driver, self.signin_button_locator, 10, lambda elem: elem.click())
 
         signin_iframe = WebDriverWait(self.driver, 20).until(
-                    EC.presence_of_element_located(
-                        self.signin_iframe_locator)
-                )
+            EC.presence_of_element_located(
+                self.signin_iframe_locator)
+        )
 
         self.driver.switch_to.frame(signin_iframe)
 
@@ -50,15 +50,11 @@ class IcloudPage(BasePage):
             elem.send_keys(self.env_icloud_email)
         ))
 
-
         # time.sleep(3000)
         # keep_me_signed_in_checkbox_locator = (By.CSS_SELECTOR, '.form-choice-indicator')
         # self.wait_and_execute(self.driver, keep_me_signed_in_checkbox_locator, 20, lambda elem: elem.click())
 
-
-
         self.wait_and_execute(self.driver, self.proceed_button_locator, 10, lambda elem: elem.click())
-
 
         self.wait_and_execute(self.driver, self.password_textbox_locator, 10, lambda elem: (
             elem.click(),
@@ -71,9 +67,6 @@ class IcloudPage(BasePage):
 
     def delete_file(self):
 
-
-
-
         try:
             # find the iframe element
 
@@ -85,12 +78,12 @@ class IcloudPage(BasePage):
             # switch to the iframe
             self.driver.switch_to.frame(iframe)
 
-            browseButton = WebDriverWait(self.driver, 5).until(
+            browse_button = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located(
                     self.browse_button_locator)
 
             )
-            browseButton.click()
+            browse_button.click()
             first_file_locator = (
                 By.XPATH, "//span[contains(text(), 'gparted')]")
             first_file = WebDriverWait(self.driver, 5).until(
@@ -98,7 +91,6 @@ class IcloudPage(BasePage):
                     first_file_locator)
             )
             first_file.click()
-
 
             delete_button = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located(
@@ -116,10 +108,9 @@ class IcloudPage(BasePage):
             )
             recently_deleted_button.click()
 
-
             delete_all_button_locator = (
                 By.XPATH, "//ui-button[contains(text(), 'Delete All')]")
-            self.wait_and_execute(self.driver,delete_all_button_locator, 5, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, delete_all_button_locator, 5, lambda elem: elem.click())
             # time.sleep(3000)
             popup_delete_button_locator = (
                 By.CSS_SELECTOR, ".alert-button-container .cw-button.primary.destructive")
@@ -151,7 +142,8 @@ class IcloudPage(BasePage):
                 scroll_direction = "up"
             elif scroll_direction == "up" and self.driver.execute_script("return window.pageYOffset") == 0:
                 scroll_direction = "down"
-    def  run_icloud_upload(self,timeout=180):
+
+    def run_icloud_upload(self, timeout=180):
         self.driver.get(self.test_sites["icloud_upload"])
 
         # time.sleep(3000)
@@ -182,7 +174,6 @@ class IcloudPage(BasePage):
 
         self.logger(f'\niCloud Upload Started... \n')
 
-
         self.interaction(timeout)
 
     def run_icloud_download(self, timeout=180):
@@ -204,7 +195,7 @@ class IcloudPage(BasePage):
         # switch to the iframe
         self.driver.switch_to.frame(iframe)
 
-        self.wait_and_execute(self.driver,self.browse_button_locator, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.driver, self.browse_button_locator, 10, lambda elem: elem.click())
 
         first_file_locator = (
             By.XPATH, "//span[contains(text(), 'gparted')]")

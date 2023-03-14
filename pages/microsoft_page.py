@@ -9,7 +9,7 @@ from pages.base_page import BasePage
 
 
 class MicrosoftPage(BasePage):
-    def __init__(self, driver, test_sites):     
+    def __init__(self, driver, test_sites):
         super().__init__(driver)
         self.driver = driver
         self.actions = ActionChains(self.driver)
@@ -20,11 +20,10 @@ class MicrosoftPage(BasePage):
         print("Interacting with page...")
         self.driver.switch_to.window(self.driver.window_handles[-1])
         time.sleep(timeout)
+
     def run_microsoft_download(self, timeout=180):
-        
         self.driver.get(self.test_sites["microsoft_download"])
-        
-        
+
         self.logger(f'\nStarting Microsoft download test... \n')
 
         wait = WebDriverWait(self.driver, self.timeout).until(
@@ -56,5 +55,3 @@ class MicrosoftPage(BasePage):
         final_download_btn.click()
         self.logger(f'\nMicrosoft download started... \n')
         self.interaction(timeout)
-
-   

@@ -20,6 +20,7 @@ class YoutubePage(BasePage):
         body_locator = (By.CSS_SELECTOR, 'body')
         self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys("0"))
         time.sleep(timeout)
+
     def interaction_download(self, timeout):
         self.driver.switch_to.window(self.driver.window_handles[0])
         start_time = time.time()
@@ -36,8 +37,8 @@ class YoutubePage(BasePage):
                     self.wait_and_execute(self.driver, delete_all_delete_locator, 3, lambda elem: elem.click())
                 except (NoSuchElementException, TimeoutException):
                     continue
-    def run_youtube_streaming(self, timeout=180):
 
+    def run_youtube_streaming(self, timeout=180):
 
         self.driver.get(self.test_sites['youtube_streaming'])
 
@@ -76,18 +77,12 @@ class YoutubePage(BasePage):
         self.wait_and_execute(self.driver, delete_all_delete_locator, 5, lambda elem: elem.click())
         time.sleep(5)
 
-
-
     def run_youtube_download(self, timeout=180):
-
 
         try:
             self.delete_video_download()
         except (NoSuchElementException, TimeoutException):
             pass
-
-
-
 
         start_time = time.time()
 
@@ -101,6 +96,5 @@ class YoutubePage(BasePage):
         #
         # except (NoSuchElementException, TimeoutException):
         #     self.actions.send_keys('k').perform()
-
 
         self.interaction_download(timeout)
