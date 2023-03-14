@@ -18,10 +18,12 @@ class YoutubePage(BasePage):
     def interaction(self, timeout):
         body_locator = (By.CSS_SELECTOR, 'body')
         self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys("0"))
+        time.sleep(timeout)
+
+    def download_interaction(self, timeout):
         download_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Download"]')
         downloaded_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloaded"]')
         downloading_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloading"]')
-
         while time.time() - start_time < timeout:
             try:
                 self.wait_and_execute(self.driver, download_button_locator, 3, lambda elem: elem.click())
