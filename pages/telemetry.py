@@ -63,7 +63,7 @@ class Telemetry(BasePage):
             if self.driver.title == "Messenger call":
                 break
             else:
-                self.driver.switch_to.window(self.driver.window_handles[0])
+                self.driver.switch_to.window(self.driver.window_handles[-1])
 
 
 

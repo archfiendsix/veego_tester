@@ -24,7 +24,7 @@ class NexusModsPage(BasePage):
         time.sleep(60)
 
     def interaction(self, timeout):
-        self.driver.switch_to.window(self.driver.window_handles[0])
+        self.driver.switch_to.window(self.driver.window_handles[-1])
         self.random_scroll(timeout)
 
     def run_nexusmods_download(self, timeout=180):

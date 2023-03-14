@@ -132,7 +132,7 @@ class IcloudPage(BasePage):
 
     def interaction(self, timeout):
         print("Interacting with page...")
-        self.driver.switch_to.window(self.driver.window_handles[0])
+        self.driver.switch_to.window(self.driver.window_handles[-1])
         start_time = time.time()
         scroll_direction = 'down'
         while time.time() - start_time < timeout:

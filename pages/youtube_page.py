@@ -16,7 +16,7 @@ class YoutubePage(BasePage):
         self.test_sites = test_sites
 
     def interaction(self, timeout):
-        self.driver.switch_to.window(self.driver.window_handles[0])
+        self.driver.switch_to.window(self.driver.window_handles[-1])
         body_locator = (By.CSS_SELECTOR, 'body')
         self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys("0"))
         time.sleep(timeout)
