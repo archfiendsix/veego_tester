@@ -92,7 +92,7 @@ class TelemetryTest(unittest.TestCase):
 
     def test_youtube_download(self):
         self.youtube_page.run_youtube_download(180)
-        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.download_interaction(180))
+        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download(180))
 
     # def test_bittorrent_download(self):
     #
