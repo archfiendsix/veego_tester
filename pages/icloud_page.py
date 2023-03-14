@@ -176,8 +176,8 @@ class IcloudPage(BasePage):
         )
         upload_file_dir = os.path.abspath(os.path.join(os.getcwd(), "fixtures/upload_files/gparted.iso"))
 
-        # for i in range(10):
-        input_element.send_keys(upload_file_dir)
+        for i in range(10):
+            input_element.send_keys(upload_file_dir)
 
         self.logger(f'\niCloud Upload Started... \n')
 
