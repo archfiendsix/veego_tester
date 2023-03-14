@@ -16,7 +16,6 @@ from applications.bittorent import Bittorrent
 
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
-
         # Update paths to be platform-independent
         download_dir = os.path.abspath(os.path.join(os.getcwd(), "downloads"))
         config_dir = os.path.abspath(os.path.join(os.getcwd(), "config.json"))
@@ -49,10 +48,10 @@ class TelemetryTest(unittest.TestCase):
 
     # Needs subscription to upload/download more files
     def test_icloud_download(self):
-        #Sign in script requires text code authentication. Must login manually.
+        # Sign in script requires text code authentication. Must login manually.
         self.icloud_page.run_icloud_download(180)
         self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.icloud_page.interaction)
-    #
+
     #  Needs subscription to upload/download more files
     def test_icloud_upload(self):
         self.icloud_page.run_icloud_upload(180)
@@ -80,7 +79,7 @@ class TelemetryTest(unittest.TestCase):
 
     def test_tiktok_social(self):
         self.tiktok_page.run_tiktok_social(180)
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True,self.tiktok_page.interaction)
+        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction)
 
     def test_twitter_social(self):
         self.twitter_page.run_twitter_social(180)
@@ -102,5 +101,3 @@ class TelemetryTest(unittest.TestCase):
     def tearDown(self):
         # Close the browser
         self.driver.quit()
-
-
