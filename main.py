@@ -86,17 +86,17 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction)
 
     def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
+        self.youtube_page.run_youtube_streaming(60)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
 
     def test_youtube_download(self):
         self.youtube_page.run_youtube_download(180)
         self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download)
 
-    # def test_bittorrent_download(self):
-    #
-    #     self.bittorrent.run_bittorrent_download()
-    #     time.sleep(3000)
+    def test_bittorrent_download(self):
+
+        self.bittorrent.run_bittorrent_download()
+
 
     def tearDown(self):
         # Close the browser

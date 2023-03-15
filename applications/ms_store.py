@@ -1,5 +1,4 @@
 
-
 import os
 import pyautogui
 import time
@@ -7,7 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
 
-class Bittorrent(BasePage):
+class MSStore(BasePage):
 
 
     def __init__(self, driver, test_sites):
