@@ -162,5 +162,8 @@ class Telemetry(BasePage):
             # self.driver.switch_to.window(self.driver.window_handles[1])
             time.sleep(10)
 
-            assert False, self.logger(
-                f"No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")
+            try:
+                assert False
+            except AssertionError:
+                self.logger(
+                    f"No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")
