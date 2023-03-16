@@ -26,33 +26,47 @@ class SoundcloudPage(BasePage):
         self.signin_signin_button_locator = (By.ID, 'enter_password_submit')
 
     def soundcloud_signin(self):
-
         try:
-            self.wait_and_execute(self.driver, self.header_sign_button_locator, 5, lambda elem: elem.click())
+            signin_iframe_locator = (By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
+            signin_iframe = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(
+                    signin_iframe_locator)
+            )
 
-            # Find all iframes on the page
-            iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
+            self.driver.switch_to.frame(signin_iframe)
 
-            # Iterate over each iframe
-            for iframe in iframes:
-                # Check if the src attribute includes the expected URL
-                if "https://secure.soundcloud.com/web-auth" in iframe.get_attribute("src"):
-                    # Switch to the iframe
-                    self.driver.switch_to.frame(iframe)
-                    break  # Stop iterating over iframes once we have found the correct one
+            continue_as = (By.CSS_SELECTOR, '#continue-as')
 
-            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5,
-                                  lambda elem: (
-                                      elem.click(), elem.send_keys(Keys.CONTROL + "a"), elem.send_keys(Keys.DELETE)))
-            self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5,
-                                  lambda elem: elem.send_keys(self.env_soundcloud_email))
-            self.wait_and_execute(self.driver, self.signin_continue_button_locator, 5, lambda elem: elem.click())
-            self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 5, lambda elem: (
-                elem.click(), elem.send_keys(Keys.CONTROL + "a"), elem.send_keys(Keys.DELETE),
-                elem.send_keys(self.env_soundcloud_password)))
-            self.wait_and_execute(self.driver, self.signin_signin_button_locator, 5, lambda elem: elem.click())
-        except (NoSuchElementException, TimeoutException):
+            self.wait_and_execute(self.driver, continue_as, 5, lambda elem: elem.click())
+        except(NoSuchElementException, TimeoutException):
             pass
+
+        # try:
+        #     self.wait_and_execute(self.driver, self.header_sign_button_locator, 5, lambda elem: elem.click())
+        #
+        #     # Find all iframes on the page
+        #     iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe")
+        #
+        #     # Iterate over each iframe
+        #     for iframe in iframes:
+        #         # Check if the src attribute includes the expected URL
+        #         if "https://secure.soundcloud.com/web-auth" in iframe.get_attribute("src"):
+        #             # Switch to the iframe
+        #             self.driver.switch_to.frame(iframe)
+        #             break  # Stop iterating over iframes once we have found the correct one
+        #
+        #     self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5,
+        #                           lambda elem: (
+        #                               elem.click(), elem.send_keys(Keys.CONTROL + "a"), elem.send_keys(Keys.DELETE)))
+        #     self.wait_and_execute(self.driver, self.signin_email_textbox_locator, 5,
+        #                           lambda elem: elem.send_keys(self.env_soundcloud_email))
+        #     self.wait_and_execute(self.driver, self.signin_continue_button_locator, 5, lambda elem: elem.click())
+        #     self.wait_and_execute(self.driver, self.signin_password_textbox_locator, 5, lambda elem: (
+        #         elem.click(), elem.send_keys(Keys.CONTROL + "a"), elem.send_keys(Keys.DELETE),
+        #         elem.send_keys(self.env_soundcloud_password)))
+        #     self.wait_and_execute(self.driver, self.signin_signin_button_locator, 5, lambda elem: elem.click())
+        # except (NoSuchElementException, TimeoutException):
+        #     pass
         try:
             # Wait for the alert to appear
             alert = Alert(self.driver)
