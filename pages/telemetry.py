@@ -85,9 +85,9 @@ class Telemetry(BasePage):
         services = text_to_json["devices"][0]["discovery"]["devices"][self.config_data["mac"]]["services"]
         assert services, "No running services detected"
         service_items = {key: value for key, value in services.items(
-        ) if value["is_classification_final"] == is_classification_final and value["type"] == type and value[
-                             "name"] == name}
-
+        ) if value["is_classification_final"] == is_classification_final and value["type"] == type}
+        # and value[
+        #         "name"] == name
         return service_items
 
     def run_telemetry_test(self, service, service_type, classification_final, interaction):
