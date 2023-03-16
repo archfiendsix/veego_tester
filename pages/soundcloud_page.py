@@ -82,7 +82,7 @@ class SoundcloudPage(BasePage):
                 self.driver.switch_to.window(self.driver.window_handles[0])
 
         try:
-            time.sleep(random.randint(1, timeout / 2))
+            time.sleep(random.randint(timeout*.80, timeout))
             soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
             self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 5, lambda elem: elem.click())
         except (NoSuchElementException, TimeoutException):

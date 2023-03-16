@@ -89,6 +89,18 @@ class MessengerPage(BasePage):
 
     def interaction(self, timeout):
 
+        # Get the list of window handles
+        window_handles = self.driver.window_handles
+
+        # Iterate over the window handles and switch to the one with the desired title
+        for handle in window_handles:
+            self.driver.switch_to.window(handle)
+
+            if self.driver.title == "Messenger call":
+                break
+            else:
+                self.driver.switch_to.window(self.driver.window_handles[-1])
+
         start_time = time.time()
         while time.time() - start_time < timeout:
             self.driver.switch_to.window(self.driver.window_handles[1])

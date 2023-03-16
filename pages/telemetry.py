@@ -160,10 +160,10 @@ class Telemetry(BasePage):
             rerun += 1
             # Switch to the second tab
             # self.driver.switch_to.window(self.driver.window_handles[1])
-            time.sleep(10)
+            interaction(10)
 
             try:
                 assert False
             except AssertionError:
                 self.logger(
-                    f"No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")
+                    f"FAIL: No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")

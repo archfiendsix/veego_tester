@@ -20,7 +20,7 @@ class Bittorrent(BasePage):
 
     def run_bittorrent_download(self):
         self.driver.get(
-            "magnet:?xt=urn:btih:F2E6914B4C30B7F6EF9A621E7C5133B8839CBD11&dn=Cyberpunk+2077+v6.15+%282021+Update%29&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce")
+            self.test_sites['bittorrent_download'])
         time.sleep(5)
         pyautogui.press('tab')
         pyautogui.press('enter')
@@ -28,7 +28,7 @@ class Bittorrent(BasePage):
         time.sleep(10)
         pyautogui.press('enter')
         pyautogui.press('return')
-        time.sleep(3000)
+
         # WebDriverWait(self.driver, 20).until(EC.alert_is_present())
         # alert = self.driver.switch_to.alert
         # alert.accept()
@@ -55,11 +55,7 @@ class Bittorrent(BasePage):
 
         # print(os.path.abspath(os.path.join(os.getcwd(), "open_bittorrent_button.png")))
         # image_path = os.path.abspath(os.path.join(os.getcwd(), "open_bittorrent_button.png"))
-        image_coords = pyautogui.locateOnScreen(file_path)
-        if image_coords is not None:
-            pyautogui.click(image_coords)
-        else:
-            print(f"Image not found on screen: {file_path}")
+
         # pyautogui.click(os.path.abspath(os.path.join(os.getcwd(), "open_bittorrent_button.png")))
         # Click on the button
         # pyautogui.click(button_location)
