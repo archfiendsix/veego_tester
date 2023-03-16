@@ -19,7 +19,7 @@ class YoutubePage(BasePage):
     def interaction(self, timeout):
         self.driver.switch_to.window(self.driver.window_handles[0])
         body_locator = (By.CSS_SELECTOR, 'body')
-        rand = random.randint(1, 3)
+        rand = random.randint(1, 7)
         self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys(f'{rand}'))
         time.sleep(timeout)
 

@@ -61,7 +61,7 @@ class BasePage:
                     scroll_amount = random.randint(300, 1000)
                     driver.execute_script(f"window.scrollBy(0, {scroll_amount});")
                 else:
-                    scroll_amount = random.randint(300, 1000)
+                    scroll_amount = random.randint(500, 1000)
                     driver.execute_script(f"window.scrollBy(0, -{scroll_amount});")
                 time.sleep(random.randint(0, 1))  # wait for n seconds between scrolls
                 if scroll_direction == "down" and driver.execute_script(
@@ -100,7 +100,7 @@ class BasePage:
                 self.driver.execute_script(
                     f"window.scrollBy(0, {scroll_amount});")
             else:
-                scroll_amount = random.randint(500, 1000)
+                scroll_amount = random.randint(300, 800)
                 self.driver.execute_script(
                     f"window.scrollBy(0, -{scroll_amount});")
             time.sleep(random.randint(1, 3))  # wait for n seconds between scrolls
