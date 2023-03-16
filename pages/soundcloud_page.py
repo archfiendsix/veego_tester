@@ -99,6 +99,10 @@ class SoundcloudPage(BasePage):
             time.sleep(random.randint(timeout*.80, timeout))
             soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
             self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 5, lambda elem: elem.click())
+
+            body_locator = (By.CSS_SELECTOR, 'body')
+            rand = random.randint(1, 7)
+            self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys(f'{rand}'))
         except (NoSuchElementException, TimeoutException):
             pass
 

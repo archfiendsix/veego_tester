@@ -74,6 +74,7 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True, self.soundcloud_page.interaction)
 
     def test_soundcloud_upload(self):
+        # Need Premium account
         self.soundcloud_page.run_soundcloud_upload(180)
         self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
 

@@ -145,8 +145,6 @@ class Telemetry(BasePage):
 
             # Wait before trying to detect service again
             rerun += 1
-            # Switch to the second tab
-            # self.driver.switch_to.window(self.driver.window_handles[1])
             interaction(10)
 
             try:
