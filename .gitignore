@@ -36,3 +36,5 @@ fixtures/music.mp3
 fixtures/upload_files/gparted.iso
 fixtures/upload_files/music.mp3
 report_allure
+config.json
+
