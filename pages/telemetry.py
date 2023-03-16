@@ -54,19 +54,6 @@ class Telemetry(BasePage):
             # Elements not found, so the user is probably already signed in
             pass
 
-    def switch_to_service_window(self, timeout):
-        # Get the list of window handles
-        window_handles = self.driver.window_handles
-
-        # Iterate over the window handles and switch to the one with the desired title
-        for handle in window_handles:
-            self.driver.switch_to.window(handle)
-
-            if self.driver.title == "Messenger call":
-                break
-            else:
-                self.driver.switch_to.window(self.driver.window_handles[-1])
-
     def return_page_service_items(self, name, type, is_classification_final):
         # Switch to telemetry Window
         self.driver.switch_to.window(self.driver.window_handles[-1])
@@ -163,7 +150,7 @@ class Telemetry(BasePage):
             interaction(10)
 
             try:
-                assert False
+                assert service_item
             except AssertionError:
                 self.logger(
                     f"FAIL: No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")

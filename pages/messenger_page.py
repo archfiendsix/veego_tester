@@ -97,6 +97,7 @@ class MessengerPage(BasePage):
             self.driver.switch_to.window(handle)
 
             if self.driver.title == "Messenger call":
+                time.sleep(timeout)
                 break
             else:
                 self.driver.switch_to.window(self.driver.window_handles[-1])
