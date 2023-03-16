@@ -48,7 +48,7 @@ class TelemetryTest(unittest.TestCase):
 
     # Needs subscription to upload/download more files
     def test_icloud_download(self):
-        # Sign in script requires text code authentication. Must login manually.
+        # Sign in script requires text code authentication. Must log in manually.
         self.icloud_page.run_icloud_download(180)
         self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.icloud_page.interaction)
 
@@ -96,7 +96,6 @@ class TelemetryTest(unittest.TestCase):
     def test_bittorrent_download(self):
 
         self.bittorrent.run_bittorrent_download()
-
 
     def tearDown(self):
         # Close the browser
