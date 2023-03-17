@@ -18,7 +18,6 @@ class NexusModsPage(BasePage):
         self.download_button_locator = (By.CSS_SELECTOR, '#slowDownloadButton')
 
     def nexusmods_signin(self):
-
         self.driver.maximize_window()
 
         time.sleep(60)
@@ -30,7 +29,7 @@ class NexusModsPage(BasePage):
     def run_nexusmods_download(self, timeout=180):
         self.driver.get(self.test_sites["nexusmods_download"])
 
-        self.wait_and_execute(self.driver,self.download_button_locator,5,lambda elem:elem.click())
+        self.wait_and_execute(self.driver, self.download_button_locator, 5, lambda elem: elem.click())
 
         self.logger(f'\nStarting Nexus Mods Download test... \n')
 
