@@ -50,7 +50,7 @@ class TelemetryTest(unittest.TestCase):
     def test_icloud_download(self):
         # Sign in script requires text code authentication. Must log in manually.
         self.icloud_page.run_icloud_download(180)
-        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.icloud_page.interaction)
+        self.telemetry.run_telemetry_test('iCloud', 'DOWNLOAD', True, self.icloud_page.interaction)
 
     #  Needs subscription to upload/download more files
     def test_icloud_upload(self):
