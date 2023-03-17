@@ -86,41 +86,21 @@ class SoundcloudPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[0])
         window_handles = self.driver.window_handles
 
-        # Iterate over the window handles and switch to the one with the desired title
-        for handle in window_handles:
-            self.driver.switch_to.window(handle)
-
-            if self.driver.title == "Messenger call":
-                break
-            else:
-                self.driver.switch_to.window(self.driver.window_handles[0])
-
-        try:
-            time.sleep(random.randint(timeout*.80, timeout))
-            soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
-            self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 5, lambda elem: elem.click())
-
-            body_locator = (By.CSS_SELECTOR, 'body')
-            rand = random.randint(1, 7)
-            self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys(f'{rand}'))
-        except (NoSuchElementException, TimeoutException):
-            pass
+        # try:
+        #     # time.sleep(random.randint(timeout*.80, timeout))
+        #     # soundcloud_skip_button_locator = (By.CSS_SELECTOR, ".skipControl__next")
+        #     # self.wait_and_execute(self.driver, soundcloud_skip_button_locator, 5, lambda elem: elem.click())
+        #
+        #     body_locator = (By.CSS_SELECTOR, 'body')
+        #     rand = random.randint(1, 7)
+        #     self.wait_and_execute(self.driver, body_locator, 5, lambda elem: elem.send_keys(f'{rand}'))
+        # except (NoSuchElementException, TimeoutException):
+        #     pass
+        time.sleep(timeout)
 
     def run_soundcloud_music(self, timeout=180):
 
         self.driver.get(self.test_sites["soundcloud_music"])
-
-        try:
-            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
-
-        except (NoSuchElementException, TimeoutException):
-            pass
-
-        play_btn_locator = (
-            By.CSS_SELECTOR, ".sc-button-play.playButton.sc-button.m-stretch")
-
-        self.wait_and_execute(self.driver, play_btn_locator, 5, lambda elem: elem.click())
-
         try:
             self.soundcloud_signin()
         except (NoSuchElementException, TimeoutException):

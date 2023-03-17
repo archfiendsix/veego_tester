@@ -77,20 +77,42 @@ class Telemetry(BasePage):
         #         "name"] == name
         return service_items
 
-    def run_telemetry_test(self, service, service_type, classification_final, interaction):
+    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, service_type, uuid_key, service_start_time, delta):
+
+        self.logger(
+            f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
+            f"\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} "
+            f"Minutes\nService UUID: {uuid_key}\n")
+
+        # Check if service is correct and log message accordingly
+        if detected_service_name == service_name and detected_service_type == service_type:
+            assert True
+            self.logger("PASS: Both type and name are correct\n\n")
+        elif detected_service_type == service_type and (
+                not detected_service_name or detected_service_name == ''):
+            assert True
+            self.logger(
+                "Partial PASS: Type is correct, name is empty\n\n")
+        elif detected_service_type == service_type and detected_service_name != service_name:
+            self.logger(
+                "Fail: Type is correct, name is incorrect\n\n")
+        else:
+            self.logger("Fail: Type and/or name are incorrect\n\n")
+
+    def run_telemetry_test(self, service_name, service_type, classification_final, interaction):
 
         self.run_telemetry()
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
-        max_runtime = 10 * 60  # 10 minutes in seconds
+        max_runtime = 4 * 60  # 6 minutes in seconds
         detection_time = datetime.utcnow()
 
         # Loop until maximum runtime is reached
         while (datetime.utcnow() - detection_time).total_seconds() <= max_runtime:
             # Try to detect the service
             service_item = self.return_page_service_items(
-                service, service_type, classification_final)
+                service_name, service_type, classification_final)
 
             # Loop until service is detected or maximum runtime is reached
             while service_item:
@@ -102,24 +124,8 @@ class Telemetry(BasePage):
                 service_start_time = datetime.utcfromtimestamp(
                     service_item[uuid_key]['start_time'] / 1000)
                 delta = detection_time - service_start_time
-                self.logger(
-                    f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
-                    f"\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} "
-                    f"Minutes\nService UUID: {uuid_key}\n")
 
-                # Check if service is correct and log message accordingly
-                if detected_service_name == service and detected_service_name == service:
-                    self.logger("PASS: Both type and name are correct\n\n")
-                elif detected_service_type == service_type and (
-                        not detected_service_name or detected_service_name == ''):
-                    assert True
-                    self.logger(
-                        "Partial PASS: Type is correct, name is empty\n\n")
-                elif detected_service_type == service_type and detected_service_name != service:
-                    self.logger(
-                        "Fail: Type is correct, name is incorrect\n\n")
-                else:
-                    self.logger("Fail: Type and/or name are incorrect\n\n")
+                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, service_type, uuid_key, service_start_time, delta)
 
                 # Wait before trying to detect service again
                 interaction(10)
@@ -132,14 +138,14 @@ class Telemetry(BasePage):
                 # Try to detect the service again
                 rerun += 1
                 service_item = self.return_page_service_items(
-                    service, service_type, classification_final)
+                    service_name, service_type, classification_final)
 
             # Print message if service is not detected within the allowed time
             total_testing_time = datetime.utcnow() - detection_time
-            if total_testing_time.total_seconds() >= 360 and not service:
+            if total_testing_time.total_seconds() >= 180 and not service_item:
                 total_testing_time = total_testing_time / 60
                 self.logger(
-                    f"No {service} service recognized for the past {total_testing_time} minutes\n")
+                    f"No {service_name} service recognized for the past {total_testing_time} minutes\n")
                 assert False
                 return
 
@@ -147,8 +153,5 @@ class Telemetry(BasePage):
             rerun += 1
             interaction(10)
 
-            try:
-                assert service_item
-            except AssertionError:
-                self.logger(
-                    f"FAIL: No {service} {service_type} service detected. Retrying service recognition test ({rerun})...\n")
+            self.logger(f"FAIL: No {service_name} {service_type} service detected. Retrying service "
+                        f"recognition test ({rerun})...\n")
