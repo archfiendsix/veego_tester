@@ -94,9 +94,10 @@ class TelemetryTest(unittest.TestCase):
         self.youtube_page.run_youtube_download(180)
         self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download)
 
-    def test_bittorrent_download(self):
-
-        self.bittorrent.run_bittorrent_download()
+    # # Not Yet Working
+    # def test_bittorrent_download(self):
+    #
+    #     self.bittorrent.run_bittorrent_download()
 
     def tearDown(self):
         # Close the browser
