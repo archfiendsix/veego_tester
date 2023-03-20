@@ -153,5 +153,8 @@ class Telemetry(BasePage):
             rerun += 1
             interaction(10)
 
-            self.logger(f"FAIL: No {service_name} {service_type} service detected. Retrying service "
-                        f"recognition test ({rerun})...\n")
+            if (datetime.utcnow() - detection_time).total_seconds() <= max_runtime:
+                self.logger(f"FAIL: No {service_name} {service_type} service detected. Retrying service "
+                            f"recognition test ({rerun})...\n")
+            else:
+                assert False
