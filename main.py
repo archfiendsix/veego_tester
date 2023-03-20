@@ -1,6 +1,8 @@
 import json
 import os
 import unittest
+
+from pages.twitch_page import TwitchPage
 from setup.test_setup import setup_test_environment
 from pages.microsoft_page import MicrosoftPage
 from pages.messenger_page import MessengerPage
@@ -46,6 +48,7 @@ class TelemetryTest(unittest.TestCase):
         self.tiktok_page = TiktokPage(self.driver, self.test_sites_data)
         self.bittorrent = Bittorrent(self.driver, self.test_sites_data)
         self.msstore = MSStore(self.driver, self.test_sites_data)
+        self.twitch_page = TwitchPage(self.driver, self.test_sites_data)
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
@@ -91,6 +94,10 @@ class TelemetryTest(unittest.TestCase):
     def test_youtube_streaming(self):
         self.youtube_page.run_youtube_streaming(180)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
+
+    def test_twitch_streaming(self):
+        self.twitch_page.run_twitch_streaming(180)
+        self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
 
     def test_youtube_download(self):
         self.youtube_page.run_youtube_download(180)
