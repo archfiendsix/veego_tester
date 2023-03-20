@@ -105,7 +105,7 @@ class Telemetry(BasePage):
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
-        max_runtime = 4 * 60  # 6 minutes in seconds
+        max_runtime = 3 * 60  # 6 minutes in seconds
         detection_time = datetime.utcnow()
 
         # Loop until maximum runtime is reached
