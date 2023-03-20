@@ -96,7 +96,7 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
 
     def test_twitch_streaming(self):
-        self.twitch_page.run_twitch_streaming(180)
+        self.twitch_page.run_twitch_streaming(122)
         self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
 
     def test_youtube_download(self):

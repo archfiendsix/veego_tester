@@ -39,25 +39,20 @@ class TwitchPage(BasePage):
         time.sleep(timeout)
 
     def run_twitch_streaming(self, timeout=180):
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        driver = webdriver.Chrome()
+        # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        # driver = webdriver.Chrome()
         # driver = webdriver.Chrome(executable_path='C:/Veego/Automation/chromedriver.exe')
 
-        driver.get('https://www.twitch.tv/videos/1733916001')
-        self.interaction(122)
-        return driver
-        # driver.close()
-        # driver.quit()
-
+        self.driver.get(self.test_sites['twitch_streaming'])
         self.driver.maximize_window()
 
-        self.driver.get(self.test_sites['twitch_streaming'])
-
-        time.sleep(2)
+        # return driver
+        # driver.close()
+        # driver.quit()
         self.actions.send_keys('k').perform()
         self.logger(f'\nRunning Twitch Streaming... \n')
 
-        time.sleep(timeout)
+        self.interaction(timeout)
         # 180
 
 
