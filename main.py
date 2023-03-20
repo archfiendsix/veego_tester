@@ -12,6 +12,7 @@ from pages.youtube_page import YoutubePage
 from pages.icloud_page import IcloudPage
 from pages.tiktok_page import TiktokPage
 from applications.bittorent import Bittorrent
+from applications.ms_store import MSStore
 
 
 class TelemetryTest(unittest.TestCase):
@@ -44,6 +45,7 @@ class TelemetryTest(unittest.TestCase):
         self.icloud_page = IcloudPage(self.driver, self.test_sites_data)
         self.tiktok_page = TiktokPage(self.driver, self.test_sites_data)
         self.bittorrent = Bittorrent(self.driver, self.test_sites_data)
+        self.msstore = MSStore(self.driver, self.test_sites_data)
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
@@ -94,10 +96,16 @@ class TelemetryTest(unittest.TestCase):
         self.youtube_page.run_youtube_download(180)
         self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download)
 
-    # # Not Yet Working
-    # def test_bittorrent_download(self):
-    #
-    #     self.bittorrent.run_bittorrent_download()
+    # Not Yet Working
+    def test_bittorrent_download(self):
+
+        self.bittorrent.run_bittorrent_download(180)
+        self.telemetry.run_telemetry_test('Torrent', 'TORRENT', True, self.youtube_page.interaction_download)
+
+    def test_msstore_download(self):
+
+        self.msstore.run_msstore_download(180)
+        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.youtube_page.interaction_download)
 
     def tearDown(self):
         # Close the browser

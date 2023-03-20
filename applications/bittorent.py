@@ -1,5 +1,4 @@
 
-
 import os
 import pyautogui
 import time
@@ -17,8 +16,10 @@ class Bittorrent(BasePage):
         self.test_sites = test_sites
         self.timeout = 10
 
+    def interaction(self, timeout):
+        time.sleep(timeout)
 
-    def run_bittorrent_download(self):
+    def run_bittorrent_download(self, timeout):
         self.driver.get(
             self.test_sites['bittorrent_download'])
         time.sleep(5)
@@ -26,9 +27,14 @@ class Bittorrent(BasePage):
         pyautogui.press('enter')
         pyautogui.press('return')
         time.sleep(10)
+        self.open_window("BitTorrent")
+        self.open_window("Add New Torrent")
+        time.sleep(10)
         pyautogui.press('enter')
         pyautogui.press('return')
 
+        self.logger("Bittorrent download started...")
+        self.interaction(timeout)
         # WebDriverWait(self.driver, 20).until(EC.alert_is_present())
         # alert = self.driver.switch_to.alert
         # alert.accept()

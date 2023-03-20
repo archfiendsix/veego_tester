@@ -4,6 +4,12 @@ import random
 import time
 import threading
 import os
+import pytesseract
+import pygetwindow as gw
+import cv2
+import pyautogui
+import numpy as np
+from PIL import ImageGrab
 from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -152,3 +158,86 @@ class BasePage:
     @staticmethod
     def logger(text):
         logging.info(text)
+
+    def get_active_window(self, window_title):
+        partial_window_title = window_title
+        all_windows = gw.getAllWindows()
+        window = None
+        for win in all_windows:
+            if partial_window_title in win.title:
+                window = win
+                break
+
+        if window is None:
+            print(f"No window found with partial title '{partial_window_title}'")
+            exit()
+
+        return window
+
+    def print_all_window_titles(self):
+        all_windows = gw.getAllWindows()
+        for win in all_windows:
+            print(win.title)
+    def open_window(self, window_title):
+        # Set the path to the tesseract executable (Windows users)
+        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+        # Ask the user for the partial title of the window to search within
+        partial_window_title = window_title
+
+        # Get all open windows
+        all_windows = gw.getAllWindows()
+
+        # Find the first window that contains the partial title
+        window = None
+        for win in all_windows:
+            print(win.title)
+            if partial_window_title in win.title:
+                window = win
+                break
+
+        if window is None:
+            print(f"No window found with partial title '{partial_window_title}'")
+            exit()
+
+        # Activate (bring to the front) the window
+        window.activate()
+
+
+    def application_action(self, window_title, element_text):
+
+        time.sleep(15)
+
+        # Update the window handle before grabbing the screenshot
+        window = self.get_active_window(window_title)
+        # Capture the window's content
+        screenshot = ImageGrab.grab(
+            bbox=(window.left, window.top, window.left + window.width, window.top + window.height))
+
+        # Convert the image to grayscale
+        gray_screenshot = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2GRAY)
+
+        # Set pytesseract configuration
+        config = r'--psm 6 --oem 3'
+
+        # Use pytesseract to extract text and their bounding boxes
+        data = pytesseract.image_to_data(gray_screenshot, output_type=pytesseract.Output.DICT, config=config)
+
+        search_text = element_text
+        # Loop through the extracted data and check if any of the detected words match the search_text
+        for i in range(len(data["text"])):
+            if data["text"][i] == search_text:
+                # Calculate the center coordinates of the bounding box
+                x_center = data["left"][i] + data["width"][i] // 2
+                y_center = data["top"][i] + data["height"][i] // 2
+
+                # Calculate the screen coordinates by adding the window's position
+                screen_x = window.left + x_center
+                screen_y = window.top + y_center
+
+                # Move the mouse to the center of the text and click
+                pyautogui.moveTo(screen_x, screen_y)
+                pyautogui.click()
+
+                # Break the loop once the text has been found and clicked
+                break
