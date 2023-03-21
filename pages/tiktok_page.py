@@ -6,7 +6,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from pages.base_page import BasePage
 
-
 class TiktokPage(BasePage):
     def __init__(self, driver, test_sites):
         super().__init__(driver)
@@ -16,6 +15,7 @@ class TiktokPage(BasePage):
         self.timeout = 10
 
     def tiktok_signin(self):
+
         try:
             self.wait_and_execute(
                 self.driver, (By.CSS_SELECTOR, 'button[data-e2e="top-login-button"]'), 5, lambda elem: elem.click())

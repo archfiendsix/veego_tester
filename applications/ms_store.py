@@ -28,6 +28,11 @@ class MSStore(BasePage):
         pyautogui.press('enter')
 
         self.open_window("Microsoft Store")
-        self.application_action("Microsoft Store", "Get")
-
+        # self.application_action("Microsoft Store", "Get")
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        pyautogui.press('tab')
+        pyautogui.press('enter')
         self.interaction(timeout)

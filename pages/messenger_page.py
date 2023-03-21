@@ -88,25 +88,26 @@ class MessengerPage(BasePage):
         self.interaction(timeout)
 
     def interaction(self, timeout):
-
+        print("Interacting...")
         # Get the list of window handles
         window_handles = self.driver.window_handles
 
         # Iterate over the window handles and switch to the one with the desired title
-        for handle in window_handles:
-            self.driver.switch_to.window(handle)
-
-            if self.driver.title == "Messenger call":
-                time.sleep(timeout)
-                break
-            else:
-                self.driver.switch_to.window(self.driver.window_handles[-1])
-
-        start_time = time.time()
-        while time.time() - start_time < timeout:
-            self.driver.switch_to.window(self.driver.window_handles[1])
-            self.random_scroll(timeout*.20)
-            time.sleep(timeout*.20)
-            self.driver.switch_to.window(self.driver.window_handles[3])
-            self.random_scroll(timeout * .20)
-            time.sleep(timeout * .20)
+        # for handle in window_handles:
+        #     self.driver.switch_to.window(handle)
+        #
+        #     if self.driver.title == "Messenger call":
+        #         time.sleep(timeout/2)
+        #         break
+        #     else:
+        #         self.driver.switch_to.window(self.driver.window_handles[-1])
+        self.driver.switch_to.window(self.driver.window_handles[3])
+        time.sleep(timeout)
+        # start_time = time.time()
+        # while time.time() - start_time < timeout:
+        #     self.driver.switch_to.window(self.driver.window_handles[1])
+        #     self.random_scroll(timeout*.20)
+        #     time.sleep(timeout*.20)
+        #     self.driver.switch_to.window(self.driver.window_handles[3])
+        #     self.random_scroll(timeout * .20)
+        #     time.sleep(timeout * .20)
