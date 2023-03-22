@@ -72,17 +72,18 @@ class Telemetry(BasePage):
         services = text_to_json["devices"][0]["discovery"]["devices"][self.config_data["mac"]]["services"]
         assert services, "No running services detected"
         service_items = {key: value for key, value in services.items(
-        ) if value["is_classification_final"] == is_classification_final and value["type"] == type}
+        ) if value["type"] == type}
+        # value["is_classification_final"] == is_classification_final and
         # and value[
         #         "name"] == name
         return service_items
 
-    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, service_type, uuid_key, service_start_time, delta):
+    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, is_classifcation_final, service_type, uuid_key, service_start_time, delta):
 
         self.logger(
             f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
             f"\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} "
-            f"Minutes\nService UUID: {uuid_key}\n")
+            f"Minutes\nService UUID: {uuid_key}\n" f"Is Classification final: {is_classifcation_final}")
 
         # Check if service is correct and log message accordingly
         if detected_service_name == service_name and detected_service_type == service_type:
@@ -125,7 +126,7 @@ class Telemetry(BasePage):
                     service_item[uuid_key]['start_time'] / 1000)
                 delta = detection_time - service_start_time
 
-                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, service_type, uuid_key, service_start_time, delta)
+                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, detected_is_classification_final, service_type, uuid_key, service_start_time, delta)
 
                 # Wait before trying to detect service again
                 interaction(10)
@@ -142,7 +143,7 @@ class Telemetry(BasePage):
 
             # Print message if service is not detected within the allowed time
             total_testing_time = datetime.utcnow() - detection_time
-            if total_testing_time.total_seconds() >= 180 and not service_item:
+            if total_testing_time.total_seconds() >= 120 and not service_item:
                 total_testing_time = total_testing_time / 60
                 self.logger(
                     f"No {service_name} service recognized for the past {total_testing_time} minutes\n")

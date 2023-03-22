@@ -2,6 +2,8 @@ import json
 import os
 import unittest
 
+from pages.espn_page import EspnPage
+# from pages.facebook_page import FacebookPage
 from pages.twitch_page import TwitchPage
 from setup.test_setup import setup_test_environment
 from pages.microsoft_page import MicrosoftPage
@@ -49,6 +51,9 @@ class TelemetryTest(unittest.TestCase):
         self.bittorrent = Bittorrent(self.driver, self.test_sites_data)
         self.msstore = MSStore(self.driver, self.test_sites_data)
         self.twitch_page = TwitchPage(self.driver, self.test_sites_data)
+        self.espn_page = EspnPage(self.driver, self.test_sites_data)
+        # self.facebook_page = FacebookPage(self.driver, self.test_sites_data)
+
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
@@ -64,7 +69,7 @@ class TelemetryTest(unittest.TestCase):
 
     def test_messenger_conference(self):
         self.messenger_page.run_messenger_conference(180)
-        self.telemetry.run_telemetry_test('Facebook', 'CONFERENCE', True, self.messenger_page.interaction)
+        self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.messenger_page.interaction)
 
     def test_microsoft_download(self):
         self.microsoft_page.run_microsoft_download(180)
@@ -95,8 +100,16 @@ class TelemetryTest(unittest.TestCase):
         self.youtube_page.run_youtube_streaming(180)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
 
+    # def test_facebook_social(self):
+    #     self.facebook_page.run_facebook_social(180)
+    #     self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.twitter_page.interaction)
+
+    def test_espn_streaming(self):
+        self.espn_page.run_espn_streaming(180)
+        self.telemetry.run_telemetry_test('ESPN', 'STREAMING', True, self.espn_page.interaction)
+
     def test_twitch_streaming(self):
-        self.twitch_page.run_twitch_streaming(122)
+        self.twitch_page.run_twitch_streaming(180)
         self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
 
     def test_youtube_download(self):

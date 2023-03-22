@@ -36,6 +36,8 @@ class TwitchPage(BasePage):
         self.timeout = 10
 
     def interaction(self, timeout):
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        self.actions.send_keys('1').perform()
         time.sleep(timeout)
 
     def run_twitch_streaming(self, timeout=180):
@@ -46,15 +48,11 @@ class TwitchPage(BasePage):
         self.driver.get(self.test_sites['twitch_streaming'])
         self.driver.maximize_window()
 
-        # return driver
-        # driver.close()
-        # driver.quit()
-        self.actions.send_keys('k').perform()
+        # self.actions.send_keys('k').perform()
         self.logger(f'\nRunning Twitch Streaming... \n')
 
         self.interaction(timeout)
         # 180
-
 
 #
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -76,5 +74,3 @@ class TwitchPage(BasePage):
 #         break
 # else:
 #     driver.close()
-
-
