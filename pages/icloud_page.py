@@ -146,7 +146,7 @@ class IcloudPage(BasePage):
     def run_icloud_upload(self, timeout=180):
         self.driver.get(self.test_sites["icloud_upload"])
 
-        # time.sleep(3000)
+        time.sleep(3000)
         try:
             self.icloud_signin()
         except (NoSuchElementException, TimeoutException, UnexpectedAlertPresentException):

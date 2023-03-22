@@ -22,12 +22,18 @@ def setup_test_environment():
     chrome_options.add_argument("--disable-infobars")
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-popup-blocking")
+    chrome_options.add_argument("--disable-beforeunload")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--disable-web-security")
+    # chrome_options.add_argument("--disable-features=PasswordManager")
+    chrome_options.add_argument("--disable-session-crashed-bubble")
+
     chrome_options.add_experimental_option("prefs", {
         "profile.default_content_setting_values.media_stream_mic": 1,
         "profile.default_content_setting_values.media_stream_camera": 1,
         "profile.default_content_setting_values.geolocation": 1,
         "profile.default_content_setting_values.notifications": 1,
-        "credentials_enable_service": True
+        "credentials_enable_service": 1
     })
 
 

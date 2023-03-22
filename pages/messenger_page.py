@@ -35,6 +35,7 @@ class MessengerPage(BasePage):
 
         try:
             self.driver.switch_to.new_window('tab')
+            self.driver.switch_to.window(self.driver.window_handles[1])
             self.driver.get(self.test_sites["messenger_receiver"])
 
             self.wait_and_execute(self.driver, self.messenger_email_textbox_locator, 30, lambda elem: (

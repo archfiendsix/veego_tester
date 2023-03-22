@@ -25,20 +25,21 @@ class YoutubePage(BasePage):
 
     def interaction_download(self, timeout):
         self.driver.switch_to.window(self.driver.window_handles[0])
-        start_time = time.time()
-        download_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Download"]')
-        downloaded_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloaded"]')
-        downloading_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloading"]')
-        while time.time() - start_time < timeout:
-            try:
-                self.wait_and_execute(self.driver, download_button_locator, 3, lambda elem: elem.click())
-            except (NoSuchElementException, TimeoutException):
-                try:
-                    self.wait_and_execute(self.driver, downloaded_button_locator, 3, lambda elem: elem.click())
-                    delete_all_delete_locator = (By.CSS_SELECTOR, 'tp-yt-paper-dialog button[aria-label="Delete"]')
-                    self.wait_and_execute(self.driver, delete_all_delete_locator, 3, lambda elem: elem.click())
-                except (NoSuchElementException, TimeoutException):
-                    continue
+        # start_time = time.time()
+        # download_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Download"]')
+        # downloaded_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloaded"]')
+        # downloading_button_locator = (By.CSS_SELECTOR, 'button[aria-label="Downloading"]')
+        # while time.time() - start_time < timeout:
+        #     try:
+        #         self.wait_and_execute(self.driver, download_button_locator, 3, lambda elem: elem.click())
+        #     except (NoSuchElementException, TimeoutException):
+        #         try:
+        #             self.wait_and_execute(self.driver, downloaded_button_locator, 3, lambda elem: elem.click())
+        #             delete_all_delete_locator = (By.CSS_SELECTOR, 'tp-yt-paper-dialog button[aria-label="Delete"]')
+        #             self.wait_and_execute(self.driver, delete_all_delete_locator, 3, lambda elem: elem.click())
+        #         except (NoSuchElementException, TimeoutException):
+        #             continue
+        time.sleep(timeout)
 
     def run_youtube_streaming(self, timeout=180):
 
@@ -79,7 +80,7 @@ class YoutubePage(BasePage):
         self.wait_and_execute(self.driver, delete_all_delete_locator, 5, lambda elem: elem.click())
         time.sleep(5)
 
-    def run_youtube_download(self, timeout=180):
+    def run_youtube_download_back(self, timeout=180):
 
         try:
             self.delete_video_download()
@@ -89,7 +90,7 @@ class YoutubePage(BasePage):
         start_time = time.time()
 
         self.driver.get(self.test_sites["youtube_download"])
-
+        # time.sleep(3000)
         # try:
         #     player_paused = WebDriverWait(self.driver, 6).until(
         #         EC.presence_of_element_located(
@@ -98,5 +99,23 @@ class YoutubePage(BasePage):
         #
         # except (NoSuchElementException, TimeoutException):
         #     self.actions.send_keys('k').perform()
+
+        self.interaction_download(timeout)
+
+    def run_youtube_download(self, timeout=180):
+
+        self.driver.get(self.test_sites["youtube_download"])
+        # time.sleep(3000)
+        content_side_panel_icon_locator = (By.XPATH, "//div[contains(text(), 'Content')]")
+        self.wait_and_execute(self.driver, content_side_panel_icon_locator, 5, lambda elem: elem.click())
+
+        select_all_locator = (By.CSS_SELECTOR, 'ytcp-checkbox-lit#selection-checkbox')
+        self.wait_and_execute(self.driver, select_all_locator, 30, lambda elem: elem.click())
+
+        more_actions_locator = (By.XPATH, "//span[contains(text(), 'More actions')]")
+        self.wait_and_execute(self.driver, more_actions_locator, 5, lambda elem:elem.click())
+
+        download_dropdown_locator = (By.CSS_SELECTOR, 'tp-yt-paper-item[test-id="DOWNLOAD"]')
+        self.wait_and_execute(self.driver, download_dropdown_locator, 5, lambda elem: elem.click())
 
         self.interaction_download(timeout)
