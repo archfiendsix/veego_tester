@@ -146,11 +146,12 @@ class IcloudPage(BasePage):
     def run_icloud_upload(self, timeout=180):
         self.driver.get(self.test_sites["icloud_upload"])
 
-        # time.sleep(3000)
         try:
             self.icloud_signin()
         except (NoSuchElementException, TimeoutException, UnexpectedAlertPresentException):
             pass
+
+
 
         iframe = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located(
@@ -159,6 +160,8 @@ class IcloudPage(BasePage):
 
         # switch to the iframe
         self.driver.switch_to.frame(iframe)
+
+        self.delete_file()
 
         self.wait_and_execute(self.driver, self.browse_button_locator, 5, lambda elem: elem.click())
 
@@ -169,8 +172,8 @@ class IcloudPage(BasePage):
         )
         upload_file_dir = os.path.abspath(os.path.join(os.getcwd(), "fixtures/upload_files/gparted.iso"))
 
-        for i in range(10):
-            input_element.send_keys(upload_file_dir)
+
+        input_element.send_keys(upload_file_dir)
 
         self.logger(f'\niCloud Upload Started... \n')
 
