@@ -28,7 +28,7 @@ class Bittorrent(BasePage):
         pyautogui.press('return')
         time.sleep(10)
         self.open_window("BitTorrent")
-        self.open_window("Add New Torrent")
+        self.open_window("Torrent")
         time.sleep(10)
         pyautogui.press('enter')
         pyautogui.press('return')

@@ -25,7 +25,6 @@ def setup_test_environment():
     chrome_options.add_argument("--disable-beforeunload")
     chrome_options.add_argument("--ignore-certificate-errors")
     chrome_options.add_argument("--disable-web-security")
-    # chrome_options.add_argument("--disable-features=PasswordManager")
     chrome_options.add_argument("--disable-session-crashed-bubble")
 
     chrome_options.add_experimental_option("prefs", {
