@@ -78,12 +78,12 @@ class Telemetry(BasePage):
         #         "name"] == name
         return service_items
 
-    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, is_classifcation_final, service_type, uuid_key, service_start_time, delta):
+    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, is_classifcation_final, service_type, uuid_key, service_start_time, delta, score):
 
         self.logger(
             f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
             f"\nName: {detected_service_name}\nService Type: {detected_service_type}\nRecognized in: {delta} "
-            f"Minutes\nService UUID: {uuid_key}\n" f"Is Classification final: {is_classifcation_final}")
+            f"Minutes\nService UUID: {uuid_key}\n" f"Score: {score}\n" f"Is classification final: {is_classifcation_final}")
 
         # Check if service is correct and log message accordingly
         if detected_service_name == service_name and detected_service_type == service_type:
@@ -125,8 +125,9 @@ class Telemetry(BasePage):
                 service_start_time = datetime.utcfromtimestamp(
                     service_item[uuid_key]['start_time'] / 1000)
                 delta = detection_time - service_start_time
+                detected_score = service_item[uuid_key]['score']
 
-                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, detected_is_classification_final, service_type, uuid_key, service_start_time, delta)
+                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, detected_is_classification_final, service_type, uuid_key, service_start_time, delta, detected_score)
 
                 # Wait before trying to detect service again
                 interaction(10)

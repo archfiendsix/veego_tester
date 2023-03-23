@@ -7,7 +7,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from pages.base_page import BasePage
 
-
 class MessengerPage(BasePage):
     def __init__(self, driver, test_sites):
         super().__init__(driver)

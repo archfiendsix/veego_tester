@@ -191,7 +191,7 @@ class BasePage:
         # Find the first window that contains the partial title
         window = None
         for win in all_windows:
-            print(win.title)
+            # print(win.title)
             if partial_window_title in win.title:
                 window = win
                 break

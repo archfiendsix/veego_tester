@@ -3,7 +3,7 @@ import os
 import unittest
 
 from pages.espn_page import EspnPage
-# from pages.facebook_page import FacebookPage
+from pages.facebook_page import FacebookPage
 from pages.twitch_page import TwitchPage
 from setup.test_setup import setup_test_environment
 from pages.microsoft_page import MicrosoftPage
@@ -52,7 +52,7 @@ class TelemetryTest(unittest.TestCase):
         self.msstore = MSStore(self.driver, self.test_sites_data)
         self.twitch_page = TwitchPage(self.driver, self.test_sites_data)
         self.espn_page = EspnPage(self.driver, self.test_sites_data)
-        # self.facebook_page = FacebookPage(self.driver, self.test_sites_data)
+        self.facebook_page = FacebookPage(self.driver, self.test_sites_data)
 
         self.driver.maximize_window()
 
@@ -100,9 +100,9 @@ class TelemetryTest(unittest.TestCase):
         self.youtube_page.run_youtube_streaming(180)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
 
-    # def test_facebook_social(self):
-    #     self.facebook_page.run_facebook_social(180)
-    #     self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.twitter_page.interaction)
+    def test_facebook_social(self):
+        self.facebook_page.run_facebook_social(80)
+        self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.twitter_page.interaction)
 
     def test_espn_streaming(self):
         self.espn_page.run_espn_streaming(180)
