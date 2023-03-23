@@ -29,7 +29,7 @@ class MSStore(BasePage):
         time.sleep(5)
         self.open_window("Microsoft Store")
         # self.application_action("Microsoft Store", "Get")
-        time.sleep(5)
+        time.sleep(10)
 
         pyautogui.press('tab')
         pyautogui.press('tab')
