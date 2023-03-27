@@ -83,6 +83,11 @@ class TelemetryTest(unittest.TestCase):
         self.soundcloud_page.run_soundcloud_upload(180)
         self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
 
+    def test_soundcloud_download(self):
+        # Need Premium account
+        self.soundcloud_page.run_soundcloud_download(180)
+        self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction)
+
     def test_tiktok_social(self):
         self.tiktok_page.run_tiktok_social(180)
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction)
