@@ -37,16 +37,17 @@ class EspnPage(BasePage):
         center_height = x.height // 2
         center_width = x.width // 2
         time.sleep(3)
-        py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.5)), duration=0.25)
+        py.moveTo(center_width - (width * (-0.9)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
         time.sleep(1)
         pyautogui.click()
         time.sleep(1)
         pyautogui.click()
-        # time.sleep(1)
-        # pyautogui.click()
-        # time.sleep(1)
-        # py.moveTo(center_width - (width * (0.2)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
-        time.sleep(80)
+        py.moveTo(center_width - (width * (-0.9)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
+        pyautogui.click()
+        time.sleep(1)
+        pyautogui.click()
+        time.sleep(1)
+        py.moveTo(center_width - (width * (0.1)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
         pyautogui.click()
 
 

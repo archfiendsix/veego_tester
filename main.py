@@ -92,7 +92,7 @@ class TelemetryTest(unittest.TestCase):
 
     def test_pcloud_upload(self):
         self.pcloud_page.run_pcloud_upload(180)
-        self.telemetry.run_telemetry_test('Pcloud', 'UPLOAD', True, self.pcloud_page.interaction)
+        self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_page.interaction)
 
     def test_dropbox_download(self):
         self.dropbox_page.run_dropbox_download(180)
