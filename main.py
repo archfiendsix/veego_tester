@@ -24,6 +24,12 @@ from pages.roblox_page import RobloxPage
 from pages.gmail_page import GmailPage
 from pages.amazonPrime_page import AmazonPrimePage
 from pages.linkedin_page import LinkedinPage
+from pages.netflix_page import NetflixPage
+from pages.instegram_page import InstegramPage
+from pages.dropbox_page import DropboxPage
+from pages.spotify_page import SpotifyPage
+from pages.pcloud_page import PcloudPage
+
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
         # Update paths to be platform-independent
@@ -65,6 +71,13 @@ class TelemetryTest(unittest.TestCase):
         self.gmail_page = GmailPage(self.driver, self.test_sites_data)
         self.amazonPrime_page = AmazonPrimePage(self.driver, self.test_sites_data)
         self.linkedin_page = LinkedinPage(self.driver, self.test_sites_data)
+        self.netflix_page = NetflixPage(self.driver, self.test_sites_data)
+        self.instegram_page = InstegramPage(self.driver, self.test_sites_data)
+        self.dropbox_page = DropboxPage(self.driver, self.test_sites_data)
+        self.spotify_page = SpotifyPage(self.driver, self.test_sites_data)
+        self.pcloud_page = PcloudPage(self.driver, self.test_sites_data)
+
+
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
@@ -77,6 +90,14 @@ class TelemetryTest(unittest.TestCase):
     def test_icloud_upload(self):
         self.icloud_page.run_icloud_upload(180)
         self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
+
+    def test_pcloud_upload(self):
+        self.pcloud_page.run_pcloud_upload(180)
+        self.telemetry.run_telemetry_test('Pcloud', 'UPLOAD', True, self.pcloud_page.interaction)
+
+    def test_dropbox_download(self):
+        self.dropbox_page.run_dropbox_download(180)
+        self.telemetry.run_telemetry_test('Dropbox', 'DOWNLOAD', True, self.dropbox_page.interaction)
 
     def test_messenger_conference(self):
         self.messenger_page.run_messenger_conference(180)
@@ -110,6 +131,9 @@ class TelemetryTest(unittest.TestCase):
     def test_youtube_streaming(self):
         self.youtube_page.run_youtube_streaming(180)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
+    def test_spotify_music(self):
+        self.spotify_page.run_spotify_music(180)
+        self.telemetry.run_telemetry_test('Spotify', 'MUSIC', True, self.spotify_page.interaction)
 
     def test_zoom_conference(self):
         self.zoom_page.run_zoom_conference(180)
@@ -130,16 +154,23 @@ class TelemetryTest(unittest.TestCase):
         self.gmail_page.run_gmail_game(80)
         self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_page.interaction)
     def test_amazonPrime_game(self):
-        self.amazonPrime_page.run_amazonPrime_game(180)
+        self.amazonPrime_page.run_amazonPrime_streaming(180)
         self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_page.interaction)
 
     def test_linkedin_social(self):
         self.linkedin_page.run_linkedin_social(80)
         self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_page.interaction)
 
+    def test_instegram_social(self):
+        self.instegram_page.run_instegram_social(80)
+        self.telemetry.run_telemetry_test('Instegram', 'SOCIAL', True, self.instegram_page.interaction)
+
     def test_facebook_social(self):
         self.facebook_page.run_facebook_social(80)
         self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.facebook_page.interaction)
+    def test_netflix_streaming(self):
+        self.netflix_page.run_netflix_streaming(180)
+        self.telemetry.run_telemetry_test('Netflix', 'STREAMING', True, self.netflix_page.interaction)
 
     def test_espn_streaming(self):
         self.espn_page.run_espn_streaming(180)

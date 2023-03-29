@@ -17,7 +17,7 @@ class AmazonPrimePage(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_amazonPrime_game(self, timeout):
+    def run_amazonPrime_streaming(self, timeout):
         self.driver.get(
             self.test_sites['amazonPrime_streaming'])
         time.sleep(5)
