@@ -24,8 +24,8 @@ from pages.roblox_page import RobloxPage
 from pages.gmail_page import GmailPage
 from pages.amazonPrime_page import AmazonPrimePage
 from pages.linkedin_page import LinkedinPage
+from pages.instagram_page import InstagramPage
 from pages.netflix_page import NetflixPage
-from pages.instegram_page import InstegramPage
 from pages.dropbox_page import DropboxPage
 from pages.spotify_page import SpotifyPage
 from pages.pcloud_page import PcloudPage
@@ -52,8 +52,7 @@ class TelemetryTest(unittest.TestCase):
         self.youtube_page = YoutubePage(self.driver, self.test_sites_data)
         self.telemetry = Telemetry(self.driver, self.config_data)
         self.messenger_page = MessengerPage(self.driver, self.test_sites_data)
-        self.soundcloud_page = SoundcloudPage(
-            self.driver, self.test_sites_data)
+        self.soundcloud_page = SoundcloudPage(self.driver, self.test_sites_data)
         self.twitter_page = TwitterPage(self.driver, self.test_sites_data)
         self.nexusmods_page = NexusModsPage(self.driver, self.test_sites_data)
         self.microsoft_page = MicrosoftPage(self.driver, self.test_sites_data)
@@ -72,7 +71,7 @@ class TelemetryTest(unittest.TestCase):
         self.amazonPrime_page = AmazonPrimePage(self.driver, self.test_sites_data)
         self.linkedin_page = LinkedinPage(self.driver, self.test_sites_data)
         self.netflix_page = NetflixPage(self.driver, self.test_sites_data)
-        self.instegram_page = InstegramPage(self.driver, self.test_sites_data)
+        self.instagram_page = InstagramPage(self.driver, self.test_sites_data)
         self.dropbox_page = DropboxPage(self.driver, self.test_sites_data)
         self.spotify_page = SpotifyPage(self.driver, self.test_sites_data)
         self.pcloud_page = PcloudPage(self.driver, self.test_sites_data)
@@ -161,9 +160,9 @@ class TelemetryTest(unittest.TestCase):
         self.linkedin_page.run_linkedin_social(80)
         self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_page.interaction)
 
-    def test_instegram_social(self):
-        self.instegram_page.run_instegram_social(80)
-        self.telemetry.run_telemetry_test('Instegram', 'SOCIAL', True, self.instegram_page.interaction)
+    def test_instagram_social(self):
+        self.instagram_page.run_instagram_social(80)
+        self.telemetry.run_telemetry_test('Instagram', 'SOCIAL', True, self.instagram_page.interaction)
 
     def test_facebook_social(self):
         self.facebook_page.run_facebook_social(80)

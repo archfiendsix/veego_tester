@@ -6,14 +6,15 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from pages.base_page import BasePage
 
-class InstegramPage(BasePage):
+
+class InstagramPage(BasePage):
     def __init__(self, driver, test_sites):
         super().__init__(driver)
         self.driver = driver
         self.actions = ActionChains(self.driver)
         self.test_sites = test_sites
 
-    def instegram_signin(self):
+    def instagram_signin(self):
         self.driver.switch_to.default_content()
 
         # self.wait_and_execute(
@@ -21,7 +22,7 @@ class InstegramPage(BasePage):
         # time.sleep(3000)
         self.wait_and_execute(
             self.driver, (By.CSS_SELECTOR, 'input[autocomplete="username"]'), 5,
-            lambda elem: elem.send_keys(self.env_instegram_email))
+            lambda elem: elem.send_keys(self.env_instagram_email))
 
         self.wait_and_execute(
             self.driver, (By.XPATH, "//span[contains(text(), 'Next')]"), 5,
@@ -29,7 +30,7 @@ class InstegramPage(BasePage):
 
         self.wait_and_execute(
             self.driver, (By.CSS_SELECTOR, 'input[type="password"]'), 5,
-            lambda elem: elem.send_keys(self.env_instegram_password))
+            lambda elem: elem.send_keys(self.env_instagram_password))
 
         self.wait_and_execute(
             self.driver, (By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]'), 5, lambda elem: elem.click())
@@ -38,9 +39,9 @@ class InstegramPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.random_scroll(timeout)
 
-    def run_instegram_social(self, timeout=180):
+    def run_instagram_social(self, timeout=180):
 
-        self.driver.get(self.test_sites["instegram_social"])
+        self.driver.get(self.test_sites["instagram_social"])
 
         try:
             signin_iframe_locator = (By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
@@ -58,5 +59,5 @@ class InstegramPage(BasePage):
             pass
 
         # self.twitter_signin(self.env_facebook_email, self.env_facebook_password)
-        self.logger(f'\nRunning Instegram Social... \n')
+        self.logger(f'\nRunning Instagram Social... \n')
         self.interaction(timeout)
