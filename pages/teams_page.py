@@ -18,18 +18,25 @@ class TeamsPage(BasePage):
         time.sleep(timeout)
 
     def run_teams_conference(self, timeout):
-        self.driver.get(
-            self.test_sites['teams_conference'])
+        self.driver.get(self.test_sites['teams_conference'])
         time.sleep(5)
         x = py.size()
         height = x.height
         width = x.width
         center_height = x.height // 2
         center_width = x.width // 2
-        py.moveTo(center_width - (width * (0.005)), center_height - (height // 4) + (height * (0.36)), duration=0.25)
+        py.moveTo(center_width - (width * (-0.005)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
         time.sleep(5)
-        pyautogui.click()
-        time.sleep(1)
+        # pyautogui.click()
+        # time.sleep(1)
+        #
+        # py.moveTo(center_width - (width * (0.005)), center_height - (height // 4) + (height * (0.36)), duration=0.25)
+        # time.sleep(5)
+        # pyautogui.click()
+        # time.sleep(1)
+
+
+
         self.logger("teams conferencing started...")
         self.interaction(timeout)
 

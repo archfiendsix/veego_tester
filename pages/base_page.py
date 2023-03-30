@@ -29,6 +29,8 @@ class BasePage:
         # Set environment variables
         self.env_username = os.getenv("VEEGO_USERNAME")
         self.env_password = os.getenv("VEEGO_PASSWORD")
+        # self.azure_username = os.getazure("VEEGO_USERNAME")
+        # self.azure_password = os.getazure("VEEGO_PASSWORD")
         self.env_soundcloud_email = os.getenv("SOUNDCLOUD_EMAIL")
         self.env_soundcloud_password = os.getenv("SOUNDCLOUD_PASSWORD")
         self.env_twitter_email = os.getenv("TWITTER_EMAIL")
