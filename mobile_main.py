@@ -7,7 +7,7 @@ import time
 import os
 import pytest
 import urllib3
-from appium import webdriver as webdriver
+from appium import webdriver as mobile_webdriver
 from selenium.webdriver.chrome.options import Options
 from appium.webdriver import Remote
 from selenium.webdriver import Chrome
@@ -45,7 +45,7 @@ class TelemetryTest(unittest.TestCase):
             "noReset": True
         }
 
-        self.mobile_driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
+        self.mobile_driver = mobile_webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
 
         # Load configuration data and test site data from JSON files
         with open(config_dir, "r") as json_file:
@@ -69,7 +69,13 @@ class TelemetryTest(unittest.TestCase):
     @pytest.mark.sanity
     def test_pcloud_download_mobile(self):
         self.pcloud_mobile.run_pcloud_download_mobile(180)
-        self.telemetry.run_telemetry_test('pCLoud', 'DOWNLOAD', True, self.pcloud_mobile.interaction)
+        self.telemetry.run_telemetry_test('pcloud', 'DOWNLOAD', True, self.pcloud_mobile.interaction)
+
+    @pytest.mark.repeat(10)
+    @pytest.mark.sanity
+    def test_pcloud_upload_mobile(self):
+        self.pcloud_mobile.run_pcloud_upload_mobile(180)
+        self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_mobile.interaction)
 
     def tearDown(self):
         # Close the browser

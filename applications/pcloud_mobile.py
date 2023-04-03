@@ -23,13 +23,23 @@ class PCloudMobile(BasePage):
         self.actions = ActionChains(self.driver)
         self.test_sites = test_sites
         self.timeout = 10
+        self.download_button_locator = (By.ID, "com.pcloud.pcloud:id/action_download")
+        self.hamburger_button = (By.XPATH, '//android.widget.ImageButton[@content-desc="pCloud"]')
+        self.tasks_link = (By.ID, 'com.pcloud.pcloud:id/subtitle')
+        self.download_tab = (By.XPATH, '//android.widget.LinearLayout[@content-desc="Download"]/android.widget.TextView')
+        self.add_button_locator = (By.ID, 'com.pcloud.pcloud:id/fabs_container')
+        self.upload_file_locator = (By.XPATH,
+                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.RelativeLayout[3]/android.widget.ImageButton')
+        self.first_file_locator = (By.XPATH,
+                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/androidx.drawerlayout.widget.DrawerLayout/android.widget.ScrollView/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.TextView')
+        self.select_button_locator = (By.ID, 'com.google.android.documentsui:id/action_menu_select')
 
     def interaction(self, timeout):
         time.sleep(timeout)
 
     def run_pcloud_download_mobile(self, timeout=180):
         self.mobile_driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
-
+        self.logger('Starting pcloud Download...')
         # Locate the element using its XPATH
         element = self.mobile_driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[4]/android.widget.ImageButton')
 
@@ -44,6 +54,28 @@ class PCloudMobile(BasePage):
         actions.w3c_actions.pointer_action.release()
         actions.perform()
 
-        # download_button_locator = (By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/androidx.appcompat.widget.LinearLayoutCompat[9]/android.widget.CheckedTextView")
-        # self.wait_and_execute(self.mobile_driver, download_button_locator, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.download_button_locator, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.hamburger_button, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.tasks_link, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.download_tab, 10, lambda elem: elem.click())
+        self.logger('pCloud Download started...')
         self.interaction(180)
+
+    def run_pcloud_upload_mobile(self, timeout=180):
+        self.mobile_driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
+        self.logger('Starting pcloud Download...')
+
+        self.wait_and_execute(self.mobile_driver, self.add_button_locator, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.upload_file_locator, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.first_file_locator, 10, lambda elem: elem.click())
+
+        try:
+            self.wait_and_execute(self.mobile_driver, self.select_button_locator, 10, lambda elem: elem.click())
+        except (NoSuchElementException, TimeoutException, StaleElementReferenceException):
+            pass
+
+        self.wait_and_execute(self.mobile_driver, self.hamburger_button, 10, lambda elem: elem.click())
+        self.wait_and_execute(self.mobile_driver, self.tasks_link, 10, lambda elem: elem.click())
+
+        self.interaction(timeout)
+

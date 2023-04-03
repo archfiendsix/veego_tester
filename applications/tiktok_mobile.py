@@ -30,7 +30,7 @@ class TiktokMobile(BasePage):
         height = self.mobile_driver.get_window_size()['height']
 
         start_time = time.time()
-
+        self.logger('Interacting with Tiktok application...')
         while time.time() - start_time < timeout:
             # Wait for a random time between 0 and 10 seconds
             time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
@@ -45,6 +45,9 @@ class TiktokMobile(BasePage):
             action = TouchAction(self.mobile_driver)
             action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
 
+
     def run_tiktok_mobile(self, timeout=180):
+        self.logger('Starting Tiktok Application...')
         self.mobile_driver.start_activity("com.ss.android.ugc.trill", "com.ss.android.ugc.aweme.splash.SplashActivity")
+        self.logger('Tiktok application started...')
         self.interaction(timeout)
