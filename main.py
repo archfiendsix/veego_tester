@@ -54,54 +54,54 @@ class TelemetryTest(unittest.TestCase):
     # Needs subscription to upload/download more files
     def test_icloud_download(self):
         # Sign in script requires text code authentication. Must log in manually.
-        self.icloud_page.run_icloud_download(180)
+        self.icloud_page.run_icloud_download(155)
         self.telemetry.run_telemetry_test('iCloud', 'DOWNLOAD', True, self.icloud_page.interaction)
 
     #  Needs subscription to upload/download more files
     def test_icloud_upload(self):
-        self.icloud_page.run_icloud_upload(180)
+        self.icloud_page.run_icloud_upload(155)
         self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
 
     def test_messenger_conference(self):
-        self.messenger_page.run_messenger_conference(180)
+        self.messenger_page.run_messenger_conference(155)
         self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.messenger_page.interaction)
 
     def test_microsoft_download(self):
-        self.microsoft_page.run_microsoft_download(180)
+        self.microsoft_page.run_microsoft_download(155)
         self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.microsoft_page.interaction)
 
     def test_nexusmods_download(self):
-        self.nexusmods_page.run_nexusmods_download(180)
+        self.nexusmods_page.run_nexusmods_download(155)
         self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True, self.nexusmods_page.interaction)
 
     def test_soundcloud_music(self):
-        self.soundcloud_page.run_soundcloud_music(180)
+        self.soundcloud_page.run_soundcloud_music(155)
         self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True, self.soundcloud_page.interaction)
 
     def test_soundcloud_upload(self):
         # Need Premium account
-        self.soundcloud_page.run_soundcloud_upload(180)
+        self.soundcloud_page.run_soundcloud_upload(155)
         self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
 
     def test_soundcloud_download(self):
         # Need Premium account
-        self.soundcloud_page.run_soundcloud_download(180)
+        self.soundcloud_page.run_soundcloud_download(155)
         self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction)
 
     def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
+        self.tiktok_page.run_tiktok_social(155)
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction)
 
     def test_twitter_social(self):
-        self.twitter_page.run_twitter_social(180)
+        self.twitter_page.run_twitter_social(155)
         self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction)
 
     def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
+        self.youtube_page.run_youtube_streaming(155)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
 
     def test_twitch_streaming(self):
-        self.twitch_page.run_twitch_streaming(122)
+        self.twitch_page.run_twitch_streaming(155)
         self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
 
     def test_youtube_download(self):
@@ -111,12 +111,12 @@ class TelemetryTest(unittest.TestCase):
     # Not Yet Working
     def test_bittorrent_download(self):
 
-        self.bittorrent.run_bittorrent_download(180)
+        self.bittorrent.run_bittorrent_download(155)
         self.telemetry.run_telemetry_test('Torrent', 'TORRENT', True, self.youtube_page.interaction_download)
 
     def test_msstore_download(self):
 
-        self.msstore.run_msstore_download(180)
+        self.msstore.run_msstore_download(155)
         self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.msstore.interaction)
 
     def tearDown(self):

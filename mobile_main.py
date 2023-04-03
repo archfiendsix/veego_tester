@@ -62,19 +62,19 @@ class TelemetryTest(unittest.TestCase):
     @pytest.mark.repeat(10)
     @pytest.mark.sanity
     def test_tiktok_social_mobile(self):
-        self.tiktok_mobile.run_tiktok_mobile(180)
+        self.tiktok_mobile.run_tiktok_mobile(155)
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_mobile.interaction)
 
     @pytest.mark.repeat(10)
     @pytest.mark.sanity
     def test_pcloud_download_mobile(self):
-        self.pcloud_mobile.run_pcloud_download_mobile(180)
+        self.pcloud_mobile.run_pcloud_download_mobile(155)
         self.telemetry.run_telemetry_test('pcloud', 'DOWNLOAD', True, self.pcloud_mobile.interaction)
 
     @pytest.mark.repeat(10)
     @pytest.mark.sanity
     def test_pcloud_upload_mobile(self):
-        self.pcloud_mobile.run_pcloud_upload_mobile(180)
+        self.pcloud_mobile.run_pcloud_upload_mobile(155)
         self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_mobile.interaction)
 
     def tearDown(self):
