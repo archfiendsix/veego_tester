@@ -80,4 +80,4 @@ class TelemetryTest(unittest.TestCase):
     def tearDown(self):
         # Close the browser
         self.desktop_driver.quit()
-        self.mobile_driver.quit()
+        # self.mobile_driver.quit()
