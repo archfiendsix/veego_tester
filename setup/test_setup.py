@@ -35,7 +35,6 @@ def setup_test_environment():
         "credentials_enable_service": 1
     })
 
-
     driver = webdriver.Chrome(options=chrome_options)
 
     # prefs = {"download.default_directory": download_dir}

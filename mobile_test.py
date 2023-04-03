@@ -115,50 +115,65 @@ driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
 # driver = Remote('http://localhost:4723/wd/hub', options.to_capabilities())
 
 # ==========================
-# driver.start_activity("com.ss.android.ugc.trill","com.ss.android.ugc.aweme.splash.SplashActivity")
-#
-#
-# # Get the dimensions of the screen
-# width = driver.get_window_size()['width']
-# height = driver.get_window_size()['height']
-#
-# start_time = time.time()
-# timeout = 20
-#
-# while time.time() - start_time < timeout:
-#     # Wait for a random time between 0 and 10 seconds
-#     time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
-#
-#     # Calculate the start and end coordinates for the swipe
-#     start_x = width / 2
-#     start_y = height / 2
-#     end_x = start_x
-#     end_y = start_y - (height * 0.1)  # move in the opposite direction
-#
-#     # Perform the swipe action
-#     action = TouchAction(driver)
-#     action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
+driver.start_activity("com.ss.android.ugc.trill","com.ss.android.ugc.aweme.splash.SplashActivity")
+
+
+# Get the dimensions of the screen
+width = driver.get_window_size()['width']
+height = driver.get_window_size()['height']
+
+start_time = time.time()
+timeout = 20
+
+while time.time() - start_time < timeout:
+    # Wait for a random time between 0 and 10 seconds
+    time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
+
+    # Calculate the start and end coordinates for the swipe
+    start_x = width / 2
+    start_y = height / 2
+    end_x = start_x
+    end_y = start_y - (height * 0.1)  # move in the opposite direction
+
+    # Perform the swipe action
+    action = TouchAction(driver)
+    action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
 # ==========================
 
-driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
+# driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
+#
+# # Locate the element using its XPATH
+# element = driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[4]/android.widget.ImageButton')
+#
+# # Tap on the element
+# element.click()
+#
+# actions = ActionChains(driver)
+# actions.w3c_actions = ActionBuilder(driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
+# actions.w3c_actions.pointer_action.move_to_location(495, 1773)
+# actions.w3c_actions.pointer_action.pointer_down()
+# actions.w3c_actions.pointer_action.move_to_location(532, 1305)
+# actions.w3c_actions.pointer_action.release()
+# actions.perform()
+#==============upload================
+# driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
+# el6 = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.ImageButton")
+# el6.click()
+# el7 = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.RelativeLayout[3]/android.widget.TextView")
+# el7.click()
+# el8 = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/androidx.drawerlayout.widget.DrawerLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.HorizontalScrollView/android.widget.LinearLayout/android.widget.LinearLayout[4]/android.widget.ImageView")
+# el8.click()
+# actions = ActionChains(driver)
+# actions.w3c_actions = ActionBuilder(driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
+# actions.w3c_actions.pointer_action.move_to_location(298, 919)
+# actions.w3c_actions.pointer_action.pointer_down()
+# actions.w3c_actions.pointer_action.pause(0.1)
+# actions.w3c_actions.pointer_action.release()
+# actions.perform()
 
-# Locate the element using its XPATH
-element = driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[4]/android.widget.ImageButton')
-
-# Tap on the element
-element.click()
-
-actions = ActionChains(driver)
-actions.w3c_actions = ActionBuilder(driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
-actions.w3c_actions.pointer_action.move_to_location(495, 1773)
-actions.w3c_actions.pointer_action.pointer_down()
-actions.w3c_actions.pointer_action.move_to_location(532, 1305)
-actions.w3c_actions.pointer_action.release()
-actions.perform()
-
-
-download_element = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/androidx.appcompat.widget.LinearLayoutCompat[9]/android.widget.CheckedTextView")
-download_element.click()
+# download_element = driver.find_element(By.XPATH, "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/androidx.appcompat.widget.LinearLayoutCompat[9]/android.widget.CheckedTextView")
+# download_element.click()
+#==============================
 time.sleep(180)
 telemetry.run_telemetry_test("pCloud", "DOWNLOAD", True)
 
