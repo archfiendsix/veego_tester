@@ -33,7 +33,7 @@ class NetflixPage(BasePage):
         py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
         pyautogui.click()
         time.sleep(1)
-        self.driver.find_element(By.XPATH,'//*[@id="main-view"]/div/span/div/div/div/div/div/div[2]/div/div/div[3]/a[2]/button').click()
+        self.driver.find_element(By.XPATH,'//*[@id="main-view"]/div/span/div/div/div/div/div/div[2]/div/div/div[3]/a/button').click()
         time.sleep(1)
 
         self.logger("Netflix streaming started...")

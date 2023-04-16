@@ -29,6 +29,7 @@ from pages.netflix_page import NetflixPage
 from pages.dropbox_page import DropboxPage
 from pages.spotify_page import SpotifyPage
 from pages.pcloud_page import PcloudPage
+from pages.speed_page import SpeedPage
 
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
@@ -75,20 +76,20 @@ class TelemetryTest(unittest.TestCase):
         self.dropbox_page = DropboxPage(self.driver, self.test_sites_data)
         self.spotify_page = SpotifyPage(self.driver, self.test_sites_data)
         self.pcloud_page = PcloudPage(self.driver, self.test_sites_data)
-
+        self.speed_page = SpeedPage(self.driver, self.test_sites_data)
 
         self.driver.maximize_window()
 
     # Needs subscription to upload/download more files
     def test_icloud_download(self):
         # Sign in script requires text code authentication. Must log in manually.
-        self.icloud_page.run_icloud_download(180)
+        self.icloud_page.run_icloud_download(100)
         self.telemetry.run_telemetry_test('iCloud', 'DOWNLOAD', True, self.icloud_page.interaction)
 
     #  Needs subscription to upload/download more files
-    def test_icloud_upload(self):
-        self.icloud_page.run_icloud_upload(180)
-        self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
+    # def test_icloud_upload(self):
+    #     self.icloud_page.run_icloud_upload(120)
+    #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
 
     def test_pcloud_upload(self):
         self.pcloud_page.run_pcloud_upload(180)
@@ -98,6 +99,9 @@ class TelemetryTest(unittest.TestCase):
         self.dropbox_page.run_dropbox_download(180)
         self.telemetry.run_telemetry_test('Dropbox', 'DOWNLOAD', True, self.dropbox_page.interaction)
 
+    # def test_dropbox_upload(self):
+    #     self.dropbox_page.run_dropbox_upload(180)
+    #     self.telemetry.run_telemetry_test('Dropbox', 'UPLOAD', True, self.dropbox_page.interaction)
     def test_messenger_conference(self):
         self.messenger_page.run_messenger_conference(180)
         self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.messenger_page.interaction)
@@ -118,6 +122,11 @@ class TelemetryTest(unittest.TestCase):
         # Need Premium account
         self.soundcloud_page.run_soundcloud_upload(180)
         self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
+
+    def test_soundcloud_download(self):
+        # Need Premium account
+        self.soundcloud_page.run_soundcloud_download(180)
+        self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction)
 
     def test_tiktok_social(self):
         self.tiktok_page.run_tiktok_social(180)
@@ -149,8 +158,8 @@ class TelemetryTest(unittest.TestCase):
         self.roblox_page.run_roblox_game(180)
         self.telemetry.run_telemetry_test('Roblox', 'GAMING', True, self.roblox_page.interaction)
 
-    def test_gmail_game(self):
-        self.gmail_page.run_gmail_game(80)
+    def test_gmail_mail(self):
+        self.gmail_page.run_gmail_mail(80)
         self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_page.interaction)
     def test_amazonPrime_game(self):
         self.amazonPrime_page.run_amazonPrime_streaming(180)
@@ -178,6 +187,9 @@ class TelemetryTest(unittest.TestCase):
     def test_twitch_streaming(self):
         self.twitch_page.run_twitch_streaming(180)
         self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
+    def test_speed_download(self):
+        self.speed_page.run_speed_download(100)
+        self.telemetry.run_telemetry_test('Speed', 'DOWNLOAD', True, self.speed_page.interaction)
 
     def test_youtube_download(self):
         self.youtube_page.run_youtube_download(180)

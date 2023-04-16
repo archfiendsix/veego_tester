@@ -17,7 +17,7 @@ class GmailPage(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_gmail_game(self, timeout):
+    def run_gmail_mail(self, timeout):
         self.driver.get(
             self.test_sites['gmail_email'])
         time.sleep(5)

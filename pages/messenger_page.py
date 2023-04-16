@@ -25,10 +25,10 @@ class MessengerPage(BasePage):
             print("Detecting Login State...")
             self.driver.get(self.test_sites["messenger_caller"])
 
-            # self.wait_and_execute(self.driver, self.messenger_email_textbox_locator, 10, lambda elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE), elem.send_keys(self.env_messenger_email)))
-            # self.wait_and_execute(self.driver, self.messenger_password_texbox_locator, 10, lambda elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE), elem.send_keys(self.env_messenger_password)))
-            # self.wait_and_execute(self.driver,self.keep_me_signed_in_label, 10, lambda elem:elem.click())
-            # self.wait_and_execute(self.driver, self.messenger_continue_button_locator, 10, lambda elem: elem.click())
+            self.wait_and_execute(self.driver, self.messenger_email_textbox_locator, 10, lambda elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE), elem.send_keys(self.env_messenger_email)))
+            self.wait_and_execute(self.driver, self.messenger_password_texbox_locator, 10, lambda elem: (elem.click(), elem.send_keys(Keys.CONTROL+"a"), elem.send_keys(Keys.DELETE), elem.send_keys(self.env_messenger_password)))
+            self.wait_and_execute(self.driver,self.keep_me_signed_in_label, 10, lambda elem:elem.click())
+            self.wait_and_execute(self.driver, self.messenger_continue_button_locator, 10, lambda elem: elem.click())
 
         except (NoSuchElementException, TimeoutException):
             print("User already logged in")

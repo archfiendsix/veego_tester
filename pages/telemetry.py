@@ -25,10 +25,11 @@ class Telemetry(BasePage):
         self.driver.get(
             self.config_data["telemetry"] + self.config_data["router_id"])
         try:
-
+            '''Need to add: self.azure_username'''
             login_textbox_locator = (By.ID, "username")
             login_tb_attrib = self.wait_and_execute(
                 self.driver, login_textbox_locator, 20, lambda elem: elem.get_attribute("value"))
+
             # Check if the login textbox is already populated with the correct value
             if login_tb_attrib != self.env_username:
                 # login_textbox.send_keys(Keys.CONTROL + "a")
@@ -40,7 +41,7 @@ class Telemetry(BasePage):
                 # login_textbox.send_keys(self.env_username)
                 self.wait_and_execute(self.driver, login_textbox_locator,
                                       20, lambda elem: elem.send_keys(self.env_username))
-
+            '''Need to add: self.azure_password'''
             password_textbox = self.driver.find_element(By.ID, "password")
             # Check if the password textbox is already populated with the correct value
             if password_textbox.get_attribute("value") != self.env_password:
@@ -63,11 +64,11 @@ class Telemetry(BasePage):
         body = self.driver.find_element(By.CSS_SELECTOR, "body")
         body_text = body.text
 
-        try:
-            text_to_json = json.loads(body_text)
-        except json.decoder.JSONDecodeError as e:
-            logging.error(f"Failed to parse JSON data: {e}")
-            return
+        # try:
+        text_to_json = json.loads(body_text)
+        # except json.decoder.JSONDecodeError as e:
+        #     logging.error(f"Failed to parse JSON data: {e}")
+        #     return
 
         services = text_to_json["devices"][0]["discovery"]["devices"][self.config_data["mac"]]["services"]
         assert services, "No running services detected"

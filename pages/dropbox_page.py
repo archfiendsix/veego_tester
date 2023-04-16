@@ -4,7 +4,7 @@ import pyautogui
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
-
+import pyautogui as py
 class DropboxPage(BasePage):
     def __init__(self, driver, test_sites):
         super().__init__(driver)
@@ -20,14 +20,50 @@ class DropboxPage(BasePage):
         self.driver.get( self.test_sites['dropbox_download'])
         time.sleep(5)
         # time.sleep(3000)
-        self.driver.find_element(By.XPATH, '// *[ @ id = "files-view-table-container"] / tr[4] / td[1] / div').click()
+        # self.driver.find_element(By.XPATH, '//*[@id="maestro-content-portal"]/div/div/div/div/div/div[2]/div[1]/div/div[1]/div/div/button').click()
         time.sleep(3)
-        self.driver.find_element(By.XPATH,' // *[ @ id = "maestro-content-portal"] / div / div / div / div / div / div[2] / div[1] / div / div[4] / button / span').click()
+        x = py.size()
+        height = x.height
+        width = x.width
+        center_height = x.height // 2
+        center_width = x.width // 2
+        py.moveTo(center_width - (width * (0.13)), center_height - (height // 4) + (height * (0.44)), duration=0.25)  # Confirmation to sync
+        time.sleep(2)
+        pyautogui.click()
+        pyautogui.click()
+        time.sleep(1)
+        py.moveTo(center_width - (width * (0.02)), center_height - (height // 4) + (height * (0.44)), duration=0.25)
+        time.sleep(2)
+        pyautogui.click()
+        pyautogui.click()
+        # py.moveTo(center_width - (width * (0.3)), center_height - (height // 4) + (height * (0.001)),
+        #           duration=0.22)  # arrive to icon_2 of user in chrome
+        # time.sleep(2)
+        # pyautogui.click()
+        # time.sleep(1)
+        # py.moveTo(center_width - (width * (0.3)), center_height - (height // 4) + (height * (0.031)),
+        #           duration=0.25)  # arrive to password
+        # time.sleep(2)
+        # pyautogui.click()
+        # py.moveTo(center_width - (width * (0.36)), center_height - (height // 4) + (height * (0.009)),
+        #           duration=0.25)  # scroll on dropbox
+        time.sleep(2)
+
+        time.sleep(2)
+        # self.driver.find_element(By.XPATH,' // *[ @ id = "maestro-content-portal"] / div / div / div / div / div / div[2] / div[1] / div / div[4] / button / span').click()
         self.logger("Dropbox download started...")
         self.interaction(timeout)
 
 
-
+    def run_dropbox_upload(self, timeout):
+        self.driver.get( self.test_sites['dropbox_upload'])
+        time.sleep(3)
+        # time.sleep(3000)
+        self.driver.find_element(By.XPATH, '//*[@id="maestro-content-portal"]/div/div/div/div/div/div[2]/div[1]/div/div[1]/div/div/button').click()
+        time.sleep(3)
+        # self.driver.find_element(By.XPATH,' // *[ @ id = "maestro-content-portal"] / div / div / div / div / div / div[2] / div[1] / div / div[4] / button / span').click()
+        self.logger("Dropbox upload started...")
+        self.interaction(timeout)
 
 #
 # import os

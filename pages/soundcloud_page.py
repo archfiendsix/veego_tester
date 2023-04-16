@@ -151,3 +151,25 @@ class SoundcloudPage(BasePage):
         save_button.click()
         # Wait for the upload to complete
         time.sleep(timeout)
+
+    def run_soundcloud_download(self, timeout=180):
+        self.logger('Starting Soundcloud download test...')
+
+        # Load the Soundcloud upload page
+        self.driver.get(self.test_sites["soundcloud_download"])
+        try:
+            self.wait_and_execute(self.driver, self.accept_cookies_button_locator, 5, lambda elem: elem.click())
+
+        except (NoSuchElementException, TimeoutException):
+            pass
+        self.soundcloud_signin()
+        self.driver.get(self.test_sites["soundcloud_download"])
+
+        more_button_locator= (By.CSS_SELECTOR, '.sc-button-group.sc-button-group-medium button[title="More"]')
+        self.wait_and_execute(self.driver, more_button_locator, 10, lambda elem:elem.click())
+
+        download_file_button = (By.CSS_SELECTOR, 'button[aria-label="Download this track"]')
+        self.wait_and_execute(self.driver, download_file_button, 10, lambda elem: elem.click())
+
+        # Wait for the upload to complete
+        time.sleep(timeout)
