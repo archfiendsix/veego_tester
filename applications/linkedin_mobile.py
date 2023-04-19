@@ -16,7 +16,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
 
-class TiktokMobile(BasePage):
+class LinkedinMobile(BasePage):
     def __init__(self, mobile_driver, test_sites):
         super().__init__(mobile_driver)
         self.mobile_driver = mobile_driver
@@ -30,7 +30,7 @@ class TiktokMobile(BasePage):
         height = self.mobile_driver.get_window_size()['height']
 
         start_time = time.time()
-        self.logger('Interacting with Tiktok application...')
+        self.logger('Interacting with Linkedin application...')
         while time.time() - start_time < timeout:
             # Wait for a random time between 0 and 10 seconds
             time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
@@ -46,8 +46,8 @@ class TiktokMobile(BasePage):
             action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
         time.sleep(timeout)
 
-    def run_tiktok_mobile(self, timeout=50):
-        self.logger('Starting Tiktok Application...')
-        self.mobile_driver.start_activity("com.zhiliaoapp.musically","com.ss.android.ugc.aweme.splash.SplashActivity")
-        self.logger('Tiktok application started...')
+    def run_linkedin_mobile(self, timeout=50):
+        self.logger('Starting Linkedin Application...')
+        self.mobile_driver.start_activity("com.linkedin.android","com.linkedin.android.authenticator.LaunchActivity")
+        self.logger('Linkedin application started...')
         self.interaction(timeout)

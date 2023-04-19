@@ -100,12 +100,12 @@ desired_caps = {
 
 
 
-# options = Options()
-# options.set_capability('automationName', 'UIAutomator2')
-# options.set_capability('deviceName', '477cffc9')
-# options.set_capability('platformName', 'Android')
-# options.set_capability('platformVersion', '13')
-# options.set_capability('app', 'C:\\Users\\Ace\\Desktop\\Wrk\\veego_tester\\TikTok_28.9.1_Apkpure.apk')
+options = Options()
+options.set_capability('automationName', 'UIAutomator2')
+options.set_capability('deviceName', '477cffc9')
+options.set_capability('platformName', 'Android')
+options.set_capability('platformVersion', '13')
+options.set_capability('app', 'C:\\Users\\Ace\\Desktop\\Wrk\\veego_tester\\TikTok_28.9.1_Apkpure.apk')
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

@@ -1,6 +1,8 @@
 import time
 import os
 import random
+import pyautogui as py
+import pyautogui
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -16,7 +18,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
 
 
-class TiktokMobile(BasePage):
+class FacebookMobile(BasePage):
     def __init__(self, mobile_driver, test_sites):
         super().__init__(mobile_driver)
         self.mobile_driver = mobile_driver
@@ -30,7 +32,7 @@ class TiktokMobile(BasePage):
         height = self.mobile_driver.get_window_size()['height']
 
         start_time = time.time()
-        self.logger('Interacting with Tiktok application...')
+        self.logger('Interacting with Facebook application...')
         while time.time() - start_time < timeout:
             # Wait for a random time between 0 and 10 seconds
             time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
@@ -46,8 +48,19 @@ class TiktokMobile(BasePage):
             action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
         time.sleep(timeout)
 
-    def run_tiktok_mobile(self, timeout=50):
-        self.logger('Starting Tiktok Application...')
-        self.mobile_driver.start_activity("com.zhiliaoapp.musically","com.ss.android.ugc.aweme.splash.SplashActivity")
-        self.logger('Tiktok application started...')
+
+    def run_facebook_mobile(self, timeout=50):
+        self.logger('Starting Facebook Application...')
+        self.mobile_driver.start_activity("com.facebook.katana","com.facebook.katana.LoginActivity")
+        time.sleep(1)
+        x = py.size()
+        height = x.height
+        width = x.width
+        center_height = x.height // 2
+        center_width = x.width // 2
+        time.sleep(1)
+        # py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
+        # pyautogui.click()
+        # time.sleep(1)
+        self.logger('Facebook application started...')
         self.interaction(timeout)

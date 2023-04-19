@@ -129,7 +129,7 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction)
 
     def test_tiktok_social(self):
-        self.tiktok_page.run_tiktok_social(180)
+        self.tiktok_page.run_tiktok_social(80)
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction)
 
     def test_twitter_social(self):
@@ -137,7 +137,7 @@ class TelemetryTest(unittest.TestCase):
         self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction)
 
     def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(180)
+        self.youtube_page.run_youtube_streaming(30)
         self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
     def test_spotify_music(self):
         self.spotify_page.run_spotify_music(180)
