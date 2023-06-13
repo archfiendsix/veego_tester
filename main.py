@@ -1,11 +1,14 @@
 import json
 import os
 import unittest
+# from venv import logger
 
 from pages.espn_page import EspnPage
 from pages.facebook_page import FacebookPage
+from pages.squidtv_page import SquidtvPage
 from pages.twitch_page import TwitchPage
 from pages.zoom_page import ZoomPage
+from pages.skype_page import SkypePage
 from setup.test_setup import setup_test_environment
 from pages.microsoft_page import MicrosoftPage
 from pages.messenger_page import MessengerPage
@@ -30,7 +33,28 @@ from pages.dropbox_page import DropboxPage
 from pages.spotify_page import SpotifyPage
 from pages.pcloud_page import PcloudPage
 from pages.speed_page import SpeedPage
+from pages.squidtv_page import SquidtvPage
 
+# @pytest.mark.sanity
+class kill_process():
+    # logger('clean_computer')
+
+    os.system(' taskkill /f /im Skype.exe')
+    os.system('taskkill /f /im chrome.exe')
+    os.system('taskkill /f /im WebexMTAV2.exe')
+    os.system('taskkill /f /im WebexHost.exe')
+    os.system('taskkill /f /im wmlhost.exe')
+    os.system('taskkill /f /im atmgr.exe ')
+    os.system('taskkill /f /im CiscoCollabHost.exe')
+    os.system('taskkill /f /im chromedriver.exe')
+    os.system('taskkill /f /im Zoom.exe')
+    os.system('taskkill /f /im Teams.exe')
+    os.system('taskkill /f /im RobloxPlayerBeta.exe')
+    os.system('taskkill /f /im Messenger.exe')
+    os.system('taskkill /f /im steame.exe')
+    os.system('taskkill /f /im steamservice.exe')
+    os.system('taskkill /f /im steamwebhelper.exe')
+    # logger.info('ending clean_computer')
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
         # Update paths to be platform-independent
@@ -67,6 +91,7 @@ class TelemetryTest(unittest.TestCase):
         self.zoom_page = ZoomPage(self.driver, self.test_sites_data)
         self.googleMeet_page = GoogleMeetPage(self.driver, self.test_sites_data)
         self.teams_page = TeamsPage(self.driver, self.test_sites_data)
+        self.skype_page = SkypePage(self.driver, self.test_sites_data)
         self.roblox_page = RobloxPage(self.driver, self.test_sites_data)
         self.gmail_page = GmailPage(self.driver, self.test_sites_data)
         self.amazonPrime_page = AmazonPrimePage(self.driver, self.test_sites_data)
@@ -77,14 +102,33 @@ class TelemetryTest(unittest.TestCase):
         self.spotify_page = SpotifyPage(self.driver, self.test_sites_data)
         self.pcloud_page = PcloudPage(self.driver, self.test_sites_data)
         self.speed_page = SpeedPage(self.driver, self.test_sites_data)
+        self.squidtv_page = SquidtvPage(self.driver, self.test_sites_data)
 
+        self.resource = self._get_resource_info(self.config_data, "windows")
         self.driver.maximize_window()
 
-    # Needs subscription to upload/download more files
-    def test_icloud_download(self):
-        # Sign in script requires text code authentication. Must log in manually.
-        self.icloud_page.run_icloud_download(100)
-        self.telemetry.run_telemetry_test('iCloud', 'DOWNLOAD', True, self.icloud_page.interaction)
+    def _get_resource_info(self, data, tag):
+        if isinstance(data, dict):
+            if 'tag' in data and data['tag'] == tag:
+                return data
+            for value in data.values():
+                result = self._get_resource_info(value, tag)
+                if result:
+                    return result
+        elif isinstance(data, list):
+            for item in data:
+                result = self._get_resource_info(item, tag)
+                if result:
+                    return result
+        return None
+
+
+
+    ''' Needs subscription to upload/download more files'''
+    # def test_icloud_download(self):
+    #     # Sign in script requires text code authentication. Must log in manually.
+    #     self.icloud_page.run_icloud_download(100)
+    #     self.telemetry.run_telemetry_test('iCloud', 'DOWNLOAD', True, self.icloud_page.interaction)
 
     #  Needs subscription to upload/download more files
     # def test_icloud_upload(self):
@@ -92,119 +136,157 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
 
     def test_pcloud_upload(self):
-        self.pcloud_page.run_pcloud_upload(180)
-        self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_page.interaction)
+        kill_process()
+        self.pcloud_page.run_pcloud_upload(130)
+        self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_page.interaction,mac=self.resource['mac'])
 
     def test_dropbox_download(self):
-        self.dropbox_page.run_dropbox_download(180)
-        self.telemetry.run_telemetry_test('Dropbox', 'DOWNLOAD', True, self.dropbox_page.interaction)
+        kill_process()
+        self.dropbox_page.run_dropbox_download(130)
+        self.telemetry.run_telemetry_test('Dropbox', 'DOWNLOAD', True, self.dropbox_page.interaction,mac=self.resource['mac'])
 
+    '''Needs subscription to upload files'''
     # def test_dropbox_upload(self):
     #     self.dropbox_page.run_dropbox_upload(180)
-    #     self.telemetry.run_telemetry_test('Dropbox', 'UPLOAD', True, self.dropbox_page.interaction)
-    def test_messenger_conference(self):
-        self.messenger_page.run_messenger_conference(180)
-        self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.messenger_page.interaction)
+    #     self.telemetry.run_telemetry_test('Dropbox', 'UPLOAD', True, self.dropbox_page.interaction,mac=self.resource['mac'])
+
+    # def test_messenger_conference(self):
+    #     self.messenger_page.run_messenger_conference(180)
+    #     self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.messenger_page.interaction,mac=self.resource['mac'])
 
     def test_microsoft_download(self):
-        self.microsoft_page.run_microsoft_download(180)
-        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.microsoft_page.interaction)
+        kill_process()
+        self.microsoft_page.run_microsoft_download(130)
+        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.microsoft_page.interaction,mac=self.resource['mac'])
 
-    def test_nexusmods_download(self):
-        self.nexusmods_page.run_nexusmods_download(180)
-        self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True, self.nexusmods_page.interaction)
+    '''Needs subscription to download files'''
+    # def test_nexusmods_download(self):
+    #     self.nexusmods_page.run_nexusmods_download(180)
+    #     self.telemetry.run_telemetry_test('NexusMods', 'DOWNLOAD', True, self.nexusmods_page.interaction,mac=self.resource['mac'])
 
     def test_soundcloud_music(self):
-        self.soundcloud_page.run_soundcloud_music(180)
-        self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True, self.soundcloud_page.interaction)
+        kill_process()
+        self.soundcloud_page.run_soundcloud_music(120)
+        self.telemetry.run_telemetry_test('SoundCloud', 'MUSIC', True, self.soundcloud_page.interaction, mac=self.resource['mac'])
 
-    def test_soundcloud_upload(self):
-        # Need Premium account
-        self.soundcloud_page.run_soundcloud_upload(180)
-        self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction)
+    '''Needs subscription to upload files'''
+    # def test_soundcloud_upload(self):
+    #     # Need Premium account
+    #     self.soundcloud_page.run_soundcloud_upload(180)
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'UPLOAD', True, self.soundcloud_page.interaction, mac=self.resource['mac'])
 
-    def test_soundcloud_download(self):
-        # Need Premium account
-        self.soundcloud_page.run_soundcloud_download(180)
-        self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction)
+    # def test_soundcloud_download(self):
+    #     # Need Premium account
+    #     self.soundcloud_page.run_soundcloud_download(180)
+    #     self.telemetry.run_telemetry_test('SoundCloud', 'DOWNLOAD', True, self.soundcloud_page.interaction, mac=self.resource['mac'])
 
     def test_tiktok_social(self):
+        kill_process()
         self.tiktok_page.run_tiktok_social(80)
-        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction)
+        self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_page.interaction,mac=self.resource['mac'])
 
     def test_twitter_social(self):
-        self.twitter_page.run_twitter_social(180)
-        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction)
+        kill_process()
+        self.twitter_page.run_twitter_social(80)
+        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_page.interaction,mac=self.resource['mac'])
 
     def test_youtube_streaming(self):
-        self.youtube_page.run_youtube_streaming(30)
-        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction)
+        kill_process()
+        self.youtube_page.run_youtube_streaming(130)
+        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_page.interaction,mac=self.resource['mac'])
     def test_spotify_music(self):
-        self.spotify_page.run_spotify_music(180)
-        self.telemetry.run_telemetry_test('Spotify', 'MUSIC', True, self.spotify_page.interaction)
+        kill_process()
+        self.spotify_page.run_spotify_music(100)
+        self.telemetry.run_telemetry_test('Spotify', 'MUSIC', True, self.spotify_page.interaction,mac=self.resource['mac'])
 
     def test_zoom_conference(self):
-        self.zoom_page.run_zoom_conference(180)
-        self.telemetry.run_telemetry_test('Zoom', 'CONFERENCING', True, self.zoom_page.interaction)
+        kill_process()
+        self.zoom_page.run_zoom_conference(130)
+        self.telemetry.run_telemetry_test('Zoom', 'CONFERENCING', True, self.zoom_page.interaction,mac=self.resource['mac'])
+    def test_skype_conference(self):
+        kill_process()
+        self.skype_page.run_skype_conference(80)
+        self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.skype_page.interaction,mac=self.resource['mac'])
 
     def test_teams_conference(self):
-        self.teams_page.run_teams_conference(180)
-        self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.zoom_page.interaction)
+        kill_process()
+        self.teams_page.run_teams_conference(80)
+        self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.teams_page.interaction,mac=self.resource['mac'])
+
     def test_GoogleMeet_conference(self):
-        self.googleMeet_page.run_googleMeet_conference(180)
-        self.telemetry.run_telemetry_test('GoogleMeet', 'CONFERENCING', True, self.googleMeet_page.interaction)
+        kill_process()
+        self.googleMeet_page.run_googleMeet_conference(130)
+        self.telemetry.run_telemetry_test('GoogleMeet', 'CONFERENCING', True, self.googleMeet_page.interaction,mac=self.resource['mac'])
 
     def test_roblox_game(self):
-        self.roblox_page.run_roblox_game(180)
-        self.telemetry.run_telemetry_test('Roblox', 'GAMING', True, self.roblox_page.interaction)
+        kill_process()
+        self.roblox_page.run_roblox_game(120)
+        self.telemetry.run_telemetry_test('Roblox', 'GAMING', True, self.roblox_page.interaction,mac=self.resource['mac'])
 
     def test_gmail_mail(self):
+        kill_process()
         self.gmail_page.run_gmail_mail(80)
-        self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_page.interaction)
+        self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_page.interaction,mac=self.resource['mac'])
+
     def test_amazonPrime_game(self):
-        self.amazonPrime_page.run_amazonPrime_streaming(180)
-        self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_page.interaction)
+        kill_process()
+        self.amazonPrime_page.run_amazonPrime_streaming(120)
+        self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_page.interaction,mac=self.resource['mac'])
 
     def test_linkedin_social(self):
+        kill_process()
         self.linkedin_page.run_linkedin_social(80)
-        self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_page.interaction)
+        self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_page.interaction,mac=self.resource['mac'])
 
     def test_instagram_social(self):
+        kill_process()
         self.instagram_page.run_instagram_social(80)
-        self.telemetry.run_telemetry_test('Instagram', 'SOCIAL', True, self.instagram_page.interaction)
+        self.telemetry.run_telemetry_test('Instagram', 'SOCIAL', True, self.instagram_page.interaction,mac=self.resource['mac'])
 
     def test_facebook_social(self):
+        kill_process()
         self.facebook_page.run_facebook_social(80)
-        self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.facebook_page.interaction)
+        self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.facebook_page.interaction,mac=self.resource['mac'])
+
     def test_netflix_streaming(self):
-        self.netflix_page.run_netflix_streaming(180)
-        self.telemetry.run_telemetry_test('Netflix', 'STREAMING', True, self.netflix_page.interaction)
+        kill_process()
+        self.netflix_page.run_netflix_streaming(130)
+        self.telemetry.run_telemetry_test('Netflix', 'STREAMING', True, self.netflix_page.interaction,mac=self.resource['mac'])
+
+    def test_squidtv_streaming(self):
+        kill_process()
+        self.squidtv_page.run_squidtv_streaming(130)
+        self.telemetry.run_telemetry_test('Squidtv', 'STREAMING', True, self.squidtv_page.interaction, mac=self.resource['mac'])
 
     def test_espn_streaming(self):
-        self.espn_page.run_espn_streaming(180)
-        self.telemetry.run_telemetry_test('ESPN', 'STREAMING', True, self.espn_page.interaction)
+        kill_process()
+        self.espn_page.run_espn_streaming(120)
+        self.telemetry.run_telemetry_test('ESPN', 'STREAMING', True, self.espn_page.interaction,mac=self.resource['mac'])
 
     def test_twitch_streaming(self):
-        self.twitch_page.run_twitch_streaming(180)
-        self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction)
+        kill_process()
+        self.twitch_page.run_twitch_streaming(130)
+        self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_page.interaction,mac=self.resource['mac'])
     def test_speed_download(self):
-        self.speed_page.run_speed_download(100)
-        self.telemetry.run_telemetry_test('Speed', 'DOWNLOAD', True, self.speed_page.interaction)
+        kill_process()
+        self.speed_page.run_speed_download(120)
+        self.telemetry.run_telemetry_test('Speed', 'DOWNLOAD', True, self.speed_page.interaction,mac=self.resource['mac'])
 
     def test_youtube_download(self):
-        self.youtube_page.run_youtube_download(180)
-        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download)
+        kill_process()
+        self.youtube_page.run_youtube_download(130)
+        self.telemetry.run_telemetry_test('Youtube', 'DOWNLOAD', True, self.youtube_page.interaction_download,mac=self.resource['mac'])
 
     # Not Yet Working
     def test_bittorrent_download(self):
-
-        self.bittorrent.run_bittorrent_download(180)
-        self.telemetry.run_telemetry_test('Torrent', 'TORRENT', True, self.youtube_page.interaction_download)
+        kill_process()
+        self.bittorrent.run_bittorrent_download(50)
+        self.telemetry.run_telemetry_test('Torrent', 'TORRENT', True, self.bittorrent.interaction,mac=self.resource['mac'])
 
     def test_msstore_download(self):
-
-        self.msstore.run_msstore_download(180)
-        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.youtube_page.interaction_download)
+        kill_process()
+        self.msstore.run_msstore_download(110)
+        self.telemetry.run_telemetry_test('Microsoft', 'DOWNLOAD', True, self.msstore.interaction,mac=self.resource['mac'])
 
     def tearDown(self):
         # Close the browser

@@ -202,6 +202,7 @@ class BasePage:
         all_windows = gw.getAllWindows()
         for win in all_windows:
             print(win.title)
+
     def open_window(self, window_title):
         # Set the path to the tesseract executable (Windows users)
         pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -226,7 +227,6 @@ class BasePage:
 
         # Activate (bring to the front) the window
         window.activate()
-
 
     def application_action(self, window_title, element_text):
 

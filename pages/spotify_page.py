@@ -19,11 +19,11 @@ class SpotifyPage(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_spotify_music(self, timeout):
+    def run_spotify_music(self, timeout=50):
         self.driver.get(
             self.test_sites['spotify_music'])
         time.sleep(5)
-        self.driver.find_element(By.XPATH,'//*[@id="main"]/div/div[2]/div[3]/div[1]/div[2]/div[2]/div/div/div[2]/main/div[1]/section/div[2]/div[2]/div[4]/div/div/div/div/div/button/span').click()
+        self.driver.find_element(By.XPATH,'//*[@id="main"]/div/div[2]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/main/div[1]/section/div[2]/div[2]/div[4]/div/div/div/div/div/button/span').click()
         time.sleep(1)
         x = py.size()
         height = x.height

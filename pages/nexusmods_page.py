@@ -19,7 +19,6 @@ class NexusModsPage(BasePage):
 
     def nexusmods_signin(self):
         self.driver.maximize_window()
-
         time.sleep(60)
 
     def interaction(self, timeout):

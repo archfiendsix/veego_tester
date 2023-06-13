@@ -1,0 +1,1 @@
+INFO     undetected_chromedriver.patcher:patcher.py:216 patching driver executable C:\Users\veego\appdata\roaming\undetected_chromedriver\undetected_chromedriver.exe

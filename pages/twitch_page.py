@@ -40,7 +40,7 @@ class TwitchPage(BasePage):
         self.actions.send_keys('1').perform()
         time.sleep(timeout)
 
-    def run_twitch_streaming(self, timeout=180):
+    def run_twitch_streaming(self, timeout=50):
         # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         # driver = webdriver.Chrome()
         # driver = webdriver.Chrome(executable_path='C:/Veego/Automation/chromedriver.exe')

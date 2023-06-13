@@ -19,17 +19,17 @@ class MSStore(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_msstore_download(self, timeout):
+    def run_msstore_download(self, timeout=50):
         self.driver.get(self.test_sites["msstore_download"])
         self.wait_and_execute(self.driver, self.get_in_store_app_button_locator, 10, lambda elem: elem.click())
-        time.sleep(5)
+        time.sleep(3)
         pyautogui.press('tab')
         pyautogui.press('tab')
         pyautogui.press('enter')
-        time.sleep(5)
+        time.sleep(3)
         self.open_window("Microsoft Store")
         # self.application_action("Microsoft Store", "Get")
-        time.sleep(10)
+        time.sleep(5)
 
         pyautogui.press('tab')
         pyautogui.press('tab')

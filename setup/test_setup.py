@@ -33,8 +33,8 @@ def setup_test_environment():
         "credentials_enable_service": 1
     })
 
-
     driver = webdriver.Chrome(options=chrome_options)
+    # driver = webdriver.Chrome(options='C:/Users/veego/Downloads/chromedriver_win32 (1)/chromedriver.exe')
 
     # prefs = {"download.default_directory": download_dir}
     # chrome_options.add_experimental_option("prefs", prefs)

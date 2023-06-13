@@ -41,7 +41,7 @@ class YoutubePage(BasePage):
         #             continue
         time.sleep(timeout)
 
-    def run_youtube_streaming(self, timeout=180):
+    def run_youtube_streaming(self, timeout):
 
         self.driver.get(self.test_sites['youtube_streaming'])
 
@@ -105,7 +105,7 @@ class YoutubePage(BasePage):
     def run_youtube_download(self, timeout=180):
 
         self.driver.get(self.test_sites["youtube_download"])
-        # time.sleep(3000)
+
         content_side_panel_icon_locator = (By.XPATH, "//div[contains(text(), 'Content')]")
         self.wait_and_execute(self.driver, content_side_panel_icon_locator, 5, lambda elem: elem.click())
 
@@ -117,5 +117,6 @@ class YoutubePage(BasePage):
 
         download_dropdown_locator = (By.CSS_SELECTOR, 'tp-yt-paper-item[test-id="DOWNLOAD"]')
         self.wait_and_execute(self.driver, download_dropdown_locator, 5, lambda elem: elem.click())
-
+        time.sleep(230)
         self.interaction_download(timeout)
+

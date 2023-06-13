@@ -2,6 +2,7 @@
 from selenium.webdriver.common.by import By
 import os
 import pyautogui
+import pyautogui as py
 import time
 from selenium.webdriver.common.action_chains import ActionChains
 from pages.base_page import BasePage
@@ -17,11 +18,18 @@ class AmazonPrimePage(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_amazonPrime_streaming(self, timeout):
+    def run_amazonPrime_streaming(self, timeout=50):
         self.driver.get(
             self.test_sites['amazonPrime_streaming'])
-        time.sleep(5)
-        self.driver.find_element(By.XPATH,'//*[@id="dv-action-box"]/div/div/div/div[2]/div/div/div/a').click()
+        time.sleep(1)
+        x = py.size()
+        height = x.height
+        width = x.width
+        center_height = x.height // 2
+        center_width = x.width // 2
+        time.sleep(1)
+        py.moveTo(center_width - (width * (0.45)), center_height - (height // 4) + (height * (0.56)), duration=0.25)
+        pyautogui.click()
         time.sleep(1)
         self.logger("AmazonPrime streaming started...")
         self.interaction(timeout)

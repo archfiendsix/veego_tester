@@ -1,6 +1,17 @@
 {
-"router_id":"TZY9WPJFEK7",
-"api":"https://care.dev.env.veego.io/",
-"mac":"2a:e3:33:cd:10:5b",
-"telemetry": "https://api-gateway.dev.env.veego.io/v1/agent/last-single-telemetry/"
+"router_id":"352930674241403",
+"api":"https://care.qa.env.veego.io/",
+"telemetry": "https://api-gateway.qa.env.veego.io/v1/agent/last-single-telemetry/",
+
+  "resource1":{
+    "mac": "14:ab:c5:01:8e:6b",
+    "tag": "windows"
+  },
+
+  "resource2": {
+    "mac": "a8:db:03:b2:78:13",
+    "tag": "mobile"
+  }
 }
+
+

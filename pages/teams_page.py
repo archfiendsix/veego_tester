@@ -30,10 +30,10 @@ class TeamsPage(BasePage):
         pyautogui.click()
         time.sleep(1)
         #
-        # py.moveTo(center_width - (width * (0.005)), center_height - (height // 4) + (height * (0.36)), duration=0.25)
-        # time.sleep(5)
-        # pyautogui.click()
-        # time.sleep(1)
+        py.moveTo(center_width - (width * (0.001)), center_height - (height // 4) + (height * (0.37)), duration=0.25)
+        time.sleep(5)
+        pyautogui.click()
+        time.sleep(1)
 
 
 

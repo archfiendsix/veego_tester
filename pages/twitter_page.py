@@ -37,11 +37,11 @@ class TwitterPage(BasePage):
         self.wait_and_execute(
             self.driver, (By.CSS_SELECTOR, 'div[data-testid="LoginForm_Login_Button"]'), 5, lambda elem: elem.click())
 
-    def interaction(self, timeout=180):
+    def interaction(self, timeout):
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.random_scroll(timeout)
 
-    def run_twitter_social(self, timeout=180):
+    def run_twitter_social(self, timeout=50):
 
         self.driver.get(self.test_sites["twitter_social"])
 

@@ -38,7 +38,7 @@ class LinkedinPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.random_scroll(timeout)
 
-    def run_linkedin_social(self, timeout=180):
+    def run_linkedin_social(self, timeout=50):
 
         self.driver.get(self.test_sites["linkedin_social"])
 

@@ -29,25 +29,31 @@ class Telemetry(BasePage):
             login_textbox_locator = (By.ID, "username")
             login_tb_attrib = self.wait_and_execute(
                 self.driver, login_textbox_locator, 20, lambda elem: elem.get_attribute("value"))
-
+            time.sleep(4)
             # Check if the login textbox is already populated with the correct value
             if login_tb_attrib != self.env_username:
                 # login_textbox.send_keys(Keys.CONTROL + "a")
                 self.wait_and_execute(self.driver, login_textbox_locator,
                                       20, lambda elem: elem.send_keys(Keys.CONTROL + "a"))
+                time.sleep(4)
                 # login_textbox.send_keys(Keys.DELETE)
                 self.wait_and_execute(self.driver, login_textbox_locator,
                                       20, lambda elem: elem.send_keys(Keys.DELETE))
+                time.sleep(4)
                 # login_textbox.send_keys(self.env_username)
                 self.wait_and_execute(self.driver, login_textbox_locator,
                                       20, lambda elem: elem.send_keys(self.env_username))
+                time.sleep(4)
             '''Need to add: self.azure_password'''
             password_textbox = self.driver.find_element(By.ID, "password")
             # Check if the password textbox is already populated with the correct value
             if password_textbox.get_attribute("value") != self.env_password:
+                time.sleep(7)
                 password_textbox.send_keys(Keys.CONTROL + "a")
                 password_textbox.send_keys(Keys.DELETE)
+                time.sleep(7)
                 password_textbox.send_keys(self.env_password)
+                time.sleep(7)
 
             login_button = self.driver.find_element(By.ID, "kc-login")
             login_button.click()
@@ -55,7 +61,7 @@ class Telemetry(BasePage):
             # Elements not found, so the user is probably already signed in
             pass
 
-    def return_page_service_items(self, name, type, is_classification_final):
+    def return_page_service_items(self, name, type, is_classification_final, mac=None):
         # Switch to telemetry Window
         self.driver.switch_to.window(self.driver.window_handles[-1])
         self.driver.refresh()
@@ -63,14 +69,34 @@ class Telemetry(BasePage):
 
         body = self.driver.find_element(By.CSS_SELECTOR, "body")
         body_text = body.text
+        time.sleep(7)
+        text_to_json = None
+        try:
+            text_to_json = json.loads(body_text)
 
-        # try:
-        text_to_json = json.loads(body_text)
-        # except json.decoder.JSONDecodeError as e:
-        #     logging.error(f"Failed to parse JSON data: {e}")
-        #     return
+            # print("b", body_text)
+            if not text_to_json:
+                # Handle the case where no running services are detected
+                print("No running services detected.")
+                # print("c", body_text)
+                # Additional error handling or recovery logic
+            # else:
+            #     text_to_json = json.loads(body_text)
+            #     # print("d", body_text)
 
-        services = text_to_json["devices"][0]["discovery"]["devices"][self.config_data["mac"]]["services"]
+        except json.decoder.JSONDecodeError as e:
+            logging.error(f"Failed to parse JSON data: {e}")
+            return
+        print("e", body_text)
+
+        # choose the right mac address based on the test
+        # mac=self.resource['mac']
+        time.sleep(7)
+        if mac:
+            services = text_to_json["devices"][0]["discovery"]["devices"][mac]["services"]
+        else:
+            services = text_to_json["devices"][0]["discovery"]["devices"]["tag" == "windows"][self.config_data["mac"]]["services"]
+        time.sleep(7)
         assert services, "No running services detected"
         service_items = {key: value for key, value in services.items(
         ) if value["type"] == type}
@@ -79,7 +105,8 @@ class Telemetry(BasePage):
         #         "name"] == name
         return service_items
 
-    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type, is_classifcation_final, service_type, uuid_key, service_start_time, delta, score):
+    def test_service_test(self, rerun, detected_service_name, service_name, detected_service_type,
+                          is_classifcation_final, service_type, uuid_key, service_start_time, delta, score):
 
         self.logger(
             f"\n {rerun}.) {detected_service_name} {detected_service_type} started at: {service_start_time}\n"
@@ -101,24 +128,26 @@ class Telemetry(BasePage):
         else:
             self.logger("Fail: Type and/or name are incorrect\n\n")
 
-    def run_telemetry_test(self, service_name, service_type, classification_final, interaction):
+    def run_telemetry_test(self, service_name, service_type, classification_final, interaction, mac=None):
 
         self.run_telemetry()
         self.logger("\nLooking for services...\n")
         # Initialize variables
         rerun = 0
-        max_runtime = 3 * 60  # 6 minutes in seconds
+        max_runtime = .6 * 60  # 6 minutes in seconds
         detection_time = datetime.utcnow()
 
         # Loop until maximum runtime is reached
+        time.sleep(12)
         while (datetime.utcnow() - detection_time).total_seconds() <= max_runtime:
             # Try to detect the service
             service_item = self.return_page_service_items(
-                service_name, service_type, classification_final)
+                service_name, service_type, classification_final, mac=mac)
 
             # Loop until service is detected or maximum runtime is reached
             while service_item:
                 # Print information about detected service
+                time.sleep(7)
                 uuid_key = next(iter(service_item))
                 detected_service_name = service_item[uuid_key]['name']
                 detected_service_type = service_item[uuid_key]['type']
@@ -128,11 +157,13 @@ class Telemetry(BasePage):
                 delta = detection_time - service_start_time
                 detected_score = service_item[uuid_key]['score']
 
-                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type, detected_is_classification_final, service_type, uuid_key, service_start_time, delta, detected_score)
+                self.test_service_test(rerun, detected_service_name, service_name, detected_service_type,
+                                       detected_is_classification_final, service_type, uuid_key, service_start_time,
+                                       delta, detected_score)
 
                 # Wait before trying to detect service again
                 interaction(10)
-
+                # self.mobile_driver.close_app()
                 # Check if maximum runtime has been reached and exit if it has
                 if (datetime.utcnow() - detection_time).total_seconds() > max_runtime:
                     self.logger("Maximum runtime exceeded, exiting function")
@@ -155,7 +186,7 @@ class Telemetry(BasePage):
             # Wait before trying to detect service again
             rerun += 1
             interaction(10)
-
+            self.mobile_driver.close_app()
             if (datetime.utcnow() - detection_time).total_seconds() <= max_runtime:
                 self.logger(f"FAIL: No {service_name} {service_type} service detected. Retrying service "
                             f"recognition test ({rerun})...\n")

@@ -50,4 +50,5 @@ class InstagramMobile(BasePage):
         self.logger('Starting Instagram Application...')
         self.mobile_driver.start_activity("com.instagram.android","com.instagram.mainactivity.MainActivity")
         self.logger('Instagram application started...')
+
         self.interaction(timeout)

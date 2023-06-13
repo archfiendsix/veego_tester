@@ -19,7 +19,7 @@ class Bittorrent(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_bittorrent_download(self, timeout):
+    def run_bittorrent_download(self, timeout=30):
         self.driver.get(
             self.test_sites['bittorrent_download'])
         time.sleep(5)

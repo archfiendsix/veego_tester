@@ -17,7 +17,7 @@ class PcloudPage(BasePage):
     def interaction(self, timeout):
         time.sleep(timeout)
 
-    def run_pcloud_upload(self, timeout):
+    def run_pcloud_upload(self, timeout=50):
         self.driver.get( self.test_sites['pcloud_upload'])
         time.sleep(5)
         # time.sleep(3000)
@@ -29,13 +29,13 @@ class PcloudPage(BasePage):
         center_height = x.height // 2
         center_width = x.width // 2
         time.sleep(1)
-        py.moveTo(center_width - (width * (0.17)), center_height - (height // 4) + (height * (0.47)), duration=0.25)
+        py.moveTo(center_width - (width * (0.18)), center_height - (height // 4) + (height * (0.59)), duration=0.25)
         pyautogui.click()
         time.sleep(1)
-        py.moveTo(center_width - (width * (0.47)), center_height - (height // 4) + (height * (-0.15)), duration=0.25)
-        pyautogui.click()
+        # py.moveTo(center_width - (width * (0.47)), center_height - (height // 4) + (height * (-0.03)), duration=0.25)
+        # pyautogui.click()
         time.sleep(1)
-        py.moveTo(center_width - (width * (0.37)), center_height - (height // 4) + (height * (-0.15)), duration=0.25)
+        py.moveTo(center_width - (width * (0.33)), center_height - (height // 4) + (height * (-0.08)), duration=0.25)
         pyautogui.click()
         pyautogui.click()
         time.sleep(1)

@@ -2,6 +2,8 @@ import time
 import os
 import random
 from selenium.webdriver.common.by import By
+import pyautogui
+import pyautogui as py
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, TimeoutException, StaleElementReferenceException
@@ -98,7 +100,7 @@ class SoundcloudPage(BasePage):
         #     pass
         time.sleep(timeout)
 
-    def run_soundcloud_music(self, timeout=180):
+    def run_soundcloud_music(self, timeout=90):
 
         self.driver.get(self.test_sites["soundcloud_music"])
         try:
@@ -152,6 +154,29 @@ class SoundcloudPage(BasePage):
         # Wait for the upload to complete
         time.sleep(timeout)
 
+    # def run_soundcloud_download(self, timeout=180):
+    #     self.logger('Starting Soundcloud download test...')
+    #
+    #     # Load the Soundcloud upload page
+    #     self.driver.get(self.test_sites["soundcloud_download"])
+    #     try:
+    #         time.sleep(1)
+    #         x = py.size()
+    #         height = x.height
+    #         width = x.width
+    #         center_height = x.height // 2
+    #         center_width = x.width // 2
+    #         time.sleep(1)
+    #         py.moveTo(center_width - (width * (0.00009)), center_height - (height // 4) + (height * (0.2)), duration=0.25)
+    #         # pyautogui.click()
+    #         time.sleep(1)
+    #
+    #     except (NoSuchElementException, TimeoutException):
+    #         pass
+    #
+    #     # Wait for the upload to complete
+    #     time.sleep(timeout)
+
     def run_soundcloud_download(self, timeout=180):
         self.logger('Starting Soundcloud download test...')
 
@@ -165,8 +190,8 @@ class SoundcloudPage(BasePage):
         self.soundcloud_signin()
         self.driver.get(self.test_sites["soundcloud_download"])
 
-        more_button_locator= (By.CSS_SELECTOR, '.sc-button-group.sc-button-group-medium button[title="More"]')
-        self.wait_and_execute(self.driver, more_button_locator, 10, lambda elem:elem.click())
+        more_button_locator = (By.CSS_SELECTOR, '.sc-button-group.sc-button-group-medium button[title="More"]')
+        self.wait_and_execute(self.driver, more_button_locator, 10, lambda elem: elem.click())
 
         download_file_button = (By.CSS_SELECTOR, 'button[aria-label="Download this track"]')
         self.wait_and_execute(self.driver, download_file_button, 10, lambda elem: elem.click())

@@ -5,7 +5,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from pages.base_page import BasePage
-
+from pages.base_page import BasePage
+import pyautogui as py
+import pyautogui
+import time
 
 class InstagramPage(BasePage):
     def __init__(self, driver, test_sites):
@@ -39,10 +42,18 @@ class InstagramPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.random_scroll(timeout)
 
-    def run_instagram_social(self, timeout=180):
-
+    def run_instagram_social(self, timeout=50):
         self.driver.get(self.test_sites["instagram_social"])
-
+        time.sleep(7)
+        x = py.size()
+        height = x.height
+        width = x.width
+        center_height = x.height // 2
+        center_width = x.width // 2
+        py.moveTo(center_width - (width * (0.04)), center_height - (height // 4) + (height * (0.38)), duration=0.25)
+        time.sleep(2)
+        pyautogui.click()
+        time.sleep(1)
         try:
             signin_iframe_locator = (By.CSS_SELECTOR, 'iframe[title="Sign in with Google Dialog"]')
             signin_iframe = WebDriverWait(self.driver, 5).until(

@@ -22,20 +22,17 @@ class NetflixPage(BasePage):
     def run_netflix_streaming(self, timeout):
         self.driver.get(
             self.test_sites['netflix_streaming'])
-        time.sleep(5)
-
+        time.sleep(1)
         x = py.size()
         height = x.height
         width = x.width
         center_height = x.height // 2
         center_width = x.width // 2
-        time.sleep(1)
         py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
         pyautogui.click()
         time.sleep(1)
         self.driver.find_element(By.XPATH,'//*[@id="main-view"]/div/span/div/div/div/div/div/div[2]/div/div/div[3]/a/button').click()
         time.sleep(1)
-
         self.logger("Netflix streaming started...")
         self.interaction(timeout)
 

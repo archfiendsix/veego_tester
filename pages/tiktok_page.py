@@ -58,7 +58,7 @@ class TiktokPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[0])
         self.random_scroll(timeout)
 
-    def run_tiktok_social(self, timeout=180):
+    def run_tiktok_social(self, timeout=50):
 
         self.driver.get(self.test_sites["tiktok_social"])
 
