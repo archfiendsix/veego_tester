@@ -25,25 +25,25 @@ class LinkedinMobile(BasePage):
         self.timeout = 10
 
     def interaction(self, timeout):
-        # # Get the dimensions of the screen
-        # width = self.mobile_driver.get_window_size()['width']
-        # height = self.mobile_driver.get_window_size()['height']
-        #
-        # start_time = time.time()
-        # self.logger('Interacting with Linkedin application...')
-        # while time.time() - start_time < timeout:
-        #     # Wait for a random time between 0 and 10 seconds
-        #     time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
-        #
-        #     # Calculate the start and end coordinates for the swipe
-        #     start_x = width / 2
-        #     start_y = height / 2
-        #     end_x = start_x
-        #     end_y = start_y - (height * 0.1)  # move in the opposite direction
-        #
-        #     # Perform the swipe action
-        #     action = TouchAction(self.mobile_driver)
-        #     action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
+        # Get the dimensions of the screen
+        width = self.mobile_driver.get_window_size()['width']
+        height = self.mobile_driver.get_window_size()['height']
+
+        start_time = time.time()
+        self.logger('Interacting with Linkedin application...')
+        while time.time() - start_time < timeout:
+            # Wait for a random time between 0 and 10 seconds
+            time.sleep(random.randint(0, 5))  # wait for n seconds between scrolls
+
+            # Calculate the start and end coordinates for the swipe
+            start_x = width / 2
+            start_y = height / 2
+            end_x = start_x
+            end_y = start_y - (height * 0.1)  # move in the opposite direction
+
+            # Perform the swipe action
+            action = TouchAction(self.mobile_driver)
+            action.press(x=start_x, y=start_y).wait(200).move_to(x=end_x, y=end_y).release().perform()
         time.sleep(timeout)
 
     def run_linkedin_mobile(self, timeout=50):

@@ -81,8 +81,9 @@ class HideOnlineMobile(BasePage):
         time.sleep(timeout)
 
 
-    def run_hideOnline_mobile(self, timeout=50):
+    def run_hideOnline_mobile(self, timeout=30):
         self.logger('Starting HideOnline Application...')
+        time.sleep(3)
         self.mobile_driver.start_activity("com.hitrock.hideonline", "com.unity3d.player.UnityPlayerActivity")
         time.sleep(14)
 

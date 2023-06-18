@@ -1,5 +1,5 @@
 {
-"router_id":"352930674241403",
+"router_id":"JQ3001A0738",
 "api":"https://care.qa.env.veego.io/",
 "telemetry": "https://api-gateway.qa.env.veego.io/v1/agent/last-single-telemetry/",
 
@@ -9,7 +9,7 @@
   },
 
   "resource2": {
-    "mac": "a8:db:03:b2:78:13",
+    "mac": "fa:8a:27:b3:a5:53",
     "tag": "mobile"
   }
 }

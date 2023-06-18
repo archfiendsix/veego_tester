@@ -2,7 +2,7 @@ import json
 import os
 import unittest
 # from venv import logger
-
+from pages.webex_page import WebexPage
 from pages.espn_page import EspnPage
 from pages.facebook_page import FacebookPage
 from pages.squidtv_page import SquidtvPage
@@ -22,6 +22,7 @@ from pages.tiktok_page import TiktokPage
 from applications.bittorent import Bittorrent
 from applications.ms_store import MSStore
 from pages.googleMeet_page import GoogleMeetPage
+from pages.googledrive_page import GoogledrivePage
 from pages.teams_page import TeamsPage
 from pages.roblox_page import RobloxPage
 from pages.gmail_page import GmailPage
@@ -34,27 +35,29 @@ from pages.spotify_page import SpotifyPage
 from pages.pcloud_page import PcloudPage
 from pages.speed_page import SpeedPage
 from pages.squidtv_page import SquidtvPage
+from pages.hbo_page import HboPage
+from pages.filedownload_page import FiledownloadPage
 
 # @pytest.mark.sanity
-class kill_process():
-    # logger('clean_computer')
-
-    os.system(' taskkill /f /im Skype.exe')
-    os.system('taskkill /f /im chrome.exe')
-    os.system('taskkill /f /im WebexMTAV2.exe')
-    os.system('taskkill /f /im WebexHost.exe')
-    os.system('taskkill /f /im wmlhost.exe')
-    os.system('taskkill /f /im atmgr.exe ')
-    os.system('taskkill /f /im CiscoCollabHost.exe')
-    os.system('taskkill /f /im chromedriver.exe')
-    os.system('taskkill /f /im Zoom.exe')
-    os.system('taskkill /f /im Teams.exe')
-    os.system('taskkill /f /im RobloxPlayerBeta.exe')
-    os.system('taskkill /f /im Messenger.exe')
-    os.system('taskkill /f /im steame.exe')
-    os.system('taskkill /f /im steamservice.exe')
-    os.system('taskkill /f /im steamwebhelper.exe')
-    # logger.info('ending clean_computer')
+# class kill_process():
+#     # logger('clean_computer')
+#
+#     os.system(' taskkill /f /im Skype.exe')
+#     os.system('taskkill /f /im chrome.exe')
+#     os.system('taskkill /f /im WebexMTAV2.exe')
+#     os.system('taskkill /f /im WebexHost.exe')
+#     os.system('taskkill /f /im wmlhost.exe')
+#     os.system('taskkill /f /im atmgr.exe ')
+#     os.system('taskkill /f /im CiscoCollabHost.exe')
+#     os.system('taskkill /f /im chromedriver.exe')
+#     os.system('taskkill /f /im Zoom.exe')
+#     os.system('taskkill /f /im Teams.exe')
+#     os.system('taskkill /f /im RobloxPlayerBeta.exe')
+#     os.system('taskkill /f /im Messenger.exe')
+#     os.system('taskkill /f /im steame.exe')
+#     os.system('taskkill /f /im steamservice.exe')
+#     os.system('taskkill /f /im steamwebhelper.exe')
+#     # logger.info('ending clean_computer')
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
         # Update paths to be platform-independent
@@ -90,6 +93,7 @@ class TelemetryTest(unittest.TestCase):
         self.facebook_page = FacebookPage(self.driver, self.test_sites_data)
         self.zoom_page = ZoomPage(self.driver, self.test_sites_data)
         self.googleMeet_page = GoogleMeetPage(self.driver, self.test_sites_data)
+        self.googledrive_page = GoogledrivePage(self.driver, self.test_sites_data)
         self.teams_page = TeamsPage(self.driver, self.test_sites_data)
         self.skype_page = SkypePage(self.driver, self.test_sites_data)
         self.roblox_page = RobloxPage(self.driver, self.test_sites_data)
@@ -103,7 +107,10 @@ class TelemetryTest(unittest.TestCase):
         self.pcloud_page = PcloudPage(self.driver, self.test_sites_data)
         self.speed_page = SpeedPage(self.driver, self.test_sites_data)
         self.squidtv_page = SquidtvPage(self.driver, self.test_sites_data)
+        self.filedownload_page = FiledownloadPage(self.driver, self.test_sites_data)
+        self.hbo_page = HboPage(self.driver, self.test_sites_data)
 
+        self.webex_page = WebexPage(self.driver, self.test_sites_data)
         self.resource = self._get_resource_info(self.config_data, "windows")
         self.driver.maximize_window()
 
@@ -136,10 +143,26 @@ class TelemetryTest(unittest.TestCase):
     #     self.telemetry.run_telemetry_test('iCloud', 'UPLOAD', True, self.icloud_page.interaction)
 
     def test_pcloud_upload(self):
-        kill_process()
+        # kill_process()
         self.pcloud_page.run_pcloud_upload(130)
         self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_page.interaction,mac=self.resource['mac'])
 
+    def test_pcloud_download(self):
+        # kill_process()
+        self.pcloud_page.run_pcloud_download(130)
+        self.telemetry.run_telemetry_test('pcloud', 'DWONLOAD', True, self.pcloud_page.interaction,mac=self.resource['mac'])
+
+    def test_googledrive_upload(self):
+        kill_process()
+        self.googledrive_page.run_googledrive_upload(130)
+        self.telemetry.run_telemetry_test('Google_DRIVE', 'UPLOAD', True, self.pcloud_page.interaction,
+                                          mac=self.resource['mac'])
+
+    def test_googledrive_download(self):
+        kill_process()
+        self.googledrive_page.run_googledrive_download(130)
+        self.telemetry.run_telemetry_test('GOOGO_DRIVE', 'DOWNLOAD', True, self.pcloud_page.interaction,
+                                          mac=self.resource['mac'])
     def test_dropbox_download(self):
         kill_process()
         self.dropbox_page.run_dropbox_download(130)
@@ -208,12 +231,17 @@ class TelemetryTest(unittest.TestCase):
         self.skype_page.run_skype_conference(80)
         self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.skype_page.interaction,mac=self.resource['mac'])
 
+    def test_webex_conference(self):
+        kill_process()
+        self.webex_page.run_webex_conference(80)
+        self.telemetry.run_telemetry_test('webex', 'CONFERENCING', True, self.skype_page.interaction, mac=self.resource['mac'])
+
     def test_teams_conference(self):
         kill_process()
         self.teams_page.run_teams_conference(80)
         self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.teams_page.interaction,mac=self.resource['mac'])
 
-    def test_GoogleMeet_conference(self):
+    def test_googleMeet_conference(self):
         kill_process()
         self.googleMeet_page.run_googleMeet_conference(130)
         self.telemetry.run_telemetry_test('GoogleMeet', 'CONFERENCING', True, self.googleMeet_page.interaction,mac=self.resource['mac'])
@@ -228,7 +256,7 @@ class TelemetryTest(unittest.TestCase):
         self.gmail_page.run_gmail_mail(80)
         self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_page.interaction,mac=self.resource['mac'])
 
-    def test_amazonPrime_game(self):
+    def test_amazonPrime_streaming(self):
         kill_process()
         self.amazonPrime_page.run_amazonPrime_streaming(120)
         self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_page.interaction,mac=self.resource['mac'])
@@ -263,6 +291,11 @@ class TelemetryTest(unittest.TestCase):
         self.espn_page.run_espn_streaming(120)
         self.telemetry.run_telemetry_test('ESPN', 'STREAMING', True, self.espn_page.interaction,mac=self.resource['mac'])
 
+    def test_hbo_streaming(self):
+        kill_process()
+        self.hbo_page.run_hbo_streaming(20)
+        self.telemetry.run_telemetry_test('HBO', 'STREAMING', True, self.hbo_page.interaction,mac=self.resource['mac'])
+
     def test_twitch_streaming(self):
         kill_process()
         self.twitch_page.run_twitch_streaming(130)
@@ -271,6 +304,11 @@ class TelemetryTest(unittest.TestCase):
         kill_process()
         self.speed_page.run_speed_download(120)
         self.telemetry.run_telemetry_test('Speed', 'DOWNLOAD', True, self.speed_page.interaction,mac=self.resource['mac'])
+
+    def test_filedownload_download(self):
+        kill_process()
+        self.filedownload_page.run_filedownload_download(120)
+        self.telemetry.run_telemetry_test('Filedownload', 'DOWNLOAD', True, self.speed_page.interaction,mac=self.resource['mac'])
 
     def test_youtube_download(self):
         kill_process()

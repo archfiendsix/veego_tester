@@ -58,7 +58,7 @@ class TwitterMobile(BasePage):
                     # Perform the swipe action
                     action = TouchAction(self.mobile_driver)
                     action.press(x=start_x, y=start_y).wait(100).move_to(x=end_x, y=end_y).release().perform()
-        time.sleep(timeout)
+        time.sleep(30)
 
     def run_twitter_mobile(self, timeout=50):
         self.logger('Starting Twitter Application...')

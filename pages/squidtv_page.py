@@ -27,13 +27,11 @@ class SquidtvPage(BasePage):
         width = x.width
         center_height = x.height // 2
         center_width = x.width // 2
-        py.moveTo(center_width - (width * (-0.9)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
-        pyautogui.click()
+        # py.moveTo(center_width - (width * (-0.9)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
+        # pyautogui.click()
         time.sleep(1)
-        py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.3)), duration=0.25)
+        py.moveTo(center_width - (width * (-0.1)), center_height - (height // 4) + (height * (0.5)), duration=0.25)
         pyautogui.click()
-        time.sleep(1)
-        # self.driver.find_element(By.XPATH,'//*[@id="main-view"]/div/span/div/div/div/div/div/div[2]/div/div/div[3]/a/button').click()
         time.sleep(1)
         self.logger("Squidtv streaming started...")
         self.interaction(timeout)

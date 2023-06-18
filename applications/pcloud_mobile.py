@@ -38,39 +38,135 @@ class PCloudMobile(BasePage):
         time.sleep(timeout)
 
     def run_pcloud_download_mobile(self, timeout=180):
+
+        # from appium import webdriver
+        # from selenium.webdriver.common.by import By
+        # from selenium.webdriver.support.ui import WebDriverWait
+        # from selenium.webdriver.support import expected_conditions as EC
+        #
+        # # Desired capabilities for pCloud application
+        # desired_caps = {
+        #     "platformName": "Android",
+        #     "deviceName": "your_device_name",
+        #     "appPackage": "com.pcloud.pcloud",
+        #     "appActivity": "com.achellies.MainActivity",
+        #     "noReset": True
+        # }
+        #
+        # # Start the Appium server and create a driver instance
+        # driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
+        #
+        # # Wait for the "Download" element to be visible
+        # wait = WebDriverWait(driver, 10)
+        # download_button = wait.until(EC.visibility_of_element_located((By.ID, "com.pcloud.pcloud:id/download_button")))
+        #
+        # # Click on the "Download" button
+        # download_button.click()
+
+        # # Wait for the file to be downloaded (you may need to customize this based on the actual behavior of the application)
+        # wait.until(EC.invisibility_of_element_located((By.ID, "com.pcloud.pcloud:id/download_button")))
+        #
+        # # Close the driver
+        # driver.quit()
+##########################################################
+
+        # # pcloud
+        # PCLOUD_APP_PACKAGE = "com.pcloud.pcloud"
+        # PCLOUD_APP_ACTIVITY = "com.pcloud.screens.Main"
+        # PCLOUD_SEARCH_TEXTFIELD = "com.pcloud.pcloud:id/searchHint"  # id
+        # PCLOUD_SEARCH_NEWTEXTFIELD = "searchInput"  # id
+        # PCLOUD_SEARCH_TEXT = "100MB"
+        # # PCLOUD_SEARCH_TEXT = "1GBtest"
+        # PCLOUD_FILE_OPTIONS_BUTTON = "com.pcloud.pcloud:id/options"  # id
+        # # PCLOUD_DOWNLOAD_BUTTON = "//*[@text='Download']"
+        # PCLOUD_DOWNLOAD_BUTTON = "action_download"  # id
+
+###################################################################
+        #
         self.mobile_driver.start_activity("com.pcloud.pcloud", "com.pcloud.screens.Main")
         self.logger('Starting pcloud Download...')
-        # Calculate the coordinates to tap on the screen
-        x = 510  # X-coordinate of the tap
-        y = 1309  # Y-coordinate of the tap
-
-        # Perform the tap action
-        action = TouchAction(self.mobile_driver)
-        action.tap(x=x, y=y).perform()
-        time.sleep(2)
+        actions = ActionChains(self.mobile_driver)
+        actions.w3c_actions.pointer_action.move_to_location(510, 1309)
+        actions.click()
+        actions.perform()
+        time.sleep(4)
+        #
 
 
 
         # Locate the element using its XPATH
 
-        element = self.mobile_driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[4]/android.widget.ImageButton')
-        # #
+        # element = self.mobile_driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[4]/android.widget.ImageButton')
+        element = self.mobile_driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]/android.widget.ImageView[2]')
+        element.click()
+
+        time.sleep(4)
+        element = self.mobile_driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]')
         # # # Tap on the element
         element.click()
-        # #
+        element.click()
+        time.sleep(6)
         actions = ActionChains(self.mobile_driver)
-        actions.w3c_actions = ActionBuilder(self.mobile_driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
-        actions.w3c_actions.pointer_action.move_to_location(495, 1773)
-        actions.w3c_actions.pointer_action.pointer_down()
-        actions.w3c_actions.pointer_action.move_to_location(532, 1305)
-        actions.w3c_actions.pointer_action.release()
-        actions.perform()
+        actions.w3c_actions.pointer_action.move_to_location(970, 2035)
+        actions.click()
+        actions.click()
+        # actions.w3c_actions.pointer_action.move_to_location(970, 2035)
+        # actions.click()
+
+        # actions.click()
+
+        # actions.perform()
+        time.sleep(7)
+
+        # Wait for the "Download" element to be visible
+        # wait = WebDriverWait(self.mobile_driver, 10)
+        # download_button = wait.until(EC.visibility_of_element_located((By.ID, "com.pcloud.pcloud:id/download_button")))
+
+        # Click on the "Download" button
+        # download_button.click()
+
+        # Wait for the file to be downloaded (you may need to customize this based on the actual behavior of the application)
+        # download_button = wait.until(EC.invisibility_of_element_located(By.ID, "download_button"))
+        # download_button.click()
+        # Close the driver
+        # self.mobile_driver.quit()
+
+        # actions.w3c_actions.pointer_action.move_to_location(301, 1955)
+        # actions.click()
+        # actions.perform()
+
+        # element = self.mobile_driver.find_element(By.XPATH, '//*[@id="screenshotContainer"]/div[2]/div/div/div/div/div[44]/div')
+        # element.click()
+        # element.click()
+
+        # # Switch to the new window
+        # window_handles = self.mobile_driver.window_handles
+        # self.mobile_driver.switch_to.window(window_handles[-1])
+        # element = self.mobile_driver.find_element_by_id("action_download")
+
+        # element.click()
+        # element.click()
+        # # Calculate the coordinates to tap on the screen
+        # x = 302  # X-coordinate of the tap
+        # y = 1933  # Y-coordinate of the tap
         #
-        self.wait_and_execute(self.mobile_driver, self.download_button_locator, 10, lambda elem: elem.click())
-        self.wait_and_execute(self.mobile_driver, self.hamburger_button, 10, lambda elem: elem.click())
-        self.wait_and_execute(self.mobile_driver, self.tasks_link, 10, lambda elem: elem.click())
-        self.wait_and_execute(self.mobile_driver, self.download_tab, 10, lambda elem: elem.click())
-        dialog_cancel_button_locator = (By)
+        # # Perform the tap action
+        # action = TouchAction(self.mobile_driver)
+        # action.tap(x=x, y=y).perform()
+
+        # actions = ActionChains(self.mobile_driver)
+        # actions.w3c_actions = ActionBuilder(self.mobile_driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))
+        # actions.w3c_actions.pointer_action.move_to_location(970, 2037)
+        # actions.w3c_actions.pointer_action.pointer_down()
+        # actions.w3c_actions.pointer_action.move_to_location(532, 1305)
+        # actions.w3c_actions.pointer_action.release()
+        # actions.perform()
+        #
+        # self.wait_and_execute(self.mobile_driver, self.download_button_locator, 10, lambda elem: elem.click())
+        # self.wait_and_execute(self.mobile_driver, self.hamburger_button, 10, lambda elem: elem.click())
+        # self.wait_and_execute(self.mobile_driver, self.tasks_link, 10, lambda elem: elem.click())
+        # self.wait_and_execute(self.mobile_driver, self.download_tab, 10, lambda elem: elem.click())
+        # dialog_cancel_button_locator = (By)
         self.logger('pCloud Download started...')
         self.interaction(180)
 

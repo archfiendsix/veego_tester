@@ -39,49 +39,49 @@ from applications.roblox_mobile import RobloxMobile
 from applications.googleMeet_mobile import GoogleMeetMobile
 from setup.test_setup import setup_test_environment
 
-class kill_process_mobile():
-    # logger('clean_computer')
-    # Execute the ADB command to force close the application
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.youtube"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.netflix.mediaclient"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.hitrock.hideonline"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.roblox.client"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.zhiliaoapp.musically"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.twitter.android"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.facebook.katana"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.gm"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.linkedin.android"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.instagram.android"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "tv.twitch.android.app"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.youtube"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.netflix.mediaclient"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.amazon.avod.thirdpartyclient"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.amazon.mp3"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.spotify.music"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.skype.raider"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.apps.tachyon"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.pcloud.pcloud"])
-    subprocess.run(["adb", "shell", "am", "force-stop", "com.pcloud.pcloud"])
-
-
-
-    os.system(' taskkill /f /im Skype.exe')
-    os.system('taskkill /f /im chrome.exe')
-    os.system('taskkill /f /im WebexMTAV2.exe')
-    os.system('taskkill /f /im WebexHost.exe')
-    os.system('taskkill /f /im wmlhost.exe')
-    os.system('taskkill /f /im atmgr.exe ')
-    os.system('taskkill /f /im CiscoCollabHost.exe')
-    os.system('taskkill /f /im chromedriver.exe')
-    os.system('taskkill /f /im Zoom.exe')
-    os.system('taskkill /f /im Teams.exe')
-    os.system('taskkill /f /im RobloxPlayerBeta.exe')
-    os.system('taskkill /f /im Messenger.exe')
-    os.system('taskkill /f /im steame.exe')
-    os.system('taskkill /f /im steamservice.exe')
-    os.system('taskkill /f /im steamwebhelper.exe')
-#     # logger.info('ending clean_computer')
+# class kill_process_mobile():
+#     # logger('clean_computer')
+#     # Execute the ADB command to force close the application
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.youtube"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.netflix.mediaclient"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.hitrock.hideonline"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.roblox.client"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.zhiliaoapp.musically"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.twitter.android"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.facebook.katana"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.gm"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.linkedin.android"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.instagram.android"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "tv.twitch.android.app"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.youtube"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.netflix.mediaclient"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.amazon.avod.thirdpartyclient"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.amazon.mp3"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.spotify.music"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.skype.raider"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.google.android.apps.tachyon"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.pcloud.pcloud"])
+#     subprocess.run(["adb", "shell", "am", "force-stop", "com.pcloud.pcloud"])
 #
+#
+#
+#     os.system(' taskkill /f /im Skype.exe')
+#     os.system('taskkill /f /im chrome.exe')
+#     os.system('taskkill /f /im WebexMTAV2.exe')
+#     os.system('taskkill /f /im WebexHost.exe')
+#     os.system('taskkill /f /im wmlhost.exe')
+#     os.system('taskkill /f /im atmgr.exe ')
+#     os.system('taskkill /f /im CiscoCollabHost.exe')
+#     os.system('taskkill /f /im chromedriver.exe')
+#     os.system('taskkill /f /im Zoom.exe')
+#     os.system('taskkill /f /im Teams.exe')
+#     os.system('taskkill /f /im RobloxPlayerBeta.exe')
+#     os.system('taskkill /f /im Messenger.exe')
+#     os.system('taskkill /f /im steame.exe')
+#     os.system('taskkill /f /im steamservice.exe')
+#     os.system('taskkill /f /im steamwebhelper.exe')
+# #     # logger.info('ending clean_computer')
+# #
 
 class TelemetryTest(unittest.TestCase):
     def setUp(self):
@@ -102,27 +102,27 @@ class TelemetryTest(unittest.TestCase):
             "platformName": "Android",
             "platformVersion": "11",
             "noReset": True,
-            "newCommandTimeout": 3000
+            "newCommandTimeout": 3000,
+            # "http" : urllib3.PoolManager(maxsize=10)
         }
-
         self.mobile_driver = mobile_webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
 ###############################################################################
-        # Create a custom connection pool with an increased size
-        http = urllib3.PoolManager(num_pools=10)
-
-        # Make the request using the updated connection pool
-        response = http.request('GET', 'http://localhost')
-        # Access the response data
-        data = response.data
-        status_code = response.status
-
-        # Use the response data in your code
-        if status_code == 200:
-            # Process the data
-            print(data)
-        else:
-            # Handle the error or unexpected status code
-            print("Request failed with status code:", status_code)
+        # # Create a custom connection pool with an increased size
+        # http = urllib3.PoolManager(num_pools=10)
+        #
+        # # Make the request using the updated connection pool
+        # response = http.request('GET', 'http://localhost')
+        # # Access the response data
+        # data = response.data
+        # status_code = response.status
+        #
+        # # Use the response data in your code
+        # if status_code == 200:
+        #     # Process the data
+        #     print(data)
+        # else:
+        #     # Handle the error or unexpected status code
+        #     print("Request failed with status code:", status_code)
 ###############################################################################
         # # Load configuration data and test site data from JSON files
         with open(config_dir, "r") as json_file:
@@ -173,126 +173,126 @@ class TelemetryTest(unittest.TestCase):
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_hideOnline_gaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.hideOnline_mobile.run_hideOnline_mobile(120)
-        self.telemetry.run_telemetry_test('HideOnline', 'GAMING', True, self.hideOnline_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('HideOnline', 'GAMING', True, self.hideOnline_mobile.interaction,mac=self.resource['mac'])
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_roblox_gaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.roblox_mobile.run_roblox_mobile(100)
-        self.telemetry.run_telemetry_test('Roblox', 'GAMING', True, self.roblox_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Roblox', 'GAMING', True, self.roblox_mobile.interaction, mac=self.resource['mac'])
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_tiktok_social_mobile(self):
-        kill_process_mobile()
-        self.tiktok_mobile.run_tiktok_mobile(130)
+        # kill_process_mobile()
+        self.tiktok_mobile.run_tiktok_mobile(70)
         self.telemetry.run_telemetry_test('Tiktok', 'SOCIAL', True, self.tiktok_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_twitter_social_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.twitter_mobile.run_twitter_mobile(100)
-        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Twitter', 'SOCIAL', True, self.twitter_mobile.interaction,mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_facebook_social_mobile(self):
-        kill_process_mobile()
-        self.facebook_mobile.run_facebook_mobile(150)
+        # kill_process_mobile()
+        self.facebook_mobile.run_facebook_mobile(80)
         self.telemetry.run_telemetry_test('Facebook', 'SOCIAL', True, self.facebook_mobile.interaction, mac=self.resource.mac)
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_gmail_mail_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.gmail_mobile.run_gmail_mobile(30)
         self.telemetry.run_telemetry_test('Gmail', 'MAIL', True, self.gmail_mobile.interaction, mac=self.resource.mac)
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_linkedin_social_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.linkedin_mobile.run_linkedin_mobile(30)
-        self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Linkedin', 'SOCIAL', True, self.linkedin_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_instagram_social_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.instagram_mobile.run_instagram_mobile(30)
-        self.telemetry.run_telemetry_test('Instagram', 'SOCIAL', True, self.instagram_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Instagram', 'SOCIAL', True, self.instagram_mobile.interaction, mac=self.resource['mac'])
 
     # twitch -  WIP
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_twitch_streaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.twitch_mobile.run_twitch_mobile(30)
-        self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Twitch', 'STREAMING', True, self.twitch_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_youtube_streaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.youtube_mobile.run_youtube_mobile(30)
-        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Youtube', 'STREAMING', True, self.youtube_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_netflix_streaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.netflix_mobile.run_netflix_mobile(30)
-        self.telemetry.run_telemetry_test('Netflix', 'STREAMING', True, self.netflix_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Netflix', 'STREAMING', True, self.netflix_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_amazonPrime_streaming_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.amazonPrime_mobile.run_amazonPrime_mobile(30)
-        self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('AmazonPrime', 'STREAMING', True, self.amazonPrime_mobile.interaction, mac=self.resource['mac'])
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_amazonMusic_music_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.amazonMusic_mobile.run_amazonMusic_mobile(30)
-        self.telemetry.run_telemetry_test('AmazonMusic', 'MUSIC', True, self.amazonMusic_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('AmazonMusic', 'MUSIC', True, self.amazonMusic_mobile.interaction,mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_spotify_music_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.spotify_mobile.run_spotify_mobile(30)
-        self.telemetry.run_telemetry_test('Spotify', 'MUSIC', True, self.spotify_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('Spotify', 'MUSIC', True, self.spotify_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_skype_conferencing_mobile(self):
-        kill_process_mobile()
+        # kill_process_mobile()
         self.skype_mobile.run_skype_mobile(120)
-        self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.skype_mobile.interaction, mac=self.resource.mac)
+        self.telemetry.run_telemetry_test('MSTeams/Skype', 'CONFERENCING', True, self.skype_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_googleMeet_conferencing_mobile(self):
-        kill_process_mobile()
-        self.googleMeet_mobile.run_googleMeet_mobile(30)
-        self.telemetry.run_telemetry_test('GoogleMeet', 'CONFERENCING', True, self.googleMeet_mobile.interaction, mac=self.resource.mac)
+        # kill_process_mobile()
+        # self.googleMeet_mobile.run_googleMeet_mobile(45)
+        self.telemetry.run_telemetry_test('GoogleMeet', 'CONFERENCING', True, self.googleMeet_mobile.interaction, mac=self.resource['mac'])
 
     @pytest.mark.repeat(1)
     @pytest.mark.sanity
     def test_pcloud_download_mobile(self):
-        kill_process_mobile()
-        self.pcloud_mobile.run_pcloud_download_mobile(155)
-        self.telemetry.run_telemetry_test('pcloud', 'DOWNLOAD', True, self.pcloud_mobile.interaction, mac=self.resource.mac)
+        # kill_process_mobile()
+        self.pcloud_mobile.run_pcloud_download_mobile(120)
+        self.telemetry.run_telemetry_test('pcloud', 'DOWNLOAD', True, self.pcloud_mobile.interaction,mac=self.resource['mac'])
 
     #
     # @pytest.mark.repeat(10)
     # @pytest.mark.sanity
     # def test_pcloud_upload_mobile(self):
     #     self.pcloud_mobile.run_pcloud_upload_mobile(155)
-    #     self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_mobile.interaction, mac=self.resource.mac)
+    #     self.telemetry.run_telemetry_test('pcloud', 'UPLOAD', True, self.pcloud_mobile.interaction, mac=self.resource.mac                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     )
 
     def tearDown(self):
         # Close the browser
